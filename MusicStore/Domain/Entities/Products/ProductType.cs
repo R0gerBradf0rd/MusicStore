@@ -1,4 +1,4 @@
-﻿namespace MusicStore.Domain.Entities
+﻿namespace MusicStore.Domain.Entities.Products
 {
     public class ProductType
     {
@@ -9,3 +9,4 @@
         public Guid CatergoryId { get; }
     }
 }
+// SetTheProductTypeName

@@ -1,4 +1,4 @@
-﻿namespace MusicStore.Domain.Entities
+﻿namespace MusicStore.Domain.Entities.Users
 {
     public class User
     {
@@ -8,8 +8,10 @@
 
         public string Email { get; }
 
-        public string ShippingAddress { get; }
-
         public string Role { get; }
     }
 }
+// SetTheUserName
+// SetTheUserEmail
+// SetTheUserShippingAddress
+// SetTheUserRole

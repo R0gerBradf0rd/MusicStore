@@ -1,4 +1,4 @@
-﻿namespace MusicStore.Domain.Entities
+﻿namespace MusicStore.Domain.Entities.Warehouses
 {
     public class Warehouse
     {
@@ -7,3 +7,4 @@
         public string Address { get; }
     }
 }
+// SetTheWarehouseAddress

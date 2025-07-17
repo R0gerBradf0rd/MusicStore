@@ -1,4 +1,4 @@
-﻿namespace MusicStore.Domain.Entities
+﻿namespace MusicStore.Domain.Entities.Products
 {
     public class Category
     {
@@ -7,3 +7,4 @@
         public string Name { get; }
     }
 }
+// SetTheCategoryName

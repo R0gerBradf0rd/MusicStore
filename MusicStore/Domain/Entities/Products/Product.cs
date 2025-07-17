@@ -1,4 +1,4 @@
-﻿namespace MusicStore.Domain.Entities
+﻿namespace MusicStore.Domain.Entities.Products
 {
     public class Product
     {
@@ -8,10 +8,12 @@
 
         public string Description { get; }
 
-        public double Price { get; }
+        public decimal Price { get; }
+
+        public string PriceCurrencyCode { get; }
 
         public string ImageURL { get; }
 
-        public Guid ProductTypeId { get; } 
+        public Guid ProductTypeId { get; }
     }
 }

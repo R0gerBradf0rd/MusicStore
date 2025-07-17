@@ -1,4 +1,4 @@
-﻿namespace MusicStore.Domain.Entities
+﻿namespace MusicStore.Domain.Entities.Carts
 {
     public class CartItem
     {
@@ -6,6 +6,10 @@
 
         public Guid ProductId { get; }
 
+        public Guid CartId { get; }
+
         public int Quantity { get; }
     }
 }
+// IncreaseQuantityByOne
+// DecreaseQuantityByOne
