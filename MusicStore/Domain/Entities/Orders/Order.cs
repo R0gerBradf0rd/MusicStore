@@ -31,6 +31,21 @@
         public DateTime AssemblyProcessStartDate { get; private set; }
 
         /// <summary>
+        /// Дата готовности к отправке
+        /// </summary>
+        public DateTime ReadyToShipDate { get; private set; }
+
+        /// <summary>
+        /// Дата отправки
+        /// </summary>
+        public DateTime ShippmentDate { get; private set; }
+
+        /// <summary>
+        /// Дата доставки
+        /// </summary>
+        public DateTime DeliveryDate { get; private set; }
+
+        /// <summary>
         /// Общая сумма заказа
         /// </summary>
         public decimal TotalPrice { get; }
@@ -84,9 +99,13 @@
             {
                 throw new ArgumentException( "UserId не может быть пустым!", nameof( cartId ) );
             }
-            if ( shippingAddress is null )
+            if ( string.IsNullOrWhiteSpace( shippingAddress ) )
             {
                 throw new ArgumentException( "Адрес не может быть пустым!", nameof( shippingAddress ) );
+            }
+            if ( !CurrencyCodeValidator.IsCurrencyCodeValid( totalPriceCurrencyCode ) )
+            {
+                throw new ArgumentException( "Неверный код валюты!", nameof( totalPriceCurrencyCode ) );
             }
             UserId = userId;
             TotalPrice = totalPrice;
@@ -114,6 +133,7 @@
         public void EndOfAssembly()
         {
             Status = OrderStatus.ReadyToShip;
+            ReadyToShipDate = DateTime.UtcNow;
         }
 
         /// <summary>
@@ -122,6 +142,7 @@
         public void Shipping()
         {
             Status = OrderStatus.Shipped;
+            ShippmentDate = DateTime.UtcNow;
         }
 
         /// <summary>
@@ -130,6 +151,7 @@
         public void Arrived()
         {
             Status = OrderStatus.Arrived;
+            DeliveryDate = DateTime.UtcNow;
         }
     }
 }

@@ -20,6 +20,8 @@
         /// </summary>
         public int WarehouseProductQuantity { get; private set; }
 
+        public const int WarehouseProductQuantityLimit = 999;
+
         /// <summary>
         /// Создает объект, содержащий колличество определенного товара, на определенном складе, с указанными параметрами
         /// </summary>
@@ -48,25 +50,27 @@
         }
 
         /// <summary>
-        /// Увеличивает колличество товара на складе на единицу
+        /// Увеличивает колличество товара на складе на заданное число
         /// </summary>
-        public void IncreaseWarehouseProductQuantity()
+        public void IncreaseWarehouseProductQuantity( int number )
         {
-            if ( WarehouseProductQuantity < 999 )
+            if ( WarehouseProductQuantity + number > WarehouseProductQuantity )
             {
-                WarehouseProductQuantity += 1;
+                throw new InvalidOperationException( "Лимит слкада превышен!" );
             }
+            WarehouseProductQuantity += number;
         }
 
         /// <summary>
-        /// Уменьшает колличество товара на складе на единицу
+        /// Уменьшает колличество товара на складе на заданное число
         /// </summary>
-        public void DecreaseWarehouseProductQuantity()
+        public void DecreaseWarehouseProductQuantity( int number )
         {
-            if ( WarehouseProductQuantity > 0 )
+            if ( WarehouseProductQuantity - number < 0 )
             {
-                WarehouseProductQuantity -= 1;
+                throw new InvalidOperationException( "Невозможно взять данное количество товара со склада!" );
             }
+            WarehouseProductQuantity -= number;
         }
     }
 }

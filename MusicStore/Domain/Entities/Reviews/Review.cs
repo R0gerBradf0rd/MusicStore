@@ -53,9 +53,9 @@
             {
                 throw new ArgumentException( "UserId не может быть пустым!", nameof( userId ) );
             }
-            if ( rating < 1 || rating > 5 )
+            if ( rating < 0 || rating > 5 )
             {
-                throw new ArgumentOutOfRangeException( "Рейтинг не может быть больше 5 и меньше 1!", nameof( rating ) );
+                throw new ArgumentOutOfRangeException( "Рейтинг не может быть больше 5 и меньше 0!", nameof( rating ) );
             }
             Id = Guid.NewGuid();
             ProductId = productId;

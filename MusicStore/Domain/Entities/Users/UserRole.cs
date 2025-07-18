@@ -1,18 +1,26 @@
 ﻿namespace MusicStore.Domain.Entities.Users
 {
     /// <summary>
-    /// Перечисление, представляющее роль пользователя
+    /// Статический класс, представляющий роли пользователя
     /// </summary>
-    public enum UserRole
+    public static class UserRole
     {
         /// <summary>
-        /// Базовый пользователь
+        /// Роль покупателя
         /// </summary>
-        User = 0,
+        public static readonly string Buyer = "user";
 
         /// <summary>
-        /// Администратор
+        /// Роль администратор
         /// </summary>
-        Administrator = 1
+        public static readonly string Administrator = "administrator";
+
+        /// <summary>
+        /// Список всех ролей, доступных пользователю
+        /// </summary>
+        public static readonly List<string> UsersRoles = new List<string>()
+        {
+            Buyer,
+            Administrator };
     }
 }

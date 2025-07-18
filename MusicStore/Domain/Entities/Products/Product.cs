@@ -82,6 +82,10 @@
             {
                 throw new ArgumentException( "Цена должна быть больше нуля!", nameof( price ) );
             }
+            if ( !CurrencyCodeValidator.IsCurrencyCodeValid( priceCurrencyCode ) )
+            {
+                throw new ArgumentException( "Неверный код валюты!", nameof( priceCurrencyCode ) );
+            }
             Id = Guid.NewGuid();
             Name = name;
             Description = description;

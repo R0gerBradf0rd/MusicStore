@@ -26,17 +26,19 @@
         public int Quantity { get; private set; }
 
         /// <summary>
+        /// Максимальный лимит товаров в корзине
+        /// </summary>
+        public const int CartQuantityLimit = 999;
+
+        /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="CartItem"/>
         /// </summary>
         /// <param name="productId">Идентификатор продукта</param>
         /// <param name="cartId">Идентификатор корзины</param>
-        /// <param name="quantity">Количество единиц продукта. Должно быть больше нуля</param>
         /// <exception cref="ArgumentException">Если переданные значения параметров пустые</exception>
-        /// <exception cref="ArgumentOutOfRangeException">Если <paramref name="quantity"/> меньше или равен нулю.</exception>
         public CartItem(
             Guid productId,
-            Guid cartId,
-            int quantity )
+            Guid cartId )
         {
             if ( productId == Guid.Empty )
             {
@@ -46,14 +48,10 @@
             {
                 throw new ArgumentException( "CartId не может быть пустым!", nameof( cartId ) );
             }
-            if ( quantity <= 0 )
-            {
-                throw new ArgumentOutOfRangeException( nameof( quantity ), "Quantity должен быть больше нуля!" );
-            }
             Id = Guid.NewGuid();
             ProductId = productId;
             CartId = cartId;
-            Quantity = quantity;
+            Quantity = 1;
         }
 
         /// <summary>
@@ -61,7 +59,7 @@
         /// </summary>
         public void IncreaseQuantityByOne()
         {
-            if ( Quantity < 999 )
+            if ( Quantity < CartQuantityLimit )
             {
                 Quantity += 1;
             }

@@ -51,27 +51,5 @@
             OrderId = orderId;
             Quantity = quantity;
         }
-
-        /// <summary>
-        /// Увеличивает количество продукта в элементе на единицу
-        /// </summary>
-        public void IncreaseQuantityByOne()
-        {
-            if ( Quantity < 999 )
-            {
-                Quantity += 1;
-            }
-        }
-
-        /// <summary>
-        /// Уменьшает количество продукта в элементе на единицу
-        /// </summary>
-        public void DecreaseQuantityByOne()
-        {
-            if ( Quantity > 1 )
-            {
-                Quantity -= 1;
-            }
-        }
     }
 }

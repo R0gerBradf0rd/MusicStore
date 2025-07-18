@@ -23,7 +23,7 @@
         /// <summary>
         /// Роль пользователя
         /// </summary>
-        public UserRole Role { get; private set; }
+        public string UserRole { get; private set; }
 
         /// <summary>
         /// Создает пользователя, с указанными параметрами
@@ -43,23 +43,19 @@
             }
             Name = name;
             Email = email;
-            Role = UserRole.User;
+            UserRole = Users.UserRole.Buyer;
         }
 
         /// <summary>
-        /// Повышает Базового пользователя до Администратора
+        /// Присваивает пользователю переданную роль
         /// </summary>
-        public void RaiseRole()
+        public void AssignRole( string role )
         {
-            Role = UserRole.Administrator;
-        }
-
-        /// <summary>
-        /// Понижает Администратора до Базового пользователя
-        /// </summary>
-        public void DemoteRole()
-        {
-            Role = UserRole.User;
+            if ( !Users.UserRole.UsersRoles.Contains( role ) )
+            {
+                throw new InvalidOperationException( "Невозможно назначить несуществующую роль!" );
+            }
+            UserRole = role;
         }
     }
 }
