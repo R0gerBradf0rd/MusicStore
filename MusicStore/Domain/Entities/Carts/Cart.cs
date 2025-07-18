@@ -6,22 +6,6 @@
     public class Cart
     {
         /// <summary>
-        /// Создаёт новый экземпляр корзины с указанным идентификатором пользователя
-        /// </summary>
-        /// <param name="id">Идентификатор корзины</param>
-        /// <param name="userId">Идентификатор пользователя</param>
-        /// <exception cref="ArgumentNullException">Если переданные значения параметров пустые</exception>
-        public Cart( Guid id, Guid userId )
-        {
-            if ( userId == Guid.Empty )
-            {
-                throw new ArgumentNullException( "UserId не может быть пустым!", nameof( userId ) );
-            }
-            Id = Guid.NewGuid();
-            UserId = userId;
-        }
-
-        /// <summary>
         /// Уникальный идентификатор корзины
         /// </summary>
         public Guid Id { get; }
@@ -34,14 +18,30 @@
         /// <summary>
         /// Список товаров в корзине
         /// </summary>
-        public ICollection<CartItem> Items { get; }
+        public ICollection<CartItem> CartItems { get; }
+
+        /// <summary>
+        /// Создаёт новый экземпляр корзины с указанным идентификатором пользователя
+        /// </summary>
+        /// <param name="userId">Идентификатор пользователя</param>
+        /// <param name="cartItems">Список элементов корзины</param>
+        /// <exception cref="ArgumentException">Если переданные значения параметров пустые</exception>
+        public Cart( Guid userId, ICollection<CartItem> cartItems )
+        {
+            if ( userId == Guid.Empty )
+            {
+                throw new ArgumentException( "UserId не может быть пустым!", nameof( userId ) );
+            }
+            Id = Guid.NewGuid();
+            UserId = userId;
+        }
 
         /// <summary>
         /// Удаляет все товары из корзины
         /// </summary>
         public void Clear()
         {
-            Items.Clear();
+            CartItems.Clear();
         }
 
         /// <summary>
@@ -49,7 +49,7 @@
         /// </summary>
         public void AddCartItem( CartItem cartItem )
         {
-            Items.Add( cartItem );
+            CartItems.Add( cartItem );
         }
 
         /// <summary>
@@ -57,7 +57,7 @@
         /// </summary>
         public void RemoveCartItem( CartItem cartItem )
         {
-            Items.Remove( cartItem );
+            CartItems.Remove( cartItem );
         }
     }
 }

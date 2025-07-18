@@ -16,7 +16,7 @@
         public Guid ProductId { get; }
 
         /// <summary>
-        /// Идентификатор заказа, к которому относится эелемент
+        /// Идентификатор заказа, к которому относится элемент
         /// </summary>
         public Guid OrderId { get; }
 
@@ -31,20 +31,20 @@
         /// <param name="productId">Идентификатор продукта</param>
         /// <param name="orderId">Идентификатор заказа</param>
         /// <param name="quantity">Количество продукта</param>
-        /// <exception cref="ArgumentNullException">Если переданные значения параметров пустые</exception>
+        /// <exception cref="ArgumentException">Если переданные значения параметров пустые</exception>
         public OrderItem( Guid productId, Guid orderId, int quantity )
         {
             if ( productId == Guid.Empty )
             {
-                throw new ArgumentNullException( "ProductId не может быть пустым!", nameof( productId ) );
+                throw new ArgumentException( "ProductId не может быть пустым!", nameof( productId ) );
             }
             if ( orderId == Guid.Empty )
             {
-                throw new ArgumentNullException( "ProductId не может быть пустым!", nameof( orderId ) );
+                throw new ArgumentException( "OrderId не может быть пустым!", nameof( orderId ) );
             }
             if ( quantity <= 0 )
             {
-                throw new ArgumentNullException( "Количество должно быть больше нуля!", nameof( quantity ) );
+                throw new ArgumentException( "Количество должно быть больше нуля!", nameof( quantity ) );
             }
             Id = Guid.NewGuid();
             ProductId = productId;

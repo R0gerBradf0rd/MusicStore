@@ -3,7 +3,7 @@
     /// <summary>
     /// Представляет заказ, оформленный пользователем
     /// </summary>
-    public class Odrer
+    public class Order
     {
         /// <summary>
         /// Уникальный идентификатор заказа
@@ -43,12 +43,12 @@
         /// <summary>
         /// Уникальный номер заказа
         /// </summary>
-        public string OrderNumber { get; } // создать сервис
+        public Guid OrderNumber { get; }
 
         /// <summary>
         /// Адрес доставки заказа
         /// </summary>
-        public string ShippingAssress { get; }
+        public string ShippingAddress { get; }
 
         /// <summary>
         /// Идентификатор корзины, из которой был создан заказ
@@ -61,11 +61,16 @@
         /// <param name="userId">Идентификатор пользователя</param>
         /// <param name="totalPrice">Итоговая сумма заказа</param>
         /// <param name="totalPriceCurrencyCode">Код валюты заказа</param>
-        /// <param name="shippingAssress">Адрес доставки</param>
+        /// <param name="shippingAddress">Адрес доставки</param>
         /// <param name="cartId">Идентификатор корзины</param>
         /// <exception cref="ArgumentException">Если сумма заказа недопустима</exception>
-        /// <exception cref="ArgumentNullException">Если переданные значения параметров пустые</exception>
-        public Odrer( Guid userId, decimal totalPrice, string totalPriceCurrencyCode, string shippingAssress, Guid cartId )
+        /// <exception cref="ArgumentException">Если переданные значения параметров пустые</exception>
+        public Order(
+            Guid userId,
+            decimal totalPrice,
+            string totalPriceCurrencyCode,
+            string shippingAddress,
+            Guid cartId )
         {
             if ( totalPrice <= 0 )
             {
@@ -73,33 +78,33 @@
             }
             if ( userId == Guid.Empty )
             {
-                throw new ArgumentNullException( "UserId не может быть пустым!", nameof( userId ) );
+                throw new ArgumentException( "UserId не может быть пустым!", nameof( userId ) );
             }
             if ( cartId == Guid.Empty )
             {
-                throw new ArgumentNullException( "UserId не может быть пустым!", nameof( cartId ) );
+                throw new ArgumentException( "UserId не может быть пустым!", nameof( cartId ) );
             }
-            if ( shippingAssress is null )
+            if ( shippingAddress is null )
             {
-                throw new ArgumentNullException( "Адрес не может быть пустым!", nameof( shippingAssress ) );
+                throw new ArgumentException( "Адрес не может быть пустым!", nameof( shippingAddress ) );
             }
             UserId = userId;
             TotalPrice = totalPrice;
             TotalPriceCurrencyCode = totalPriceCurrencyCode;
-            ShippingAssress = shippingAssress;
+            ShippingAddress = shippingAddress;
             CartId = cartId;
             Status = OrderStatus.Created;
             CreationDate = DateTime.UtcNow;
             Id = Guid.NewGuid();
+            OrderNumber = Guid.NewGuid();
         }
-
 
         /// <summary>
         /// Переводит заказ в состояние "Процесс сборки" и сохраняет дату начала сборки
         /// </summary>
         public void StartAssembly()
         {
-            Status = OrderStatus.AssemblyProccess;
+            Status = OrderStatus.AssemblyProcess;
             AssemblyProcessStartDate = DateTime.UtcNow;
         }
 

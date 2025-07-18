@@ -6,27 +6,6 @@
     public class ProductType
     {
         /// <summary>
-        /// Создает тип продукта, относящийся к определенной категории, с указанными параметрами
-        /// </summary>
-        /// <param name="name">Название типа</param>
-        /// <param name="catergoryId">Идентификатор категории</param>
-        /// <exception cref="ArgumentNullException">Если переданные значения параметров пустые</exception>
-        public ProductType( string name, Guid catergoryId )
-        {
-            if ( catergoryId == Guid.Empty )
-            {
-                throw new ArgumentNullException( "CategoryId не может быть пустым!", nameof( catergoryId ) );
-            }
-            if ( name is null )
-            {
-                throw new ArgumentNullException( "Название не может быть пустым!", nameof( name ) );
-            }
-            Id = Guid.NewGuid();
-            Name = name;
-            CatergoryId = catergoryId;
-        }
-
-        /// <summary>
         /// Уникальный идентификатор типа продукта
         /// </summary>
         public Guid Id { get; }
@@ -40,5 +19,27 @@
         /// Идентификатор категории
         /// </summary>
         public Guid CatergoryId { get; }
+
+        /// <summary>
+        /// Создает тип продукта, относящийся к определенной категории, с указанными параметрами
+        /// </summary>
+        /// <param name="name">Название типа</param>
+        /// <param name="categoryId">Идентификатор категории</param>
+        /// <exception cref="ArgumentNullException">Если переданные значения параметров пустые</exception>
+        /// <exception cref="ArgumentException">Если переданные значения параметров пустые</exception>
+        public ProductType( string name, Guid categoryId )
+        {
+            if ( categoryId == Guid.Empty )
+            {
+                throw new ArgumentException( "CategoryId не может быть пустым!", nameof( categoryId ) );
+            }
+            if ( string.IsNullOrWhiteSpace( name ) )
+            {
+                throw new ArgumentNullException( "Название не может быть пустым!", nameof( name ) );
+            }
+            Id = Guid.NewGuid();
+            Name = name;
+            CatergoryId = categoryId;
+        }
     }
 }

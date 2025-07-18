@@ -13,7 +13,7 @@
         /// <summary>
         /// Заказ находится в процессе сборки
         /// </summary>
-        AssemblyProccess = 1,
+        AssemblyProcess = 1,
 
         /// <summary>
         /// Заказ готов к отправке
