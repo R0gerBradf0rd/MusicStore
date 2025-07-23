@@ -1,4 +1,6 @@
-﻿namespace MusicStore.Domain.Entities.Users
+﻿using System.Data;
+
+namespace MusicStore.Domain.Entities.Users
 {
     /// <summary>
     /// Представляет пользователя
@@ -30,8 +32,9 @@
         /// </summary>
         /// <param name="name">Имя пользователя</param>
         /// <param name="email">Email пользователя</param>
+        /// <param name="userRole">Роль пользователя</param>
         /// <exception cref="ArgumentNullException">Если переданные значения параметров пустые</exception>
-        public User( string name, string email )
+        public User( string name, string email, string userRole )
         {
             if ( string.IsNullOrWhiteSpace( name ) )
             {
@@ -41,9 +44,17 @@
             {
                 throw new ArgumentNullException( "Email не может быть пустым!", nameof( email ) );
             }
+            if ( string.IsNullOrWhiteSpace( userRole ) )
+            {
+                throw new ArgumentNullException( "Роль не может быть пустой!", nameof( userRole ) );
+            }
+            if ( !UserRoles.UsersRolesList.Contains( userRole ) )
+            {
+                throw new ArgumentException( "Невозможно назначить несуществующую роль!", nameof( userRole ) );
+            }
             Name = name;
             Email = email;
-            UserRole = UserRoles.Buyer;
+            UserRole = userRole;
         }
 
         /// <summary>

@@ -50,21 +50,21 @@
         /// <summary>
         /// Увеличивает колличество товара на складе на заданное число
         /// </summary>
-        public void AddProductToAWarehouse( int number )
+        public void AddProductToWarehouse( int count )
         {
-            WarehouseProductQuantity += number;
+            WarehouseProductQuantity += count;
         }
 
         /// <summary>
         /// Уменьшает колличество товара на складе на заданное число
         /// </summary>
-        public void TakeProductFromTheWarehouse( int number )
+        public void TakeProductFromWarehouse( int count )
         {
-            if ( WarehouseProductQuantity - number < 0 )
+            if ( WarehouseProductQuantity - count < 0 )
             {
                 throw new InvalidOperationException( "Невозможно взять данное количество товара со склада!" );
             }
-            WarehouseProductQuantity -= number;
+            WarehouseProductQuantity -= count;
         }
     }
 }

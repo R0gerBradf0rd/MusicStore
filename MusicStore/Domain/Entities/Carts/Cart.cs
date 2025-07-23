@@ -18,7 +18,7 @@
         /// <summary>
         /// Список товаров в корзине
         /// </summary>
-        public ICollection<CartItem> CartItems { get; } = new List<CartItem>();
+        public ICollection<CartItem> CartItems { get; }
 
         /// <summary>
         /// Создаёт новый экземпляр корзины с указанным идентификатором пользователя

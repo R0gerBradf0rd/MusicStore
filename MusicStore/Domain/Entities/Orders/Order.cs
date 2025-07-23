@@ -125,7 +125,7 @@
         {
             if ( Status != OrderStatus.Created )
             {
-                throw new InvalidOperationException( "Не верный статуса заказа." );
+                throw new InvalidOperationException( "Невозможно перейти в этот статус. Предыдущий статус должен быть Created." );
             }
             Status = OrderStatus.AssemblyProcess;
             AssemblyProcessStartDate = DateTime.UtcNow;
@@ -137,7 +137,7 @@
         {
             if ( Status != OrderStatus.AssemblyProcess )
             {
-                throw new InvalidOperationException( "Не верный статуса заказа." );
+                throw new InvalidOperationException( "Невозможно перейти в этот статус. Предыдущий статус должен быть AssemblyProcess." );
             }
             Status = OrderStatus.ReadyToShip;
             ReadyToShipDate = DateTime.UtcNow;
@@ -150,7 +150,7 @@
         {
             if ( Status != OrderStatus.ReadyToShip )
             {
-                throw new InvalidOperationException( "Не верный статуса заказа." );
+                throw new InvalidOperationException( "Невозможно перейти в этот статус. Предыдущий статус должен быть ReadyToShip." );
             }
             Status = OrderStatus.Shipped;
             ShippmentDate = DateTime.UtcNow;
@@ -163,7 +163,7 @@
         {
             if ( Status != OrderStatus.Shipped )
             {
-                throw new InvalidOperationException( "Не верный статуса заказа." );
+                throw new InvalidOperationException( "Невозможно перейти в этот статус. Предыдущий статус должен быть Shipped." );
             }
             Status = OrderStatus.Arrived;
             DeliveryDate = DateTime.UtcNow;
