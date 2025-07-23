@@ -6,6 +6,11 @@
     public class CartItem
     {
         /// <summary>
+        /// Максимальный лимит товаров в корзине
+        /// </summary>
+        public const int CartItemQuantityLimit = 999;
+
+        /// <summary>
         /// Уникальный идентификатор элемента корзины
         /// </summary>
         public Guid Id { get; }
@@ -24,11 +29,6 @@
         /// Количество данного продукта
         /// </summary>
         public int Quantity { get; private set; }
-
-        /// <summary>
-        /// Максимальный лимит товаров в корзине
-        /// </summary>
-        public const int CartQuantityLimit = 999;
 
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="CartItem"/>
@@ -59,7 +59,7 @@
         /// </summary>
         public void IncreaseQuantityByOne()
         {
-            if ( Quantity < CartQuantityLimit )
+            if ( Quantity < CartItemQuantityLimit )
             {
                 Quantity += 1;
             }

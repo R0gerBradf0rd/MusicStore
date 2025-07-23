@@ -8,7 +8,7 @@
         /// <summary>
         /// Список всех кодов валют
         /// </summary>
-        static List<string> currencyCodes = new List<string>() { "RUB" };
+        private readonly static IReadOnlyList<string> currencyCodes = new List<string>() { "RUB" };
 
         /// <summary>
         /// Метод типа bool, который принимает код валюты, сверяет со списком кодов валют 

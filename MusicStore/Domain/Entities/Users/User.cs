@@ -43,7 +43,7 @@
             }
             Name = name;
             Email = email;
-            UserRole = Users.UserRole.Buyer;
+            UserRole = UserRoles.Buyer;
         }
 
         /// <summary>
@@ -51,7 +51,7 @@
         /// </summary>
         public void AssignRole( string role )
         {
-            if ( !Users.UserRole.UsersRoles.Contains( role ) )
+            if ( !UserRoles.UsersRolesList.Contains( role ) )
             {
                 throw new InvalidOperationException( "Невозможно назначить несуществующую роль!" );
             }

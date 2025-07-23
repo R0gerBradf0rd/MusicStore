@@ -20,8 +20,6 @@
         /// </summary>
         public int WarehouseProductQuantity { get; private set; }
 
-        public const int WarehouseProductQuantityLimit = 999;
-
         /// <summary>
         /// Создает объект, содержащий колличество определенного товара, на определенном складе, с указанными параметрами
         /// </summary>
@@ -52,19 +50,15 @@
         /// <summary>
         /// Увеличивает колличество товара на складе на заданное число
         /// </summary>
-        public void IncreaseWarehouseProductQuantity( int number )
+        public void AddProductToAWarehouse( int number )
         {
-            if ( WarehouseProductQuantity + number > WarehouseProductQuantity )
-            {
-                throw new InvalidOperationException( "Лимит слкада превышен!" );
-            }
             WarehouseProductQuantity += number;
         }
 
         /// <summary>
         /// Уменьшает колличество товара на складе на заданное число
         /// </summary>
-        public void DecreaseWarehouseProductQuantity( int number )
+        public void TakeProductFromTheWarehouse( int number )
         {
             if ( WarehouseProductQuantity - number < 0 )
             {

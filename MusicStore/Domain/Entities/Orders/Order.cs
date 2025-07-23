@@ -123,15 +123,22 @@
         /// </summary>
         public void StartAssembly()
         {
+            if ( Status != OrderStatus.Created )
+            {
+                throw new InvalidOperationException( "Не верный статуса заказа." );
+            }
             Status = OrderStatus.AssemblyProcess;
             AssemblyProcessStartDate = DateTime.UtcNow;
         }
-
         /// <summary>
         /// Переводит заказ в состояние "Готов к отправке"
         /// </summary>
         public void EndOfAssembly()
         {
+            if ( Status != OrderStatus.AssemblyProcess )
+            {
+                throw new InvalidOperationException( "Не верный статуса заказа." );
+            }
             Status = OrderStatus.ReadyToShip;
             ReadyToShipDate = DateTime.UtcNow;
         }
@@ -141,6 +148,10 @@
         /// </summary>
         public void Shipping()
         {
+            if ( Status != OrderStatus.ReadyToShip )
+            {
+                throw new InvalidOperationException( "Не верный статуса заказа." );
+            }
             Status = OrderStatus.Shipped;
             ShippmentDate = DateTime.UtcNow;
         }
@@ -150,6 +161,10 @@
         /// </summary>
         public void Arrived()
         {
+            if ( Status != OrderStatus.Shipped )
+            {
+                throw new InvalidOperationException( "Не верный статуса заказа." );
+            }
             Status = OrderStatus.Arrived;
             DeliveryDate = DateTime.UtcNow;
         }

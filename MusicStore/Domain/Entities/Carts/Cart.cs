@@ -16,11 +16,6 @@
         public Guid UserId { get; }
 
         /// <summary>
-        /// Счетчик элементов корзины
-        /// </summary>
-        public int CartItemsQuantity { get; private set; }
-
-        /// <summary>
         /// Список товаров в корзине
         /// </summary>
         public ICollection<CartItem> CartItems { get; } = new List<CartItem>();
@@ -39,7 +34,6 @@
             }
             Id = Guid.NewGuid();
             UserId = userId;
-            CartItemsQuantity = 0;
         }
 
         /// <summary>
@@ -48,7 +42,6 @@
         public void Clear()
         {
             CartItems.Clear();
-            CartItemsQuantity = 0;
         }
 
         /// <summary>
@@ -59,7 +52,6 @@
             if ( !CartItems.Contains( cartItem ) )
             {
                 CartItems.Add( cartItem );
-                CartItemsQuantity += 1;
             }
         }
 
@@ -71,7 +63,6 @@
             if ( CartItems.Contains( cartItem ) )
             {
                 CartItems.Remove( cartItem );
-                CartItemsQuantity -= 1;
             }
         }
     }
