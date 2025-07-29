@@ -1,4 +1,4 @@
-﻿namespace MusicStore.Application.Interfaces
+﻿namespace MusicStore.Application.Interfaces.Repository
 {
     public interface IRepository<T>
     {
@@ -7,7 +7,5 @@
         Task UpdateAsync( T entity );
 
         Task DeleteAsync( T entity );
-
-        Task<T?> GetByIdAsync( Guid id );
     }
 }
