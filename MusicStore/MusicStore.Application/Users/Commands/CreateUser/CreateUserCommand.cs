@@ -1,5 +1,5 @@
 ﻿using MusicStore.Application.Interfaces.Command;
-using MusicStore.Application.ResultPattern;
+using MusicStore.Application.Results;
 
 namespace MusicStore.Application.Users.Commands.CreateUser
 {

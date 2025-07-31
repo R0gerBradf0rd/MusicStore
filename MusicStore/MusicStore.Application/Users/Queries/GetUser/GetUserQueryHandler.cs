@@ -1,12 +1,14 @@
 ﻿using MusicStore.Application.Interfaces.Query;
 using MusicStore.Application.Interfaces.Validators;
-using MusicStore.Application.ResultPattern;
+using MusicStore.Application.Results;
+using MusicStore.Application.Users.Dtos;
+using MusicStore.Application.Users.Mappers;
 using MusicStore.Application.Users.Repository;
 using MusicStore.Domain.Entities.Users;
 
 namespace MusicStore.Application.Users.Queries.GetUser
 {
-    public class GetUserQueryHandler : IQueryHandler<GetUserQuery, Result<User>>
+    public class GetUserQueryHandler : IQueryHandler<GetUserQuery, Result<UserDto>>
     {
         private readonly IUserRepository _userRepository;
 
@@ -18,21 +20,21 @@ namespace MusicStore.Application.Users.Queries.GetUser
             _validator = validator;
         }
 
-        public async Task<Result<User>> Handle( GetUserQuery request, CancellationToken cancellationToken )
+        public async Task<Result<UserDto>> Handle( GetUserQuery request, CancellationToken cancellationToken )
         {
             var validationResult = _validator.Validate( request );
             if ( validationResult.IsError )
             {
-                return Result<User>.Failure( validationResult.Error );
+                return Result<UserDto>.Failure( validationResult.Error );
             }
             User? user = await _userRepository.GetByIdAsync( request.UserId );
 
             if ( user is null )
             {
-                return Result<User>.Failure( "Пользователь не найден!" );
+                return Result<UserDto>.Failure( "Пользователь не найден!" );
             }
 
-            return Result<User>.Success( user );
+            return Result<UserDto>.Success( user.ToDto() );
         }
     }
 }

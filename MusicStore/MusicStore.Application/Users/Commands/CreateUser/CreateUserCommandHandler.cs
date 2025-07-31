@@ -1,7 +1,7 @@
 ﻿using MusicStore.Application.Interfaces.Command;
 using MusicStore.Application.Interfaces.UnitOfWork;
 using MusicStore.Application.Interfaces.Validators;
-using MusicStore.Application.ResultPattern;
+using MusicStore.Application.Results;
 using MusicStore.Application.Users.Repository;
 using MusicStore.Domain.Entities.Users;
 

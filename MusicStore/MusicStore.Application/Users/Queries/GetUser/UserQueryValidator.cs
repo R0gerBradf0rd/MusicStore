@@ -1,5 +1,5 @@
 ﻿using MusicStore.Application.Interfaces.Validators;
-using MusicStore.Application.ResultPattern;
+using MusicStore.Application.Results;
 
 namespace MusicStore.Application.Users.Queries.GetUser
 {

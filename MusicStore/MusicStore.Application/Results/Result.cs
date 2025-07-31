@@ -1,4 +1,4 @@
-﻿namespace MusicStore.Application.ResultPattern
+﻿namespace MusicStore.Application.Results
 {
     public class Result
     {
