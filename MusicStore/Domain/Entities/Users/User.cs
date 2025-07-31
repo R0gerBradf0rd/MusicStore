@@ -55,7 +55,6 @@ namespace MusicStore.Domain.Entities.Users
             Name = name;
             Email = email;
             UserRole = userRole;
-            Id = Guid.NewGuid();
         }
 
         /// <summary>
