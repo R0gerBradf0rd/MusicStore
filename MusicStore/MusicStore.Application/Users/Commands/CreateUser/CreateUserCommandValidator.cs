@@ -1,16 +1,15 @@
 ﻿using MusicStore.Application.Interfaces.Validators;
 using MusicStore.Application.ResultPattern;
-using MusicStore.Application.Users.Commands;
 using MusicStore.Application.Users.Repository;
 using MusicStore.Domain.Entities.Users;
 
-namespace MusicStore.Application.Users.Validators
+namespace MusicStore.Application.Users.Commands.CreateUser
 {
-    public class UserCommandValidator : IAsyncValidator<CreateUserCommand>
+    public class CreateUserCommandValidator : IAsyncValidator<CreateUserCommand>
     {
         private readonly IUserRepository _userRepository;
 
-        public UserCommandValidator( IUserRepository userRepository )
+        public CreateUserCommandValidator( IUserRepository userRepository )
         {
             _userRepository = userRepository;
         }
@@ -30,9 +29,9 @@ namespace MusicStore.Application.Users.Validators
                 return Result.Failure( "Роль пользователя не может быть пустой!" );
             }
 
-            User? user = await _userRepository.FindAsync( user => user.Email == request.Email );
+            bool isUserExist = await _userRepository.ContainsAsync( user => user.Email == request.Email );
 
-            if ( user is not null )
+            if ( isUserExist )
             {
                 return Result.Failure( "Пользователь с таким Email уже существует!" );
             }

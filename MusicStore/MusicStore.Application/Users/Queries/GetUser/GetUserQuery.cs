@@ -1,8 +1,8 @@
 ﻿using MusicStore.Application.Interfaces.Query;
-using MusicStore.Application.Result;
+using MusicStore.Application.ResultPattern;
 using MusicStore.Domain.Entities.Users;
 
-namespace MusicStore.Application.Users.Queries
+namespace MusicStore.Application.Users.Queries.GetUser
 {
     public class GetUserQuery : IQuery<Result<User>>
     {

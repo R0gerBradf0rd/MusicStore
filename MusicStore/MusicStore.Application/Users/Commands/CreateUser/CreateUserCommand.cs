@@ -1,7 +1,7 @@
 ﻿using MusicStore.Application.Interfaces.Command;
 using MusicStore.Application.ResultPattern;
 
-namespace MusicStore.Application.Users.Commands
+namespace MusicStore.Application.Users.Commands.CreateUser
 {
     public class CreateUserCommand : ICommand<Result<Guid>>
     {

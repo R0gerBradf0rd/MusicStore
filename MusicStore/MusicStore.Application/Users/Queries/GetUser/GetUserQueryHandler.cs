@@ -4,7 +4,7 @@ using MusicStore.Application.ResultPattern;
 using MusicStore.Application.Users.Repository;
 using MusicStore.Domain.Entities.Users;
 
-namespace MusicStore.Application.Users.Queries
+namespace MusicStore.Application.Users.Queries.GetUser
 {
     public class GetUserQueryHandler : IQueryHandler<GetUserQuery, Result<User>>
     {

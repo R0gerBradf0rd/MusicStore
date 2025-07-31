@@ -5,7 +5,7 @@ using MusicStore.Application.ResultPattern;
 using MusicStore.Application.Users.Repository;
 using MusicStore.Domain.Entities.Users;
 
-namespace MusicStore.Application.Users.Commands
+namespace MusicStore.Application.Users.Commands.CreateUser
 {
     public class CreateUserCommandHandler : ICommandHandler<CreateUserCommand, Result<Guid>>
     {
@@ -32,7 +32,7 @@ namespace MusicStore.Application.Users.Commands
             try
             {
                 User user = new( request.Name, request.Email, request.Role );
-                await _userRepository.AddAsync( user );
+                _userRepository.Add( user );
                 await _unitOfWork.CommitAsync();
                 return Result<Guid>.Success( user.Id );
             }

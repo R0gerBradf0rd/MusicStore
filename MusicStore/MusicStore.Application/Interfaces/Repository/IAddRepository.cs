@@ -2,6 +2,6 @@
 {
     public interface IAddRepository<T>
     {
-        Task AddAsync( T entity );
+        void Add( T entity );
     }
 }
