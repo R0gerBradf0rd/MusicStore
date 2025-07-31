@@ -1,4 +1,6 @@
-﻿namespace MusicStore.Domain.Entities.Orders
+﻿using MusicStore.Domain.Validators;
+
+namespace MusicStore.Domain.Entities.Orders
 {
     /// <summary>
     /// Представляет заказ, оформленный пользователем

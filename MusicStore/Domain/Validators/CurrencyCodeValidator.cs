@@ -1,4 +1,4 @@
-﻿namespace MusicStore.Domain.Entities
+﻿namespace MusicStore.Domain.Validators
 {
     /// <summary>
     /// Статический класс, который проверяет правильность кода валюты
