@@ -1,19 +1,12 @@
-﻿namespace MusicStore.Application.Interfaces.Result
+﻿namespace MusicStore.Application.ResultPattern
 {
-    public class Result<T>
+    public class Result<T> : Result
     {
-        public bool IsSuccess { get; }
-
-        public bool IsError => !IsSuccess;
-
-        public string Error { get; }
-
-        public T? Value { get; }
+        public T? Value { get; set; }
 
         protected Result( bool isSuccess, T value, string error )
+            : base( isSuccess, error )
         {
-            IsSuccess = isSuccess;
-            Error = error;
             Value = value;
         }
 

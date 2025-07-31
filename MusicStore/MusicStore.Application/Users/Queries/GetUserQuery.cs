@@ -1,5 +1,5 @@
 ﻿using MusicStore.Application.Interfaces.Query;
-using MusicStore.Application.Interfaces.Result;
+using MusicStore.Application.Result;
 using MusicStore.Domain.Entities.Users;
 
 namespace MusicStore.Application.Users.Queries
@@ -10,10 +10,6 @@ namespace MusicStore.Application.Users.Queries
 
         public GetUserQuery( Guid userId )
         {
-            if ( userId == Guid.Empty )
-            {
-                throw new ArgumentNullException( "Id не может быть пустым!", nameof( userId ) );
-            }
             UserId = userId;
         }
     }

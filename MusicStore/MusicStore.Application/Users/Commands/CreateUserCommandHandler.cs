@@ -1,11 +1,11 @@
 ﻿using MusicStore.Application.Interfaces.Command;
-using MusicStore.Application.Interfaces.Result;
 using MusicStore.Application.Interfaces.UnitOfWork;
-using MusicStore.Application.Users.Commands;
+using MusicStore.Application.Interfaces.Validators;
+using MusicStore.Application.ResultPattern;
 using MusicStore.Application.Users.Repository;
 using MusicStore.Domain.Entities.Users;
 
-namespace MusicStore.Application.Users.Handlers
+namespace MusicStore.Application.Users.Commands
 {
     public class CreateUserCommandHandler : ICommandHandler<CreateUserCommand, Result<Guid>>
     {
@@ -13,18 +13,21 @@ namespace MusicStore.Application.Users.Handlers
 
         private readonly IUnitOfWork _unitOfWork;
 
-        public CreateUserCommandHandler( IUserRepository userRepository, IUnitOfWork unitOfWork )
+        private readonly IAsyncValidator<CreateUserCommand> _asyncValidator;
+
+        public CreateUserCommandHandler( IUserRepository userRepository, IUnitOfWork unitOfWork, IAsyncValidator<CreateUserCommand> asyncValidator )
         {
             _userRepository = userRepository;
             _unitOfWork = unitOfWork;
+            _asyncValidator = asyncValidator;
         }
 
         public async Task<Result<Guid>> Handle( CreateUserCommand request, CancellationToken cancellationToken )
         {
-            var existingUser = await _userRepository.FindAsync( u => u.Email == request.Email );
-            if ( existingUser is not null )
+            var validationResult = await _asyncValidator.ValidateAsync( request );
+            if ( validationResult.IsError )
             {
-                Result<Guid>.Failure( "Пользователь с таким Email уже существует!" );
+                return Result<Guid>.Failure( validationResult.Error );
             }
             try
             {
