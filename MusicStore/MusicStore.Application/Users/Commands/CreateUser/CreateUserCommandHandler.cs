@@ -24,7 +24,7 @@ namespace MusicStore.Application.Users.Commands.CreateUser
 
         public async Task<Result<Guid>> Handle( CreateUserCommand request, CancellationToken cancellationToken )
         {
-            var validationResult = await _asyncValidator.ValidateAsync( request );
+            Result validationResult = await _asyncValidator.ValidateAsync( request );
             if ( validationResult.IsError )
             {
                 return Result<Guid>.Failure( validationResult.Error );

@@ -22,12 +22,12 @@ namespace MusicStore.Application.Users.Queries.GetUser
 
         public async Task<Result<UserDto>> Handle( GetUserQuery request, CancellationToken cancellationToken )
         {
-            var validationResult = _validator.Validate( request );
+            Result validationResult = _validator.Validate( request );
             if ( validationResult.IsError )
             {
                 return Result<UserDto>.Failure( validationResult.Error );
             }
-            User? user = await _userRepository.GetByIdAsync( request.UserId );
+            User? user = await _userRepository.GetByIdOrDefaultAsync( request.UserId );
 
             if ( user is null )
             {

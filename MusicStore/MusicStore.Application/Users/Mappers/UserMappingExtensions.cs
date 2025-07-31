@@ -3,7 +3,7 @@ using MusicStore.Domain.Entities.Users;
 
 namespace MusicStore.Application.Users.Mappers
 {
-    public static class UserMapper
+    public static class UserMappingExtensions
     {
         public static UserDto ToDto( this User user )
         {

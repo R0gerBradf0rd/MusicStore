@@ -4,6 +4,6 @@ namespace MusicStore.Application.Interfaces.Validators
 {
     public interface IValidator<T>
     {
-        Results.Result Validate( T value );
+        Result Validate( T value );
     }
 }

@@ -6,7 +6,7 @@ namespace MusicStore.Application.Users.Repository
 {
     public interface IUserRepository : IAddRepository<User>, IDeleteRepository<User>
     {
-        Task<User?> GetByIdAsync( Guid id );
+        Task<User?> GetByIdOrDefaultAsync( Guid id );
 
         Task<bool> ContainsAsync( Expression<Func<User, bool>> predicate );
     }

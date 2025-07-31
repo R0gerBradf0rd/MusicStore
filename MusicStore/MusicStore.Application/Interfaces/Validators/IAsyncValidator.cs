@@ -4,6 +4,6 @@ namespace MusicStore.Application.Interfaces.Validators
 {
     public interface IAsyncValidator<TRequest>
     {
-        Task<Results.Result> ValidateAsync( TRequest request );
+        Task<Result> ValidateAsync( TRequest request );
     }
 }
