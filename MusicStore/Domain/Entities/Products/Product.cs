@@ -1,6 +1,4 @@
-﻿using MusicStore.Domain.Validators;
-
-namespace MusicStore.Domain.Entities.Products
+﻿namespace MusicStore.Domain.Entities.Products
 {
     /// <summary>
     /// Представляет продукт в данном магазине
