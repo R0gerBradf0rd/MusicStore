@@ -26,9 +26,19 @@
         public Guid CartId { get; }
 
         /// <summary>
+        /// Цена элемента корзины
+        /// </summary>
+        public decimal CartItemPrice { get; private set; }
+
+        /// <summary>
         /// Количество данного продукта
         /// </summary>
         public int Quantity { get; private set; }
+
+        /// <summary>
+        /// Отображает статус элемента, выбран ли он для заказа
+        /// </summary>
+        public bool IsSelected { get; private set; }
 
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="CartItem"/>
@@ -52,6 +62,7 @@
             ProductId = productId;
             CartId = cartId;
             Quantity = 1;
+            IsSelected = true;
         }
 
         /// <summary>
@@ -74,6 +85,19 @@
             {
                 Quantity -= 1;
             }
+        }
+
+        /// <summary>
+        /// Меняет статус на противоположный
+        /// </summary>
+        public void ChangeSelectionStatus()
+        {
+            IsSelected = !IsSelected;
+        }
+
+        public void CalculateCartItemPrice( decimal productPrice )
+        {
+            CartItemPrice = Quantity * productPrice;
         }
     }
 }

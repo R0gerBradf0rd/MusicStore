@@ -7,11 +7,24 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Carts\Querys\**" />
+    <EmbeddedResource Remove="Carts\Querys\**" />
+    <None Remove="Carts\Querys\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="MediatR" Version="13.0.0" />
+    <PackageReference Include="Microsoft.TeamFoundationServer.Client" Version="19.225.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Domain\MusicStore.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Warehouses\Mappers\" />
+    <Folder Include="Warehouses\Dtos\" />
+    <Folder Include="Warehouses\Queries\" />
   </ItemGroup>
 
 </Project>

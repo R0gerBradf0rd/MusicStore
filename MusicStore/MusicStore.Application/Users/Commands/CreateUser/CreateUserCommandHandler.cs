@@ -2,7 +2,7 @@
 using MusicStore.Application.Interfaces.UnitOfWork;
 using MusicStore.Application.Interfaces.Validators;
 using MusicStore.Application.Results;
-using MusicStore.Application.Users.Repository;
+using MusicStore.Application.Users.Repositories;
 using MusicStore.Domain.Entities.Users;
 
 namespace MusicStore.Application.Users.Commands.CreateUser
