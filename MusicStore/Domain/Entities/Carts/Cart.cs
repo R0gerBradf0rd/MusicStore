@@ -21,6 +21,11 @@
         public ICollection<CartItem> CartItems { get; }
 
         /// <summary>
+        /// Полная стоимость товаров в корзине
+        /// </summary>
+        public decimal TotalPrice { get; private set; }
+
+        /// <summary>
         /// Создаёт новый экземпляр корзины с указанным идентификатором пользователя
         /// </summary>
         /// <param name="userId">Идентификатор пользователя</param>
@@ -63,6 +68,21 @@
             if ( CartItems.Contains( cartItem ) )
             {
                 CartItems.Remove( cartItem );
+            }
+        }
+
+        /// <summary>
+        /// Вычисляет общую стоимость товаров в корзине
+        /// </summary>
+        public void CalculateTotalPrice()
+        {
+            List<CartItem> cartItems = CartItems.ToList();
+            for ( int i = 0; i < cartItems.Count; i++ )
+            {
+                if ( cartItems[ i ].IsSelected )
+                {
+                    TotalPrice += cartItems[ i ].CartItemPrice;
+                }
             }
         }
     }

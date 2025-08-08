@@ -26,9 +26,19 @@
         public Guid CartId { get; }
 
         /// <summary>
+        /// Цена элемента корзины
+        /// </summary>
+        public decimal CartItemPrice { get; private set; }
+
+        /// <summary>
         /// Количество данного продукта
         /// </summary>
         public int Quantity { get; private set; }
+
+        /// <summary>
+        /// Отображает статус элемента, выбран ли он для заказа
+        /// </summary>
+        public CartItemSelectionStatus IsSelected { get; private set; }
 
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="CartItem"/>
@@ -52,6 +62,7 @@
             ProductId = productId;
             CartId = cartId;
             Quantity = 1;
+            IsSelected = CartItemSelectionStatus.Selected;
         }
 
         /// <summary>
@@ -66,14 +77,32 @@
         }
 
         /// <summary>
-        /// Уменьшает количество продукта на одну единицу
+        /// Устанавливает количество продукта в элементе корзины
         /// </summary>
-        public void DecreaseQuantityByOne()
+        public void SetQuantity( int quantity )
         {
-            if ( Quantity > 1 )
+            if ( quantity < 1 )
             {
-                Quantity -= 1;
+                throw new InvalidOperationException( "Количество товара должно быть больше нуля!" );
             }
+            if ( quantity > CartItemQuantityLimit )
+            {
+                throw new InvalidOperationException( $"Количество товара не должно быть больше {CartItemQuantityLimit}!" );
+            }
+            Quantity = quantity;
+        }
+
+        /// <summary>
+        /// Меняет статус на противоположный
+        /// </summary>
+        public void SetSelectionStatus( CartItemSelectionStatus selectionStatus )
+        {
+            IsSelected = selectionStatus;
+        }
+
+        public void CalculateCartItemPrice( decimal productPrice )
+        {
+            CartItemPrice = Quantity * productPrice;
         }
     }
 }
