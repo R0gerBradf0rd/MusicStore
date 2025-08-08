@@ -10,9 +10,7 @@ namespace MusicStore.Application.Reviews.Commands.CreateReview
     public class CreateReviewCommandHandler : ICommandHandler<CreateReviewCommand, Result<Guid>>
     {
         private readonly IReviewRepository _repository;
-
         private readonly IUnitOfWork _unitOfWork;
-
         private readonly IValidator<CreateReviewCommand> _validator;
 
         public CreateReviewCommandHandler(
@@ -35,8 +33,10 @@ namespace MusicStore.Application.Reviews.Commands.CreateReview
             try
             {
                 Review review = new Review( request.ProductId, request.UserId, request.Rating, request.Comment );
+
                 _repository.Add( review );
                 await _unitOfWork.CommitAsync();
+
                 return Result<Guid>.Success( review.Id );
             }
             catch ( Exception ex )

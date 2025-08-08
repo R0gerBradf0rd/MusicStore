@@ -3,18 +3,18 @@ using MusicStore.Application.Orders.Repositories;
 using MusicStore.Application.Results;
 using MusicStore.Domain.Entities.Orders;
 
-namespace MusicStore.Application.Orders.Commands.ChangeStatusToEndOfAssembly
+namespace MusicStore.Application.Orders.Commands.SetStatusToEndOfAssembly
 {
-    public class ChangeStatusToEndOfAssemblyCommandValidator : IAsyncValidator<ChangeStatusToEndOfAssemblyCommand>
+    public class SetStatusToEndOfAssemblyCommandValidator : IAsyncValidator<SetStatusToEndOfAssemblyCommand>
     {
         private readonly IOrderRepository _orderRepository;
 
-        public ChangeStatusToEndOfAssemblyCommandValidator( IOrderRepository orderRepository )
+        public SetStatusToEndOfAssemblyCommandValidator( IOrderRepository orderRepository )
         {
             _orderRepository = orderRepository;
         }
 
-        public async Task<Result> ValidateAsync( ChangeStatusToEndOfAssemblyCommand request )
+        public async Task<Result> ValidateAsync( SetStatusToEndOfAssemblyCommand request )
         {
             if ( request.OrderId == Guid.Empty )
             {

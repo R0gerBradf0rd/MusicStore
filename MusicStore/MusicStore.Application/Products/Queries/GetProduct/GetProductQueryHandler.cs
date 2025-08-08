@@ -11,7 +11,6 @@ namespace MusicStore.Application.Products.Queries.GetProduct
     public class GetProductQueryHandler : IQueryHandler<GetProductQuery, Result<ProductDto>>
     {
         private readonly IProductRepository _productRepository;
-
         private readonly IAsyncValidator<GetProductQuery> _asyncValidator;
 
         public GetProductQueryHandler(

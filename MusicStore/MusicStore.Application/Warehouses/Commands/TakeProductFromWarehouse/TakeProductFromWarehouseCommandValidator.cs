@@ -1,26 +1,15 @@
 ﻿using MusicStore.Application.Interfaces.Validators;
-using MusicStore.Application.Products.Repositories;
 using MusicStore.Application.Results;
-using MusicStore.Application.Warehouses.Commands.AddProductToWarehouse;
 using MusicStore.Application.Warehouses.Repositories;
 
 namespace MusicStore.Application.Warehouses.Commands.TakeProductFromWarehouse
 {
     public class TakeProductFromWarehouseCommandValidator : IAsyncValidator<TakeProductFromWarehouseCommand>
     {
-        private readonly IWarehosueRepository _warehosueRepository;
-
-        private readonly IProductRepository _productRepository;
-
         private readonly IProductWarehouseRepository _productWarehouseRepository;
 
-        public TakeProductFromWarehouseCommandValidator(
-            IWarehosueRepository warehosueRepository,
-            IProductRepository productRepository,
-            IProductWarehouseRepository productWarehouseRepository )
+        public TakeProductFromWarehouseCommandValidator( IProductWarehouseRepository productWarehouseRepository )
         {
-            _warehosueRepository = warehosueRepository;
-            _productRepository = productRepository;
             _productWarehouseRepository = productWarehouseRepository;
         }
 

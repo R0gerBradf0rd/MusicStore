@@ -10,11 +10,8 @@ namespace MusicStore.Application.Warehouses.Commands.AddProductToWarehouse
     public class AddProductToWarehouseCommandHandler : ICommandHandler<AddProductToWarehouseCommand, Result<ProductWarehouse>>
     {
         private readonly IProductWarehouseRepository _repository;
-
         private readonly IWarehosueRepository _warehosueRepository;
-
         private readonly IUnitOfWork _unitOfWork;
-
         private readonly IAsyncValidator<AddProductToWarehouseCommand> _asyncValidator;
 
         public AddProductToWarehouseCommandHandler(
@@ -40,9 +37,11 @@ namespace MusicStore.Application.Warehouses.Commands.AddProductToWarehouse
             {
                 Warehouse warehouse = await _warehosueRepository.GetByIdOrDefaultAsync( request.WarehouseId );
                 ProductWarehouse productWarehouse = new ProductWarehouse( request.ProductId, request.WarehouseId, request.WarehouseProductQuantity );
+
                 warehouse.AddProductToWarehouse( productWarehouse );
                 _repository.Add( productWarehouse );
                 await _unitOfWork.CommitAsync();
+
                 return Result<ProductWarehouse>.Success( productWarehouse );
             }
             catch ( Exception ex )

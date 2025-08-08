@@ -10,9 +10,7 @@ namespace MusicStore.Application.Warehouses.Commands.IncreaseProductInWarehaouse
     public class IncreaseProductInWarehaouseCommandHandler : ICommandHandler<IncreaseProductInWarehaouseCommand, Result<string>>
     {
         private readonly IProductWarehouseRepository _repository;
-
         private readonly IUnitOfWork _unitOfWork;
-
         private readonly IAsyncValidator<IncreaseProductInWarehaouseCommand> _asyncValidator;
 
         public IncreaseProductInWarehaouseCommandHandler(
@@ -35,8 +33,10 @@ namespace MusicStore.Application.Warehouses.Commands.IncreaseProductInWarehaouse
             try
             {
                 ProductWarehouse productWarehouse = await _repository.FindeAsync( pw => pw.ProductId == request.ProductId && pw.WarehouseId == request.WarehouseId );
+
                 productWarehouse.AddProductToWarehouse( request.WarehouseProductQuantity );
                 await _unitOfWork.CommitAsync();
+
                 return Result<string>.Success( $"Колличество товара увеличено на {request.WarehouseProductQuantity}." );
             }
             catch ( Exception ex )

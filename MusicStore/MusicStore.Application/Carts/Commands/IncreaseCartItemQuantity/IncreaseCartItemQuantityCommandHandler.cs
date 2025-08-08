@@ -12,13 +12,9 @@ namespace MusicStore.Application.Carts.Commands.IncreaseCartItemQuantity
     public class IncreaseCartItemQuantityCommandHandler : ICommandHandler<IncreaseCartItemQuantityCommand, Result<string>>
     {
         private readonly ICartItemRepository _cartItemRepository;
-
         private readonly ICartRepository _cartRepository;
-
         private readonly IProductRepository _productRepository;
-
         private readonly IUnitOfWork _unitOfWork;
-
         private readonly IAsyncValidator<IncreaseCartItemQuantityCommand> _asyncValidator;
 
         public IncreaseCartItemQuantityCommandHandler(
@@ -47,10 +43,12 @@ namespace MusicStore.Application.Carts.Commands.IncreaseCartItemQuantity
                 CartItem cartItem = await _cartItemRepository.GetByIdOrDefaultAsync( request.Id );
                 Product product = await _productRepository.GetByIdOrDefaultAsync( cartItem.ProductId );
                 Cart cart = await _cartRepository.GetByIdOrDefaultAsync( cartItem.CartId );
-                cartItem.IncreaseQuantityByOne();
+
+                cartItem.SetQuantity( cartItem.Quantity - 1 );
                 cartItem.CalculateCartItemPrice( product.Price );
                 cart.CalculateTotalPrice();
                 await _unitOfWork.CommitAsync();
+
                 return Result<string>.Success( "Количество товара в корзине увеличено 1." );
             }
             catch ( Exception ex )

@@ -12,13 +12,9 @@ namespace MusicStore.Application.Orders.Commands.CreateOrderItem
     public class CreateOrderItemCommandHandler : ICommandHandler<CreateOrderItemCommand, Result<Guid>>
     {
         private readonly IOrderItemRepository _orderItemRepository;
-
         private readonly IOrderRepository _orderRepository;
-
         private readonly ICartItemRepository _cartItemRepository;
-
         private readonly IUnitOfWork _unitOfWork;
-
         private readonly IAsyncValidator<CreateOrderItemCommand> _asyncValidator;
 
         public CreateOrderItemCommandHandler(
@@ -47,9 +43,11 @@ namespace MusicStore.Application.Orders.Commands.CreateOrderItem
                 Order order = await _orderRepository.GetByIdOrDefaultAsync( request.OrderId );
                 CartItem cartItem = await _cartItemRepository.FindeAsync( ci => ci.CartId == order.CartId && ci.ProductId == request.ProductId );
                 OrderItem orderItem = new OrderItem( request.ProductId, request.OrderId, cartItem.Quantity );
+
                 _orderItemRepository.Add( orderItem );
                 await _cartItemRepository.DeleteAsync( cartItem );
                 await _unitOfWork.CommitAsync();
+
                 return Result<Guid>.Success( orderItem.Id );
             }
             catch ( Exception ex )

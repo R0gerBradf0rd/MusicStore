@@ -8,7 +8,6 @@ namespace MusicStore.Application.Carts.Commands.AddCartItem
     public class AddCartItemValidator : IAsyncValidator<AddCartItemCommand>
     {
         private readonly ICartRepository _cartRepository;
-
         private readonly IProductRepository _productRepository;
 
         public AddCartItemValidator( ICartRepository cartRepository, IProductRepository productRepository )

@@ -8,9 +8,7 @@ namespace MusicStore.Application.Warehouses.Commands.AddProductToWarehouse
     public class AddProductToWarehouseCommandValidator : IAsyncValidator<AddProductToWarehouseCommand>
     {
         private readonly IWarehosueRepository _warehosueRepository;
-
         private readonly IProductRepository _productRepository;
-
         private readonly IProductWarehouseRepository _productWarehouseRepository;
 
         public AddProductToWarehouseCommandValidator(

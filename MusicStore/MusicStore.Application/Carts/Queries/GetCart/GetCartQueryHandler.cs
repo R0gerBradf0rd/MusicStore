@@ -11,7 +11,6 @@ namespace MusicStore.Application.Carts.Queries.GetCart
     public class GetCartQueryHandler : IQueryHandler<GetCartQuery, Result<CartDto>>
     {
         private readonly ICartRepository _cartRepository;
-
         private readonly IAsyncValidator<GetCartQuery> _validator;
 
         public GetCartQueryHandler( ICartRepository cartRepository, IAsyncValidator<GetCartQuery> validator )

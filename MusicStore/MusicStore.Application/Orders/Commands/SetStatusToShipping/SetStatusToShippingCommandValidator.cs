@@ -3,18 +3,18 @@ using MusicStore.Application.Orders.Repositories;
 using MusicStore.Application.Results;
 using MusicStore.Domain.Entities.Orders;
 
-namespace MusicStore.Application.Orders.Commands.ChangeStatusToStartAssembly
+namespace MusicStore.Application.Orders.Commands.SetStatusToShipping
 {
-    public class ChangeStatusToStartAssemblyCommandValidator : IAsyncValidator<ChangeStatusToStartAssemblyCommand>
+    public class SetStatusToShippingCommandValidator : IAsyncValidator<SetStatusToShippingCommand>
     {
         private readonly IOrderRepository _orderRepository;
 
-        public ChangeStatusToStartAssemblyCommandValidator( IOrderRepository orderRepository )
+        public SetStatusToShippingCommandValidator( IOrderRepository orderRepository )
         {
             _orderRepository = orderRepository;
         }
 
-        public async Task<Result> ValidateAsync( ChangeStatusToStartAssemblyCommand request )
+        public async Task<Result> ValidateAsync( SetStatusToShippingCommand request )
         {
             if ( request.OrderId == Guid.Empty )
             {
@@ -23,9 +23,9 @@ namespace MusicStore.Application.Orders.Commands.ChangeStatusToStartAssembly
 
             Order order = await _orderRepository.GetByIdOrDefaultAsync( request.OrderId );
 
-            if ( order.Status != OrderStatus.Created )
+            if ( order.Status != OrderStatus.ReadyToShip )
             {
-                return Result.Failure( "Невозможно перейти в этот статус. Предыдущий статус должен быть Created" );
+                return Result.Failure( "Невозможно перейти в этот статус. Предыдущий статус должен быть ReadyToShip." );
             }
 
             return Result.Success();

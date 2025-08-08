@@ -8,9 +8,7 @@ namespace MusicStore.Application.Orders.Commands.CreateOrderItem
     public class CreateOrderItemCommandмValidator : IAsyncValidator<CreateOrderItemCommand>
     {
         private readonly IOrderItemRepository _orderItemRepository;
-
         private readonly IOrderRepository _orderRepository;
-
         private readonly IProductRepository _productRepository;
 
         public CreateOrderItemCommandмValidator(

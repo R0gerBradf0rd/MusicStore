@@ -1,13 +1,13 @@
 ﻿using MusicStore.Application.Interfaces.Command;
 using MusicStore.Application.Results;
 
-namespace MusicStore.Application.Orders.Commands.ChangeStatusToArrived
+namespace MusicStore.Application.Orders.Commands.SetStatusToShipping
 {
-    public class ChangeStatusToArrivedCommand : ICommand<Result>
+    public class SetStatusToShippingCommand : ICommand<Result>
     {
         public Guid OrderId { get; }
 
-        public ChangeStatusToArrivedCommand( Guid orderId )
+        public SetStatusToShippingCommand( Guid orderId )
         {
             OrderId = orderId;
         }

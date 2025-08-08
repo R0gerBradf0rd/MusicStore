@@ -10,9 +10,7 @@ namespace MusicStore.Application.Reviews.Commands.DeleteReview
     public class DeleteReviewCommandHandler : ICommandHandler<DeleteReviewCommand, Result<Guid>>
     {
         private readonly IReviewRepository _repository;
-
         private readonly IUnitOfWork _unitOfWork;
-
         private readonly IAsyncValidator<DeleteReviewCommand> _asyncValidator;
 
         public DeleteReviewCommandHandler(
@@ -35,8 +33,10 @@ namespace MusicStore.Application.Reviews.Commands.DeleteReview
             try
             {
                 Review review = await _repository.GetByIdOrDefaultAsync( request.Id );
+
                 await _repository.DeleteAsync( review );
                 await _unitOfWork.CommitAsync();
+
                 return Result<Guid>.Success( review.Id );
             }
             catch ( Exception ex )

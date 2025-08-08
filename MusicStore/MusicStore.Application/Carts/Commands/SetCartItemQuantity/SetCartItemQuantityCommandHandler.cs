@@ -1,4 +1,5 @@
-﻿using MusicStore.Application.Carts.Repositories;
+﻿using MusicStore.Application.Carts.Commands.IncreaseCartItemQuantity;
+using MusicStore.Application.Carts.Repositories;
 using MusicStore.Application.Interfaces.Command;
 using MusicStore.Application.Interfaces.UnitOfWork;
 using MusicStore.Application.Interfaces.Validators;
@@ -7,22 +8,23 @@ using MusicStore.Application.Results;
 using MusicStore.Domain.Entities.Carts;
 using MusicStore.Domain.Entities.Products;
 
-namespace MusicStore.Application.Carts.Commands.DecreaseCartItemQuantity
+namespace MusicStore.Application.Carts.Commands.SetCartItemQuantity
 {
-    public class DecreaseCartItemQuantityCommandHandler : ICommandHandler<DecreaseCartItemQuantityCommand, Result<string>>
+    public class SetCartItemQuantityCommandHandler : ICommandHandler<SetCartItemQuantityCommand, Result<string>>
     {
         private readonly ICartItemRepository _cartItemRepository;
         private readonly ICartRepository _cartRepository;
         private readonly IProductRepository _productRepository;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IAsyncValidator<DecreaseCartItemQuantityCommand> _asyncValidator;
+        private readonly IAsyncValidator<SetCartItemQuantityCommand> _asyncValidator;
 
-        public DecreaseCartItemQuantityCommandHandler(
-            ICartItemRepository cartItemRepository,
+        public SetCartItemQuantityCommandHandler(
+            ICartItemRepository
+            cartItemRepository,
             ICartRepository cartRepository,
             IProductRepository productRepository,
             IUnitOfWork unitOfWork,
-            IAsyncValidator<DecreaseCartItemQuantityCommand> asyncValidator )
+            IAsyncValidator<SetCartItemQuantityCommand> asyncValidator )
         {
             _cartItemRepository = cartItemRepository;
             _cartRepository = cartRepository;
@@ -31,7 +33,7 @@ namespace MusicStore.Application.Carts.Commands.DecreaseCartItemQuantity
             _asyncValidator = asyncValidator;
         }
 
-        public async Task<Result<string>> Handle( DecreaseCartItemQuantityCommand request, CancellationToken cancellationToken )
+        public async Task<Result<string>> Handle( SetCartItemQuantityCommand request, CancellationToken cancellationToken )
         {
             Result validationResult = await _asyncValidator.ValidateAsync( request );
             if ( validationResult.IsError )
@@ -44,7 +46,7 @@ namespace MusicStore.Application.Carts.Commands.DecreaseCartItemQuantity
                 Product product = await _productRepository.GetByIdOrDefaultAsync( cartItem.ProductId );
                 Cart cart = await _cartRepository.GetByIdOrDefaultAsync( cartItem.CartId );
 
-                cartItem.SetQuantity( cartItem.Quantity + 1 );
+                cartItem.SetQuantity( request.Quantity );
                 cartItem.CalculateCartItemPrice( product.Price );
                 cart.CalculateTotalPrice();
                 await _unitOfWork.CommitAsync();

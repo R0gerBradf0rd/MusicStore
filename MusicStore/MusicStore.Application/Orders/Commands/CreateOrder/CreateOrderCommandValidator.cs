@@ -1,6 +1,5 @@
 ﻿using MusicStore.Application.Carts.Repositories;
 using MusicStore.Application.Interfaces.Validators;
-using MusicStore.Application.Orders.Repositories;
 using MusicStore.Application.Results;
 using MusicStore.Application.Users.Repositories;
 using MusicStore.Domain.Entities.Carts;
@@ -10,9 +9,7 @@ namespace MusicStore.Application.Orders.Commands.CreateOrder
 {
     public class CreateOrderCommandValidator : IAsyncValidator<CreateOrderCommand>
     {
-
         private readonly IUserRepository _userRepository;
-
         private readonly ICartRepository _cartRepository;
 
         public CreateOrderCommandValidator(

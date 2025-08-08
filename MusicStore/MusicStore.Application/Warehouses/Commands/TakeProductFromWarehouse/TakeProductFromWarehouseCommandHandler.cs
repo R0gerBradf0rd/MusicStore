@@ -2,7 +2,6 @@
 using MusicStore.Application.Interfaces.UnitOfWork;
 using MusicStore.Application.Interfaces.Validators;
 using MusicStore.Application.Results;
-using MusicStore.Application.Warehouses.Commands.AddProductToWarehouse;
 using MusicStore.Application.Warehouses.Repositories;
 using MusicStore.Domain.Entities.Warehouses;
 
@@ -11,11 +10,8 @@ namespace MusicStore.Application.Warehouses.Commands.TakeProductFromWarehouse
     public class TakeProductFromWarehouseCommandHandler : ICommandHandler<TakeProductFromWarehouseCommand, Result<ProductWarehouse>>
     {
         private readonly IProductWarehouseRepository _repository;
-
         private readonly IWarehosueRepository _warehosueRepository;
-
         private readonly IUnitOfWork _unitOfWork;
-
         private readonly IAsyncValidator<TakeProductFromWarehouseCommand> _asyncValidator;
 
         public TakeProductFromWarehouseCommandHandler(
@@ -41,9 +37,11 @@ namespace MusicStore.Application.Warehouses.Commands.TakeProductFromWarehouse
             {
                 Warehouse warehouse = await _warehosueRepository.GetByIdOrDefaultAsync( request.WarehouseId );
                 ProductWarehouse productWarehouse = new ProductWarehouse( request.ProductId, request.WarehouseId, request.WarehouseProductQuantity );
+
                 await _warehosueRepository.DeleteAsync( warehouse );
                 await _repository.DeleteAsync( productWarehouse );
                 await _unitOfWork.CommitAsync();
+
                 return Result<ProductWarehouse>.Success( productWarehouse );
             }
             catch ( Exception ex )

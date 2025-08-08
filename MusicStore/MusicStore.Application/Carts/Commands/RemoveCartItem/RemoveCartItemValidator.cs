@@ -9,7 +9,6 @@ namespace MusicStore.Application.Carts.Commands.RemoveCartItem
     public class RemoveCartItemValidator : IAsyncValidator<RemoveCartItemCommand>
     {
         private readonly ICartRepository _cartRepository;
-
         private readonly IProductRepository _productRepository;
 
         public RemoveCartItemValidator( ICartRepository cartRepository, IProductRepository productRepository )

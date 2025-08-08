@@ -5,27 +5,25 @@ using MusicStore.Application.Orders.Repositories;
 using MusicStore.Application.Results;
 using MusicStore.Domain.Entities.Orders;
 
-namespace MusicStore.Application.Orders.Commands.ChangeStatusToEndOfAssembly
+namespace MusicStore.Application.Orders.Commands.SetStatusToEndOfAssembly
 {
-    public class ChangeStatusToEndOfAssemblyCommandHandler : ICommandHandler<ChangeStatusToEndOfAssemblyCommand, Result>
+    public class SetStatusToEndOfAssemblyCommandHandler : ICommandHandler<SetStatusToEndOfAssemblyCommand, Result>
     {
         private readonly IOrderRepository _orderRepository;
-
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IAsyncValidator<SetStatusToEndOfAssemblyCommand> _asyncValidator;
 
-        private readonly IAsyncValidator<ChangeStatusToEndOfAssemblyCommand> _asyncValidator;
-
-        public ChangeStatusToEndOfAssemblyCommandHandler(
+        public SetStatusToEndOfAssemblyCommandHandler(
             IOrderRepository orderRepository,
             IUnitOfWork unitOfWork,
-            IAsyncValidator<ChangeStatusToEndOfAssemblyCommand> asyncValidator )
+            IAsyncValidator<SetStatusToEndOfAssemblyCommand> asyncValidator )
         {
             _orderRepository = orderRepository;
             _unitOfWork = unitOfWork;
             _asyncValidator = asyncValidator;
         }
 
-        public async Task<Result> Handle( ChangeStatusToEndOfAssemblyCommand request, CancellationToken cancellationToken )
+        public async Task<Result> Handle( SetStatusToEndOfAssemblyCommand request, CancellationToken cancellationToken )
         {
             Result validationResult = await _asyncValidator.ValidateAsync( request );
             if ( validationResult.IsError )
@@ -35,9 +33,10 @@ namespace MusicStore.Application.Orders.Commands.ChangeStatusToEndOfAssembly
             try
             {
                 Order order = await _orderRepository.GetByIdOrDefaultAsync( request.OrderId );
+
                 order.EndOfAssembly();
-                await _asyncValidator.ValidateAsync( request );
                 await _unitOfWork.CommitAsync();
+
                 return Result.Success();
             }
             catch ( Exception ex )

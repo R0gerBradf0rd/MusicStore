@@ -5,27 +5,25 @@ using MusicStore.Application.Orders.Repositories;
 using MusicStore.Application.Results;
 using MusicStore.Domain.Entities.Orders;
 
-namespace MusicStore.Application.Orders.Commands.ChangeStatusToArrived
+namespace MusicStore.Application.Orders.Commands.SetStatusToArrived
 {
-    public class ChangeStatusToArrivedCommandHandler : ICommandHandler<ChangeStatusToArrivedCommand, Result>
+    public class SetStatusToArrivedCommandHandler : ICommandHandler<SetStatusToArrivedCommand, Result>
     {
         private readonly IOrderRepository _orderRepository;
-
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IAsyncValidator<SetStatusToArrivedCommand> _asyncValidator;
 
-        private readonly IAsyncValidator<ChangeStatusToArrivedCommand> _asyncValidator;
-
-        public ChangeStatusToArrivedCommandHandler(
+        public SetStatusToArrivedCommandHandler(
             IOrderRepository orderRepository,
             IUnitOfWork unitOfWork,
-            IAsyncValidator<ChangeStatusToArrivedCommand> asyncValidator )
+            IAsyncValidator<SetStatusToArrivedCommand> asyncValidator )
         {
             _orderRepository = orderRepository;
             _unitOfWork = unitOfWork;
             _asyncValidator = asyncValidator;
         }
 
-        public async Task<Result> Handle( ChangeStatusToArrivedCommand request, CancellationToken cancellationToken )
+        public async Task<Result> Handle( SetStatusToArrivedCommand request, CancellationToken cancellationToken )
         {
             Result validationResult = await _asyncValidator.ValidateAsync( request );
             if ( validationResult.IsError )
@@ -35,9 +33,10 @@ namespace MusicStore.Application.Orders.Commands.ChangeStatusToArrived
             try
             {
                 Order order = await _orderRepository.GetByIdOrDefaultAsync( request.OrderId );
+
                 order.Arrived();
-                await _asyncValidator.ValidateAsync( request );
                 await _unitOfWork.CommitAsync();
+
                 return Result.Success();
             }
             catch ( Exception ex )

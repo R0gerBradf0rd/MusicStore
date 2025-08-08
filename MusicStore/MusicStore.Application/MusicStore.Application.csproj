@@ -21,10 +21,4 @@
     <ProjectReference Include="..\Domain\MusicStore.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Warehouses\Mappers\" />
-    <Folder Include="Warehouses\Dtos\" />
-    <Folder Include="Warehouses\Queries\" />
-  </ItemGroup>
-
 </Project>

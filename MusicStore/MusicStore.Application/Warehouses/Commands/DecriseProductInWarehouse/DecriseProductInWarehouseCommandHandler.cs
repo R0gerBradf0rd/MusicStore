@@ -2,7 +2,6 @@
 using MusicStore.Application.Interfaces.UnitOfWork;
 using MusicStore.Application.Interfaces.Validators;
 using MusicStore.Application.Results;
-using MusicStore.Application.Warehouses.Commands.IncreaseProductInWarehaouse;
 using MusicStore.Application.Warehouses.Repositories;
 using MusicStore.Domain.Entities.Warehouses;
 
@@ -11,9 +10,7 @@ namespace MusicStore.Application.Warehouses.Commands.DecriseProductInWarehouse
     public class DecriseProductInWarehouseCommandHandler : ICommandHandler<DecriseProductInWarehouseCommand, Result<string>>
     {
         private readonly IProductWarehouseRepository _repository;
-
         private readonly IUnitOfWork _unitOfWork;
-
         private readonly IAsyncValidator<DecriseProductInWarehouseCommand> _asyncValidator;
 
         public DecriseProductInWarehouseCommandHandler(
@@ -36,8 +33,10 @@ namespace MusicStore.Application.Warehouses.Commands.DecriseProductInWarehouse
             try
             {
                 ProductWarehouse productWarehouse = await _repository.FindeAsync( pw => pw.ProductId == request.ProductId && pw.WarehouseId == request.WarehouseId );
+
                 productWarehouse.TakeProductFromWarehouse( request.WarehouseProductQuantity );
                 await _unitOfWork.CommitAsync();
+
                 return Result<string>.Success( $"Колличество товара уменьшено на {request.WarehouseProductQuantity}." );
             }
             catch ( Exception ex )

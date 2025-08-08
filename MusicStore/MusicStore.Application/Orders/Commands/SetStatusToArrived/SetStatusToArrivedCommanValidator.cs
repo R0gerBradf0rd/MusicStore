@@ -3,18 +3,18 @@ using MusicStore.Application.Orders.Repositories;
 using MusicStore.Application.Results;
 using MusicStore.Domain.Entities.Orders;
 
-namespace MusicStore.Application.Orders.Commands.ChangeStatusToArrived
+namespace MusicStore.Application.Orders.Commands.SetStatusToArrived
 {
-    public class ChangeStatusToArrivedCommanValidator : IAsyncValidator<ChangeStatusToArrivedCommand>
+    public class SetStatusToArrivedCommanValidator : IAsyncValidator<SetStatusToArrivedCommand>
     {
         private readonly IOrderRepository _orderRepository;
 
-        public ChangeStatusToArrivedCommanValidator( IOrderRepository orderRepository )
+        public SetStatusToArrivedCommanValidator( IOrderRepository orderRepository )
         {
             _orderRepository = orderRepository;
         }
 
-        public async Task<Result> ValidateAsync( ChangeStatusToArrivedCommand request )
+        public async Task<Result> ValidateAsync( SetStatusToArrivedCommand request )
         {
             if ( request.OrderId == Guid.Empty )
             {

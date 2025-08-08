@@ -10,9 +10,7 @@ namespace MusicStore.Application.Users.Commands.CreateUser
     public class CreateUserCommandHandler : ICommandHandler<CreateUserCommand, Result<Guid>>
     {
         private readonly IUserRepository _userRepository;
-
         private readonly IUnitOfWork _unitOfWork;
-
         private readonly IAsyncValidator<CreateUserCommand> _asyncValidator;
 
         public CreateUserCommandHandler( IUserRepository userRepository, IUnitOfWork unitOfWork, IAsyncValidator<CreateUserCommand> asyncValidator )
@@ -32,8 +30,10 @@ namespace MusicStore.Application.Users.Commands.CreateUser
             try
             {
                 User user = new( request.Name, request.Email, request.Role );
+
                 _userRepository.Add( user );
                 await _unitOfWork.CommitAsync();
+
                 return Result<Guid>.Success( user.Id );
             }
             catch ( Exception ex )

@@ -5,27 +5,25 @@ using MusicStore.Application.Orders.Repositories;
 using MusicStore.Application.Results;
 using MusicStore.Domain.Entities.Orders;
 
-namespace MusicStore.Application.Orders.Commands.ChangeStatusToShipping
+namespace MusicStore.Application.Orders.Commands.SetStatusToStartAssembly
 {
-    public class ChangeStatusToShippingCommandHandler : ICommandHandler<ChangeStatusToShippingCommand, Result>
+    public class SetStatusToStartAssemblyCommandHandler : ICommandHandler<SetStatusToStartAssemblyCommand, Result>
     {
         private readonly IOrderRepository _orderRepository;
-
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IAsyncValidator<SetStatusToStartAssemblyCommand> _asyncValidator;
 
-        private readonly IAsyncValidator<ChangeStatusToShippingCommand> _asyncValidator;
-
-        public ChangeStatusToShippingCommandHandler(
+        public SetStatusToStartAssemblyCommandHandler(
             IOrderRepository orderRepository,
             IUnitOfWork unitOfWork,
-            IAsyncValidator<ChangeStatusToShippingCommand> asyncValidator )
+            IAsyncValidator<SetStatusToStartAssemblyCommand> asyncValidator )
         {
             _orderRepository = orderRepository;
             _unitOfWork = unitOfWork;
             _asyncValidator = asyncValidator;
         }
 
-        public async Task<Result> Handle( ChangeStatusToShippingCommand request, CancellationToken cancellationToken )
+        public async Task<Result> Handle( SetStatusToStartAssemblyCommand request, CancellationToken cancellationToken )
         {
             Result validationResult = await _asyncValidator.ValidateAsync( request );
             if ( validationResult.IsError )
@@ -35,9 +33,10 @@ namespace MusicStore.Application.Orders.Commands.ChangeStatusToShipping
             try
             {
                 Order order = await _orderRepository.GetByIdOrDefaultAsync( request.OrderId );
-                order.Shipping();
-                await _asyncValidator.ValidateAsync( request );
+
+                order.StartAssembly();
                 await _unitOfWork.CommitAsync();
+
                 return Result.Success();
             }
             catch ( Exception ex )

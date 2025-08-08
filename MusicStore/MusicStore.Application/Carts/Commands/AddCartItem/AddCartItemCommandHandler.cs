@@ -12,13 +12,9 @@ namespace MusicStore.Application.Carts.Commands.AddCartItem
     public class AddCartItemCommandHandler : ICommandHandler<AddCartItemCommand, Result<CartItem>>
     {
         private readonly ICartRepository _cartRepository;
-
         private readonly ICartItemRepository _cartItemRepository;
-
         private readonly IProductRepository _productRepository;
-
         private readonly IUnitOfWork _unitOfWork;
-
         private readonly IAsyncValidator<AddCartItemCommand> _asyncValidator;
 
         public AddCartItemCommandHandler(
@@ -47,11 +43,13 @@ namespace MusicStore.Application.Carts.Commands.AddCartItem
                 Cart? cart = await _cartRepository.GetByIdOrDefaultAsync( request.CartId );
                 Product product = await _productRepository.GetByIdOrDefaultAsync( request.ProductId );
                 CartItem cartItem = new CartItem( request.ProductId, request.CartId );
+
                 cartItem.CalculateCartItemPrice( product.Price );
                 cart.AddCartItem( cartItem );
                 cart.CalculateTotalPrice();
                 _cartItemRepository.Add( cartItem );
                 await _unitOfWork.CommitAsync();
+
                 return Result<CartItem>.Success( cartItem );
             }
             catch ( Exception ex )

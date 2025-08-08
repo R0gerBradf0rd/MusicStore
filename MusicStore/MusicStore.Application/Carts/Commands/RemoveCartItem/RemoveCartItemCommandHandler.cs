@@ -10,11 +10,8 @@ namespace MusicStore.Application.Carts.Commands.RemoveCartItem
     public class RemoveCartItemCommandHandler : ICommandHandler<RemoveCartItemCommand, Result<CartItem>>
     {
         private readonly ICartRepository _cartRepository;
-
         private readonly ICartItemRepository _cartItemRepository;
-
         private readonly IAsyncValidator<RemoveCartItemCommand> _asyncValidator;
-
         private readonly IUnitOfWork _unitOfWork;
 
         public RemoveCartItemCommandHandler(
@@ -40,10 +37,12 @@ namespace MusicStore.Application.Carts.Commands.RemoveCartItem
             {
                 Cart? cart = await _cartRepository.GetByIdOrDefaultAsync( request.CartId );
                 CartItem cartItem = new CartItem( request.ProductId, request.CartId );
+
                 cart.RemoveCartItem( cartItem );
                 cart.CalculateTotalPrice();
                 await _cartItemRepository.DeleteAsync( cartItem );
                 await _unitOfWork.CommitAsync();
+
                 return Result<CartItem>.Success( cartItem );
             }
             catch ( Exception ex )

@@ -10,9 +10,7 @@ namespace MusicStore.Application.Warehouses.Commands.CreateWarehouse
     public class CreateWarehouseCommandHandler : ICommandHandler<CreateWarehouseCommand, Result<Guid>>
     {
         private readonly IWarehosueRepository _warehosueRepository;
-
         private readonly IUnitOfWork _unitOfWork;
-
         private readonly IAsyncValidator<CreateWarehouseCommand> _asyncValidator;
 
         public CreateWarehouseCommandHandler( IWarehosueRepository warehosueRepository, IUnitOfWork unitOfWork, IAsyncValidator<CreateWarehouseCommand> asyncValidator )
@@ -32,8 +30,10 @@ namespace MusicStore.Application.Warehouses.Commands.CreateWarehouse
             try
             {
                 Warehouse warehouse = new Warehouse( request.Address );
+
                 _warehosueRepository.Add( warehouse );
                 await _unitOfWork.CommitAsync();
+
                 return Result<Guid>.Success( warehouse.Id );
             }
             catch ( Exception ex )

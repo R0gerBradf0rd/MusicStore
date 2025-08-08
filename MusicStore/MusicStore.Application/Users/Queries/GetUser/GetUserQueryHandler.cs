@@ -11,7 +11,6 @@ namespace MusicStore.Application.Users.Queries.GetUser
     public class GetUserQueryHandler : IQueryHandler<GetUserQuery, Result<UserDto>>
     {
         private readonly IUserRepository _userRepository;
-
         private readonly IAsyncValidator<GetUserQuery> _asyncValidator;
 
         public GetUserQueryHandler( IUserRepository userRepository, IAsyncValidator<GetUserQuery> validator )

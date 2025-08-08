@@ -10,9 +10,7 @@ namespace MusicStore.Application.Carts.Commands.CreateUserCart
     public class CreateUserCartCommandHandler : ICommandHandler<CreateUserCartCommand, Result<Guid>>
     {
         private readonly ICartRepository _cartRepository;
-
         private readonly IUnitOfWork _unitOfWork;
-
         private readonly IAsyncValidator<CreateUserCartCommand> _asyncValidator;
 
         public CreateUserCartCommandHandler(
@@ -35,8 +33,10 @@ namespace MusicStore.Application.Carts.Commands.CreateUserCart
             try
             {
                 Cart cart = new Cart( request.UserId );
+
                 _cartRepository.Add( cart );
                 await _unitOfWork.CommitAsync();
+
                 return Result<Guid>.Success( cart.Id );
             }
             catch ( Exception ex )
