@@ -6,14 +6,11 @@ namespace MusicStore.Application.Carts.Commands.RemoveCartItem
 {
     public class RemoveCartItemCommand : ICommand<Result<CartItem>>
     {
-        public Guid CartId { get; }
+        public Guid Id { get; }
 
-        public Guid ProductId { get; }
-
-        public RemoveCartItemCommand( Guid cartId, Guid productId )
+        public RemoveCartItemCommand( Guid id )
         {
-            CartId = cartId;
-            ProductId = productId;
+            Id = id;
         }
     }
 }

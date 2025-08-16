@@ -5,18 +5,18 @@ using MusicStore.Application.Results;
 
 namespace MusicStore.Application.Carts.Commands.AddCartItem
 {
-    public class AddCartItemValidator : IAsyncValidator<AddCartItemCommand>
+    public class AddCartItemToCartCommandValidator : IAsyncValidator<AddCartItemToCartCommand>
     {
         private readonly ICartRepository _cartRepository;
         private readonly IProductRepository _productRepository;
 
-        public AddCartItemValidator( ICartRepository cartRepository, IProductRepository productRepository )
+        public AddCartItemToCartCommandValidator( ICartRepository cartRepository, IProductRepository productRepository )
         {
             _cartRepository = cartRepository;
             _productRepository = productRepository;
         }
 
-        public async Task<Result> ValidateAsync( AddCartItemCommand request )
+        public async Task<Result> ValidateAsync( AddCartItemToCartCommand request )
         {
             if ( request.CartId == Guid.Empty )
             {
@@ -28,7 +28,6 @@ namespace MusicStore.Application.Carts.Commands.AddCartItem
             }
 
             bool isCartExist = await _cartRepository.ContainsAsync( c => c.Id == request.CartId );
-
             bool isProductExist = await _productRepository.ContainsAsync( p => p.Id == request.ProductId );
 
             if ( !isCartExist )

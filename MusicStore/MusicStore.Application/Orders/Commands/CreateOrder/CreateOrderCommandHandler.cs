@@ -51,6 +51,7 @@ namespace MusicStore.Application.Orders.Commands.CreateOrder
                     {
                         OrderItem orderItem = new OrderItem( cartItem.ProductId, order.Id, cartItem.Quantity );
                         _orderItemRepository.Add( orderItem );
+                        cart.RemoveCartItem( cartItem );
                     }
                 }
 

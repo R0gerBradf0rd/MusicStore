@@ -32,8 +32,10 @@ namespace MusicStore.Application.Products.Commands.CreateCategory
             try
             {
                 Category category = new Category( request.Name );
+
                 _categoryRepository.Add( category );
                 await _unitOfWork.CommitAsync();
+
                 return Result<Guid>.Success( category.Id );
             }
             catch ( Exception ex )

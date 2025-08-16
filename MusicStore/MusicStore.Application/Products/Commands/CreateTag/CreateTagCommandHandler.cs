@@ -35,8 +35,10 @@ namespace MusicStore.Application.Products.Commands.CreateTag
             try
             {
                 Tag tag = new Tag( request.Value );
+
                 _tagRepository.Add( tag );
                 await _unitOfWork.CommitAsync();
+
                 return Result<Guid>.Success( tag.Id );
             }
             catch ( Exception ex )

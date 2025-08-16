@@ -37,7 +37,6 @@ namespace MusicStore.Application.Warehouses.Commands.AddProductToWarehouse
             }
 
             bool isProductExist = await _productRepository.ContainsAsync( p => p.Id == request.ProductId );
-
             bool isWarehouseExist = await _warehosueRepository.ContainsAsync( w => w.Id == request.WarehouseId );
 
             if ( !isProductExist )

@@ -1,4 +1,6 @@
-﻿namespace MusicStore.Domain.Entities.Carts
+﻿using MusicStore.Domain.Entities.Products;
+
+namespace MusicStore.Domain.Entities.Carts
 {
     /// <summary>
     /// Представляет элемент корзины   
@@ -21,6 +23,11 @@
         public Guid ProductId { get; }
 
         /// <summary>
+        /// Ссылка на объект продукта
+        /// </summary>
+        public Product Product { get; }
+
+        /// <summary>
         /// Идентификатор корзины
         /// </summary>
         public Guid CartId { get; }
@@ -28,7 +35,7 @@
         /// <summary>
         /// Цена элемента корзины
         /// </summary>
-        public decimal CartItemPrice { get; private set; }
+        public decimal TotalPrice { get; private set; }
 
         /// <summary>
         /// Количество данного продукта
@@ -45,10 +52,12 @@
         /// </summary>
         /// <param name="productId">Идентификатор продукта</param>
         /// <param name="cartId">Идентификатор корзины</param>
+        /// <param name="product">Объект продукта</param>
         /// <exception cref="ArgumentException">Если переданные значения параметров пустые</exception>
         public CartItem(
             Guid productId,
-            Guid cartId )
+            Guid cartId,
+            Product product )
         {
             if ( productId == Guid.Empty )
             {
@@ -58,22 +67,17 @@
             {
                 throw new ArgumentException( "CartId не может быть пустым!", nameof( cartId ) );
             }
+            if ( ProductId != product.Id )
+            {
+                throw new ArgumentException( "Не верный Id или объект продукта!" );
+            }
             Id = Guid.NewGuid();
             ProductId = productId;
             CartId = cartId;
+            Product = product;
             Quantity = 1;
+            TotalPrice = Quantity * product.Price;
             IsSelected = CartItemSelectionStatus.Selected;
-        }
-
-        /// <summary>
-        /// Увеличивает количество продукта на одну единицу
-        /// </summary>
-        public void IncreaseQuantityByOne()
-        {
-            if ( Quantity < CartItemQuantityLimit )
-            {
-                Quantity += 1;
-            }
         }
 
         /// <summary>
@@ -90,19 +94,15 @@
                 throw new InvalidOperationException( $"Количество товара не должно быть больше {CartItemQuantityLimit}!" );
             }
             Quantity = quantity;
+            TotalPrice = Quantity * Product.Price;
         }
 
         /// <summary>
-        /// Меняет статус на противоположный
+        /// Меняет статус на установленный
         /// </summary>
         public void SetSelectionStatus( CartItemSelectionStatus selectionStatus )
         {
             IsSelected = selectionStatus;
-        }
-
-        public void CalculateCartItemPrice( decimal productPrice )
-        {
-            CartItemPrice = Quantity * productPrice;
         }
     }
 }

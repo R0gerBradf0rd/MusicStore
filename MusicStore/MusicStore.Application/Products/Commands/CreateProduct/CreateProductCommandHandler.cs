@@ -44,8 +44,10 @@ namespace MusicStore.Application.Products.Commands.CreateProduct
                     request.ProductTypeId,
                     request.ProductTags
                 );
+
                 _productRepository.Add( product );
                 await _unitOfWork.CommitAsync();
+
                 return Result<Guid>.Success( product.Id );
             }
             catch ( Exception ex )

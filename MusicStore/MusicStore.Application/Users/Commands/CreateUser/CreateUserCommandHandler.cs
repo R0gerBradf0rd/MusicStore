@@ -1,8 +1,10 @@
-﻿using MusicStore.Application.Interfaces.Command;
+﻿using MusicStore.Application.Carts.Repositories;
+using MusicStore.Application.Interfaces.Command;
 using MusicStore.Application.Interfaces.UnitOfWork;
 using MusicStore.Application.Interfaces.Validators;
 using MusicStore.Application.Results;
 using MusicStore.Application.Users.Repositories;
+using MusicStore.Domain.Entities.Carts;
 using MusicStore.Domain.Entities.Users;
 
 namespace MusicStore.Application.Users.Commands.CreateUser
@@ -10,12 +12,18 @@ namespace MusicStore.Application.Users.Commands.CreateUser
     public class CreateUserCommandHandler : ICommandHandler<CreateUserCommand, Result<Guid>>
     {
         private readonly IUserRepository _userRepository;
+        private readonly ICartRepository _cartRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IAsyncValidator<CreateUserCommand> _asyncValidator;
 
-        public CreateUserCommandHandler( IUserRepository userRepository, IUnitOfWork unitOfWork, IAsyncValidator<CreateUserCommand> asyncValidator )
+        public CreateUserCommandHandler(
+            IUserRepository userRepository,
+            ICartRepository cartRepository,
+            IUnitOfWork unitOfWork,
+            IAsyncValidator<CreateUserCommand> asyncValidator )
         {
             _userRepository = userRepository;
+            _cartRepository = cartRepository;
             _unitOfWork = unitOfWork;
             _asyncValidator = asyncValidator;
         }
@@ -29,9 +37,11 @@ namespace MusicStore.Application.Users.Commands.CreateUser
             }
             try
             {
-                User user = new( request.Name, request.Email, request.Role );
+                User user = new User( request.Name, request.Email, request.Role );
+                Cart cart = new Cart( user.Id );
 
                 _userRepository.Add( user );
+                _cartRepository.Add( cart );
                 await _unitOfWork.CommitAsync();
 
                 return Result<Guid>.Success( user.Id );

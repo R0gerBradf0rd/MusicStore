@@ -35,8 +35,10 @@ namespace MusicStore.Application.Products.Commands.CreateProductType
             try
             {
                 ProductType productType = new ProductType( request.Name, request.CategoryId );
+
                 _productTypeRepository.Add( productType );
                 await _unitOfWork.CommitAsync();
+
                 return Result<Guid>.Success( productType.Id );
             }
             catch ( Exception ex )

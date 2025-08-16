@@ -40,9 +40,10 @@ namespace MusicStore.Application.Products.Commands.RemoveProductTag
             {
                 Product product = await _productRepository.GetByIdOrDefaultAsync( request.ProductId );
                 ProductTag productTag = await _productTagRepository.FindeAsync( pt => pt.TagId == request.TagId && pt.ProductId == request.ProductId );
+
                 product.RemoveTag( productTag );
-                await _productTagRepository.DeleteAsync( productTag );
                 await _unitOfWork.CommitAsync();
+
                 return Result<ProductTag>.Success( productTag );
             }
             catch ( Exception ex )

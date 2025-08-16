@@ -44,9 +44,7 @@ namespace MusicStore.Application.Orders.Commands.CreateOrder
             }
 
             bool isUserExist = await _userRepository.ContainsAsync( u => u.Id == request.UserId );
-
             bool isCartExist = await _cartRepository.ContainsAsync( c => c.Id == request.CartId );
-
             Cart cart = await _cartRepository.GetByIdOrDefaultAsync( request.CartId );
 
             if ( !isUserExist )

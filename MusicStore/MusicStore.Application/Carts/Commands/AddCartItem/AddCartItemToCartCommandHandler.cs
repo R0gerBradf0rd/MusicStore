@@ -9,20 +9,20 @@ using MusicStore.Domain.Entities.Products;
 
 namespace MusicStore.Application.Carts.Commands.AddCartItem
 {
-    public class AddCartItemCommandHandler : ICommandHandler<AddCartItemCommand, Result<CartItem>>
+    public class AddCartItemToCartCommandHandler : ICommandHandler<AddCartItemToCartCommand, Result<CartItem>>
     {
         private readonly ICartRepository _cartRepository;
         private readonly ICartItemRepository _cartItemRepository;
         private readonly IProductRepository _productRepository;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IAsyncValidator<AddCartItemCommand> _asyncValidator;
+        private readonly IAsyncValidator<AddCartItemToCartCommand> _asyncValidator;
 
-        public AddCartItemCommandHandler(
+        public AddCartItemToCartCommandHandler(
             ICartRepository cartRepository,
             ICartItemRepository cartItemRepository,
             IProductRepository productRepository,
             IUnitOfWork unitOfWork,
-            IAsyncValidator<AddCartItemCommand> validator )
+            IAsyncValidator<AddCartItemToCartCommand> validator )
         {
             _cartRepository = cartRepository;
             _cartItemRepository = cartItemRepository;
@@ -31,7 +31,7 @@ namespace MusicStore.Application.Carts.Commands.AddCartItem
             _asyncValidator = validator;
         }
 
-        public async Task<Result<CartItem>> Handle( AddCartItemCommand request, CancellationToken cancellationToken )
+        public async Task<Result<CartItem>> Handle( AddCartItemToCartCommand request, CancellationToken cancellationToken )
         {
             Result validationResult = await _asyncValidator.ValidateAsync( request );
             if ( validationResult.IsError )
@@ -42,12 +42,10 @@ namespace MusicStore.Application.Carts.Commands.AddCartItem
             {
                 Cart? cart = await _cartRepository.GetByIdOrDefaultAsync( request.CartId );
                 Product product = await _productRepository.GetByIdOrDefaultAsync( request.ProductId );
-                CartItem cartItem = new CartItem( request.ProductId, request.CartId );
+                CartItem cartItem = new CartItem( request.ProductId, request.CartId, product );
 
-                cartItem.CalculateCartItemPrice( product.Price );
                 cart.AddCartItem( cartItem );
-                cart.CalculateTotalPrice();
-                _cartItemRepository.Add( cartItem );
+                cart.UppdateTotalPrice();
                 await _unitOfWork.CommitAsync();
 
                 return Result<CartItem>.Success( cartItem );

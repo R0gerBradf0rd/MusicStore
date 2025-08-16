@@ -4,13 +4,13 @@ using MusicStore.Domain.Entities.Carts;
 
 namespace MusicStore.Application.Carts.Commands.AddCartItem
 {
-    public class AddCartItemCommand : ICommand<Result<CartItem>>
+    public class AddCartItemToCartCommand : ICommand<Result<CartItem>>
     {
         public Guid CartId { get; }
 
         public Guid ProductId { get; }
 
-        public AddCartItemCommand( Guid cartId, Guid productId )
+        public AddCartItemToCartCommand( Guid cartId, Guid productId )
         {
             CartId = cartId;
             ProductId = productId;

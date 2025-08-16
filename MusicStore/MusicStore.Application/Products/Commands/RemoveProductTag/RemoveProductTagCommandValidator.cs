@@ -35,7 +35,6 @@ namespace MusicStore.Application.Products.Commands.RemoveProductTag
             }
 
             bool isProductExist = await _productRepository.ContainsAsync( p => p.Id == request.ProductId );
-
             bool isTagExist = await _tagRepository.ContainsAsync( t => t.Id == request.TagId );
 
             if ( !isProductExist )

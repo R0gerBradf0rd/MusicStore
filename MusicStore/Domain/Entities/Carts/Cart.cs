@@ -29,7 +29,6 @@
         /// Создаёт новый экземпляр корзины с указанным идентификатором пользователя
         /// </summary>
         /// <param name="userId">Идентификатор пользователя</param>
-        /// <param name="cartItems">Список элементов корзины</param>
         /// <exception cref="ArgumentException">Если переданные значения параметров пустые</exception>
         public Cart( Guid userId )
         {
@@ -74,14 +73,14 @@
         /// <summary>
         /// Вычисляет общую стоимость товаров в корзине
         /// </summary>
-        public void CalculateTotalPrice()
+        public void UppdateTotalPrice()
         {
             List<CartItem> cartItems = CartItems.ToList();
             for ( int i = 0; i < cartItems.Count; i++ )
             {
-                if ( cartItems[ i ].IsSelected )
+                if ( cartItems[ i ].IsSelected == CartItemSelectionStatus.Selected )
                 {
-                    TotalPrice += cartItems[ i ].CartItemPrice;
+                    TotalPrice += cartItems[ i ].TotalPrice;
                 }
             }
         }

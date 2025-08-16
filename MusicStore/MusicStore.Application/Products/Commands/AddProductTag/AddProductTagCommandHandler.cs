@@ -40,9 +40,10 @@ namespace MusicStore.Application.Products.Commands.AddProductTag
             {
                 Product product = await _productRepository.GetByIdOrDefaultAsync( request.ProductId );
                 ProductTag productTag = new ProductTag( request.TagId, request.ProductId );
+
                 product.AddTag( productTag );
-                _productTagRepository.Add( productTag );
                 await _unitOfWork.CommitAsync();
+
                 return Result<ProductTag>.Success( productTag );
             }
             catch ( Exception ex )

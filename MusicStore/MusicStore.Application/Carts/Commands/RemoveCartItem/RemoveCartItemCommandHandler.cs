@@ -35,12 +35,11 @@ namespace MusicStore.Application.Carts.Commands.RemoveCartItem
             }
             try
             {
-                Cart? cart = await _cartRepository.GetByIdOrDefaultAsync( request.CartId );
-                CartItem cartItem = new CartItem( request.ProductId, request.CartId );
+                CartItem cartItem = await _cartItemRepository.GetByIdOrDefaultAsync( request.Id );
+                Cart? cart = await _cartRepository.GetByIdOrDefaultAsync( cartItem.CartId );
 
                 cart.RemoveCartItem( cartItem );
-                cart.CalculateTotalPrice();
-                await _cartItemRepository.DeleteAsync( cartItem );
+                cart.UppdateTotalPrice();
                 await _unitOfWork.CommitAsync();
 
                 return Result<CartItem>.Success( cartItem );

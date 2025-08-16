@@ -37,7 +37,7 @@ namespace MusicStore.Application.Warehouses.Commands.DecriseProductInWarehouse
 
             ProductWarehouse productWarehouse = await _productWarehouseRepository.FindeAsync( pw => pw.WarehouseId == request.WarehouseId && pw.ProductId == request.ProductId );
 
-            if ( productWarehouse.WarehouseProductQuantity - request.WarehouseProductQuantity < 1 )
+            if ( productWarehouse.Quantity - request.WarehouseProductQuantity < 1 )
             {
                 return Result.Failure( "Количество товара недостаточно для выполнения операции!" );
             }

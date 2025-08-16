@@ -1,5 +1,4 @@
-﻿using MusicStore.Application.Carts.Commands.IncreaseCartItemQuantity;
-using MusicStore.Application.Carts.Repositories;
+﻿using MusicStore.Application.Carts.Repositories;
 using MusicStore.Application.Interfaces.Command;
 using MusicStore.Application.Interfaces.UnitOfWork;
 using MusicStore.Application.Interfaces.Validators;
@@ -19,8 +18,7 @@ namespace MusicStore.Application.Carts.Commands.SetCartItemQuantity
         private readonly IAsyncValidator<SetCartItemQuantityCommand> _asyncValidator;
 
         public SetCartItemQuantityCommandHandler(
-            ICartItemRepository
-            cartItemRepository,
+            ICartItemRepository cartItemRepository,
             ICartRepository cartRepository,
             IProductRepository productRepository,
             IUnitOfWork unitOfWork,
@@ -47,8 +45,7 @@ namespace MusicStore.Application.Carts.Commands.SetCartItemQuantity
                 Cart cart = await _cartRepository.GetByIdOrDefaultAsync( cartItem.CartId );
 
                 cartItem.SetQuantity( request.Quantity );
-                cartItem.CalculateCartItemPrice( product.Price );
-                cart.CalculateTotalPrice();
+                cart.UppdateTotalPrice();
                 await _unitOfWork.CommitAsync();
 
                 return Result<string>.Success( "Количество товара в корзине увеличено 1." );
