@@ -2,8 +2,8 @@
 
 namespace MusicStore.Application.Interfaces.Validators
 {
-    public interface IValidator<T>
+    public interface IValidator<TRequest>
     {
-        Result Validate( T value );
+        Result Validate( TRequest value );
     }
 }

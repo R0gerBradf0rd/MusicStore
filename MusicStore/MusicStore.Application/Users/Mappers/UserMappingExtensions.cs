@@ -8,10 +8,10 @@ namespace MusicStore.Application.Users.Mappers
         public static UserDto ToDto( this User user )
         {
             return new UserDto
-            {
-                Name = user.Name,
-                Email = user.Email
-            };
+            (
+                user.Name,
+                user.Email
+            );
         }
     }
 }
