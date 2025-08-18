@@ -6,9 +6,9 @@ namespace MusicStore.Application.Warehouses.Commands.CreateWarehouse
 {
     public class CreateWarehouseCommandValidator : IAsyncValidator<CreateWarehouseCommand>
     {
-        private readonly IWarehosueRepository _warehosueRepository;
+        private readonly IWarehoRepository _warehosueRepository;
 
-        public CreateWarehouseCommandValidator( IWarehosueRepository warehosueRepository )
+        public CreateWarehouseCommandValidator( IWarehoRepository warehosueRepository )
         {
             _warehosueRepository = warehosueRepository;
         }

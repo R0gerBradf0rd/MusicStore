@@ -7,12 +7,12 @@ namespace MusicStore.Application.Warehouses.Commands.AddProductToWarehouse
 {
     public class AddProductToWarehouseCommandValidator : IAsyncValidator<AddProductToWarehouseCommand>
     {
-        private readonly IWarehosueRepository _warehosueRepository;
+        private readonly IWarehoRepository _warehosueRepository;
         private readonly IProductRepository _productRepository;
         private readonly IProductWarehouseRepository _productWarehouseRepository;
 
         public AddProductToWarehouseCommandValidator(
-            IWarehosueRepository warehosueRepository,
+            IWarehoRepository warehosueRepository,
             IProductRepository productRepository,
             IProductWarehouseRepository productWarehouseRepository )
         {

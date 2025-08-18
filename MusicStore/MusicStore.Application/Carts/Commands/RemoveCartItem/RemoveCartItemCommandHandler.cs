@@ -38,8 +38,7 @@ namespace MusicStore.Application.Carts.Commands.RemoveCartItem
                 CartItem cartItem = await _cartItemRepository.GetByIdOrDefaultAsync( request.Id );
                 Cart? cart = await _cartRepository.GetByIdOrDefaultAsync( cartItem.CartId );
 
-                cart.RemoveCartItem( cartItem );
-                cart.UppdateTotalPrice();
+                cart.RemoveItem( cartItem );
                 await _unitOfWork.CommitAsync();
 
                 return Result<CartItem>.Success( cartItem );

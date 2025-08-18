@@ -2,10 +2,15 @@
 using MusicStore.Application.Interfaces.Command;
 using MusicStore.Application.Interfaces.UnitOfWork;
 using MusicStore.Application.Interfaces.Validators;
+using MusicStore.Application.Orders.Mappers;
 using MusicStore.Application.Orders.Repositories;
 using MusicStore.Application.Results;
+using MusicStore.Application.Warehouses.Repositories;
+using MusicStore.Applicatuion.Warehouses.Repositories;
 using MusicStore.Domain.Entities.Carts;
 using MusicStore.Domain.Entities.Orders;
+using MusicStore.Domain.Entities.Products;
+using MusicStore.Domain.Entities.Warehouses;
 
 namespace MusicStore.Application.Orders.Commands.CreateOrder
 {
@@ -14,6 +19,7 @@ namespace MusicStore.Application.Orders.Commands.CreateOrder
         private readonly IOrderRepository _orderRepository;
         private readonly IOrderItemRepository _orderItemRepository;
         private readonly ICartRepository _cartRepository;
+        private readonly IProductWarehouseRepository _productWarehouseRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IAsyncValidator<CreateOrderCommand> _asyncValidator;
 
@@ -21,12 +27,14 @@ namespace MusicStore.Application.Orders.Commands.CreateOrder
             IOrderRepository orderRepository,
             IOrderItemRepository orderItemRepository,
             ICartRepository cartRepository,
+            IProductWarehouseRepository productWarehouseRepository,
             IUnitOfWork unitOfWork,
             IAsyncValidator<CreateOrderCommand> asyncValidator )
         {
             _orderRepository = orderRepository;
             _orderItemRepository = orderItemRepository;
             _cartRepository = cartRepository;
+            _productWarehouseRepository = productWarehouseRepository;
             _unitOfWork = unitOfWork;
             _asyncValidator = asyncValidator;
         }
@@ -44,14 +52,14 @@ namespace MusicStore.Application.Orders.Commands.CreateOrder
                 Order order = new Order( request.UserId, cart.TotalPrice, request.CurrencyCode, request.ShippingAddress, request.CartId );
                 List<CartItem> cartItems = cart.CartItems.ToList();
 
-                for ( int i = 0; i < cart.CartItems.Count; i++ )
+                foreach ( CartItem cartItem in cartItems )
                 {
-                    CartItem cartItem = cartItems[ i ];
                     if ( cartItem.IsSelected == CartItemSelectionStatus.Selected )
                     {
-                        OrderItem orderItem = new OrderItem( cartItem.ProductId, order.Id, cartItem.Quantity );
-                        _orderItemRepository.Add( orderItem );
-                        cart.RemoveCartItem( cartItem );
+                        _orderItemRepository.Add( cartItem.ToOrderItem( order.Id ) );
+                        ProductWarehouse productWarehouse = await _productWarehouseRepository.FindeAsync( pw => pw.ProductId == cartItem.ProductId );
+                        productWarehouse.ReserveProductInWarehouse();
+                        cart.RemoveItem( cartItem );
                     }
                 }
 

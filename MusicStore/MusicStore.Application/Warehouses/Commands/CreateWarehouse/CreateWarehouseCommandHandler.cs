@@ -9,11 +9,11 @@ namespace MusicStore.Application.Warehouses.Commands.CreateWarehouse
 {
     public class CreateWarehouseCommandHandler : ICommandHandler<CreateWarehouseCommand, Result<Guid>>
     {
-        private readonly IWarehosueRepository _warehosueRepository;
+        private readonly IWarehoRepository _warehosueRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IAsyncValidator<CreateWarehouseCommand> _asyncValidator;
 
-        public CreateWarehouseCommandHandler( IWarehosueRepository warehosueRepository, IUnitOfWork unitOfWork, IAsyncValidator<CreateWarehouseCommand> asyncValidator )
+        public CreateWarehouseCommandHandler( IWarehoRepository warehosueRepository, IUnitOfWork unitOfWork, IAsyncValidator<CreateWarehouseCommand> asyncValidator )
         {
             _warehosueRepository = warehosueRepository;
             _unitOfWork = unitOfWork;

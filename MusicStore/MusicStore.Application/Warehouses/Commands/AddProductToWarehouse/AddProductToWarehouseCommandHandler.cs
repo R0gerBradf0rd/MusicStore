@@ -10,13 +10,13 @@ namespace MusicStore.Application.Warehouses.Commands.AddProductToWarehouse
     public class AddProductToWarehouseCommandHandler : ICommandHandler<AddProductToWarehouseCommand, Result<ProductWarehouse>>
     {
         private readonly IProductWarehouseRepository _repository;
-        private readonly IWarehosueRepository _warehosueRepository;
+        private readonly IWarehoRepository _warehosueRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IAsyncValidator<AddProductToWarehouseCommand> _asyncValidator;
 
         public AddProductToWarehouseCommandHandler(
             IProductWarehouseRepository repository,
-            IWarehosueRepository warehosueRepository,
+            IWarehoRepository warehosueRepository,
             IUnitOfWork unitOfWork,
             IAsyncValidator<AddProductToWarehouseCommand> asyncValidator )
         {

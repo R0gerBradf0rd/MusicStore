@@ -2,9 +2,9 @@
 using MusicStore.Application.Interfaces.Repository;
 using MusicStore.Domain.Entities.Warehouses;
 
-namespace MusicStore.Application.Warehouses.Repositories
+namespace MusicStore.Applicatuion.Warehouses.Repositories
 {
-    public interface IWarehosueRepository : IAddRepository<Warehouse>, IDeleteRepository<Warehouse>
+    public interface IWarehouseRepository : IAddRepository<Warehouse>, IDeleteRepository<Warehouse>
     {
         Task<Warehouse?> GetByIdOrDefaultAsync( Guid id );
 

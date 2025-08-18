@@ -23,7 +23,15 @@
         /// <summary>
         /// Полная стоимость товаров в корзине
         /// </summary>
-        public decimal TotalPrice { get; private set; }
+        public decimal TotalPrice
+        {
+            get
+            {
+                return CartItems
+                    .Where( item => item.IsSelected == CartItemSelectionStatus.Selected )
+                    .Sum( item => item.TotalPrice );
+            }
+        }
 
         /// <summary>
         /// Создаёт новый экземпляр корзины с указанным идентификатором пользователя
@@ -51,7 +59,7 @@
         /// <summary>
         /// Добавляет товар в корзину, увеличивает счетчик товаров на 1
         /// </summary>
-        public void AddCartItem( CartItem cartItem )
+        public void AddItem( CartItem cartItem )
         {
             if ( !CartItems.Contains( cartItem ) )
             {
@@ -62,26 +70,11 @@
         /// <summary>
         /// Удаляет товар из корзины, уменьшает счетчик товаров на 1
         /// </summary>
-        public void RemoveCartItem( CartItem cartItem )
+        public void RemoveItem( CartItem cartItem )
         {
             if ( CartItems.Contains( cartItem ) )
             {
                 CartItems.Remove( cartItem );
-            }
-        }
-
-        /// <summary>
-        /// Вычисляет общую стоимость товаров в корзине
-        /// </summary>
-        public void UppdateTotalPrice()
-        {
-            List<CartItem> cartItems = CartItems.ToList();
-            for ( int i = 0; i < cartItems.Count; i++ )
-            {
-                if ( cartItems[ i ].IsSelected == CartItemSelectionStatus.Selected )
-                {
-                    TotalPrice += cartItems[ i ].TotalPrice;
-                }
             }
         }
     }

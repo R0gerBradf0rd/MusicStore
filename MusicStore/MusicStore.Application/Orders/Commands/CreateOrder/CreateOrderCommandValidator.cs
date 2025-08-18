@@ -1,8 +1,13 @@
 ﻿using MusicStore.Application.Carts.Repositories;
 using MusicStore.Application.Interfaces.Validators;
+using MusicStore.Application.Orders.Mappers;
+using MusicStore.Application.Orders.Repositories;
 using MusicStore.Application.Results;
 using MusicStore.Application.Users.Repositories;
+using MusicStore.Application.Warehouses.Repositories;
 using MusicStore.Domain.Entities.Carts;
+using MusicStore.Domain.Entities.Orders;
+using MusicStore.Domain.Entities.Warehouses;
 using MusicStore.Domain.Validators;
 
 namespace MusicStore.Application.Orders.Commands.CreateOrder
@@ -11,13 +16,16 @@ namespace MusicStore.Application.Orders.Commands.CreateOrder
     {
         private readonly IUserRepository _userRepository;
         private readonly ICartRepository _cartRepository;
+        private readonly IProductWarehouseRepository _productWarehouseRepository;
 
         public CreateOrderCommandValidator(
             IUserRepository userRepository,
-            ICartRepository cartRepository )
+            ICartRepository cartRepository,
+            IProductWarehouseRepository productWarehouseRepository )
         {
             _userRepository = userRepository;
             _cartRepository = cartRepository;
+            _productWarehouseRepository = productWarehouseRepository;
         }
 
         public async Task<Result> ValidateAsync( CreateOrderCommand request )
@@ -44,20 +52,39 @@ namespace MusicStore.Application.Orders.Commands.CreateOrder
             }
 
             bool isUserExist = await _userRepository.ContainsAsync( u => u.Id == request.UserId );
-            bool isCartExist = await _cartRepository.ContainsAsync( c => c.Id == request.CartId );
-            Cart cart = await _cartRepository.GetByIdOrDefaultAsync( request.CartId );
 
             if ( !isUserExist )
             {
                 return Result.Failure( "Данного пользователя несуществует!" );
             }
+
+            bool isCartExist = await _cartRepository.ContainsAsync( c => c.Id == request.CartId );
+
             if ( !isCartExist )
             {
                 return Result.Failure( "Данной корзины несуществует!" );
             }
+
+            Cart cart = await _cartRepository.GetByIdOrDefaultAsync( request.CartId );
+
             if ( cart.UserId != request.UserId )
             {
                 return Result.Failure( "Данная корзина не принадлежит данному пользователю!" );
+            }
+
+            List<CartItem> cartItems = cart.CartItems.ToList();
+
+            foreach ( CartItem cartItem in cartItems )
+            {
+                ProductWarehouse? productWarehouse = await _productWarehouseRepository.FindeAsync( pw => pw.ProductId == cartItem.ProductId );
+                if ( productWarehouse == null )
+                {
+                    return Result.Failure( $"Товар {cartItem.Product.Name} отсутсвует на складе!" );
+                }
+                if ( productWarehouse.Quantity < cartItem.Quantity )
+                {
+                    return Result.Failure( "Недостаточно товара на складе!" );
+                }
             }
 
             return Result.Success();

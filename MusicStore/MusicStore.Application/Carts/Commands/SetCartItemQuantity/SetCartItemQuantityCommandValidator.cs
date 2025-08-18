@@ -5,11 +5,11 @@ using MusicStore.Domain.Entities.Carts;
 
 namespace MusicStore.Application.Carts.Commands.SetCartItemQuantity
 {
-    public class SetCartItemQuantityCommaValidator : IAsyncValidator<SetCartItemQuantityCommand>
+    public class SetCartItemQuantityCommandValidator : IAsyncValidator<SetCartItemQuantityCommand>
     {
         private readonly ICartItemRepository _cartItemRepository;
 
-        public SetCartItemQuantityCommaValidator( ICartItemRepository cartItemRepository )
+        public SetCartItemQuantityCommandValidator( ICartItemRepository cartItemRepository )
         {
             _cartItemRepository = cartItemRepository;
         }

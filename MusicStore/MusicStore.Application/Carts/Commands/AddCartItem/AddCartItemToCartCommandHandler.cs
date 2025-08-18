@@ -44,8 +44,7 @@ namespace MusicStore.Application.Carts.Commands.AddCartItem
                 Product product = await _productRepository.GetByIdOrDefaultAsync( request.ProductId );
                 CartItem cartItem = new CartItem( request.ProductId, request.CartId, product );
 
-                cart.AddCartItem( cartItem );
-                cart.UppdateTotalPrice();
+                cart.AddItem( cartItem );
                 await _unitOfWork.CommitAsync();
 
                 return Result<CartItem>.Success( cartItem );

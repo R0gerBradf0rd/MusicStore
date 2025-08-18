@@ -35,7 +35,13 @@ namespace MusicStore.Domain.Entities.Carts
         /// <summary>
         /// Цена элемента корзины
         /// </summary>
-        public decimal TotalPrice { get; private set; }
+        public decimal TotalPrice
+        {
+            get
+            {
+                return Product.Price * Quantity;
+            }
+        }
 
         /// <summary>
         /// Количество данного продукта
@@ -76,7 +82,6 @@ namespace MusicStore.Domain.Entities.Carts
             CartId = cartId;
             Product = product;
             Quantity = 1;
-            TotalPrice = Quantity * product.Price;
             IsSelected = CartItemSelectionStatus.Selected;
         }
 
@@ -94,7 +99,6 @@ namespace MusicStore.Domain.Entities.Carts
                 throw new InvalidOperationException( $"Количество товара не должно быть больше {CartItemQuantityLimit}!" );
             }
             Quantity = quantity;
-            TotalPrice = Quantity * Product.Price;
         }
 
         /// <summary>

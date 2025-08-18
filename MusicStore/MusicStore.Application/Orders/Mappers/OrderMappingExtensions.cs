@@ -3,7 +3,7 @@ using MusicStore.Domain.Entities.Orders;
 
 namespace MusicStore.Application.Orders.Mappers
 {
-    public static class OrderMappingExtinsions
+    public static class OrderMappingExtensions
     {
         public static OrderDto ToDto( this Order order )
         {
