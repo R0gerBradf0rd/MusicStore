@@ -11,19 +11,19 @@ namespace MusicStore.Application.Products.Queries.GetProduct
     public class GetProductQueryHandler : IQueryHandler<GetProductQuery, Result<ProductDto>>
     {
         private readonly IProductRepository _productRepository;
-        private readonly IAsyncValidator<GetProductQuery> _asyncValidator;
+        private readonly IAsyncValidator<GetProductQuery> _getProductQueryValidator;
 
         public GetProductQueryHandler(
             IProductRepository productRepository,
             IAsyncValidator<GetProductQuery> asyncValidator )
         {
             _productRepository = productRepository;
-            _asyncValidator = asyncValidator;
+            _getProductQueryValidator = asyncValidator;
         }
 
         public async Task<Result<ProductDto>> Handle( GetProductQuery request, CancellationToken cancellationToken )
         {
-            Result validationResult = await _asyncValidator.ValidateAsync( request );
+            Result validationResult = await _getProductQueryValidator.ValidateAsync( request );
             if ( validationResult.IsError )
             {
                 return Result<ProductDto>.Failure( validationResult.Error );

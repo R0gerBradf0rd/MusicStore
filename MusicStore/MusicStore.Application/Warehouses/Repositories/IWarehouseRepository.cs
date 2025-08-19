@@ -2,7 +2,7 @@
 using MusicStore.Application.Interfaces.Repository;
 using MusicStore.Domain.Entities.Warehouses;
 
-namespace MusicStore.Applicatuion.Warehouses.Repositories
+namespace MusicStore.Application.Warehouses.Repositories
 {
     public interface IWarehouseRepository : IAddRepository<Warehouse>, IDeleteRepository<Warehouse>
     {

@@ -1,5 +1,4 @@
 ﻿using MusicStore.Application.Interfaces.Query;
-using MusicStore.Application.Interfaces.UnitOfWork;
 using MusicStore.Application.Interfaces.Validators;
 using MusicStore.Application.Orders.Dtos;
 using MusicStore.Application.Orders.Mappers;
@@ -12,24 +11,19 @@ namespace MusicStore.Application.Orders.Queries.GetOrder
     public class GetOrderQueryHandler : IQueryHandler<GetOrderQuery, Result<OrderDto>>
     {
         private readonly IOrderRepository _orderRepository;
-
-        private readonly IUnitOfWork _unitOfWork;
-
-        private readonly IAsyncValidator<GetOrderQuery> _asyncValidator;
+        private readonly IAsyncValidator<GetOrderQuery> _getOrderQueryValidator;
 
         public GetOrderQueryHandler(
             IOrderRepository orderRepository,
-            IUnitOfWork unitOfWork,
             IAsyncValidator<GetOrderQuery> asyncValidator )
         {
             _orderRepository = orderRepository;
-            _unitOfWork = unitOfWork;
-            _asyncValidator = asyncValidator;
+            _getOrderQueryValidator = asyncValidator;
         }
 
         public async Task<Result<OrderDto>> Handle( GetOrderQuery request, CancellationToken cancellationToken )
         {
-            Result validationResult = await _asyncValidator.ValidateAsync( request );
+            Result validationResult = await _getOrderQueryValidator.ValidateAsync( request );
             if ( validationResult.IsError )
             {
                 return Result<OrderDto>.Failure( validationResult.Error );

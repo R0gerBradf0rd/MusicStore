@@ -11,7 +11,7 @@ namespace MusicStore.Application.Carts.Commands.SetCartItemSelectionStatus
     {
         private readonly ICartItemRepository _cartItemRepository;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IAsyncValidator<SetCartItemSelectionStatusCommand> _asyncValidator;
+        private readonly IAsyncValidator<SetCartItemSelectionStatusCommand> _setCartItemSelectionStatusCommandValidator;
 
         public SetCartItemSelectionStatusCommandHandler(
             ICartItemRepository cartItemRepository,
@@ -20,12 +20,12 @@ namespace MusicStore.Application.Carts.Commands.SetCartItemSelectionStatus
         {
             _cartItemRepository = cartItemRepository;
             _unitOfWork = unitOfWork;
-            _asyncValidator = asyncValidator;
+            _setCartItemSelectionStatusCommandValidator = asyncValidator;
         }
 
         public async Task<Result<string>> Handle( SetCartItemSelectionStatusCommand request, CancellationToken cancellationToken )
         {
-            Result validationResult = await _asyncValidator.ValidateAsync( request );
+            Result validationResult = await _setCartItemSelectionStatusCommandValidator.ValidateAsync( request );
             if ( validationResult.IsError )
             {
                 return Result<string>.Failure( validationResult.Error );

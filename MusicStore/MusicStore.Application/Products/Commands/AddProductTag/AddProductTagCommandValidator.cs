@@ -7,9 +7,7 @@ namespace MusicStore.Application.Products.Commands.AddProductTag
     public class AddProductTagCommandValidator : IAsyncValidator<AddProductTagCommand>
     {
         private readonly IProductRepository _productRepository;
-
         private readonly ITagRepository _tagRepository;
-
         private readonly IProductTagRepository _productTagRepository;
 
         public AddProductTagCommandValidator(
@@ -34,12 +32,14 @@ namespace MusicStore.Application.Products.Commands.AddProductTag
             }
 
             bool isProductExist = await _productRepository.ContainsAsync( p => p.Id == request.ProductId );
-            bool isTagExist = await _tagRepository.ContainsAsync( t => t.Id == request.TagId );
 
             if ( !isProductExist )
             {
                 return Result.Failure( "Данного продутка несуществует!" );
             }
+
+            bool isTagExist = await _tagRepository.ContainsAsync( t => t.Id == request.TagId );
+
             if ( !isTagExist )
             {
                 return Result.Failure( "Данного тега несуществует!" );

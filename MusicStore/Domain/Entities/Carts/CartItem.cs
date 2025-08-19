@@ -51,7 +51,7 @@ namespace MusicStore.Domain.Entities.Carts
         /// <summary>
         /// Отображает статус элемента, выбран ли он для заказа
         /// </summary>
-        public CartItemSelectionStatus IsSelected { get; private set; }
+        public CartItemSelectionStatus SelectionStatus { get; private set; }
 
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="CartItem"/>
@@ -82,7 +82,7 @@ namespace MusicStore.Domain.Entities.Carts
             CartId = cartId;
             Product = product;
             Quantity = 1;
-            IsSelected = CartItemSelectionStatus.Selected;
+            SelectionStatus = CartItemSelectionStatus.Selected;
         }
 
         /// <summary>
@@ -106,7 +106,7 @@ namespace MusicStore.Domain.Entities.Carts
         /// </summary>
         public void SetSelectionStatus( CartItemSelectionStatus selectionStatus )
         {
-            IsSelected = selectionStatus;
+            SelectionStatus = selectionStatus;
         }
     }
 }

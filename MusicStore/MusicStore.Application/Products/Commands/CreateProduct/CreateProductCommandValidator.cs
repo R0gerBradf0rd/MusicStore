@@ -6,13 +6,10 @@ namespace MusicStore.Application.Products.Commands.CreateProduct
 {
     public class CreateProductCommandValidator : IAsyncValidator<CreateProductCommand>
     {
-        private readonly IProductRepository _productRepository;
-
         private readonly IProductTypeRepository _productTypeRepository;
 
-        public CreateProductCommandValidator( IProductRepository productRepository, IProductTypeRepository productTypeRepository )
+        public CreateProductCommandValidator( IProductTypeRepository productTypeRepository )
         {
-            _productRepository = productRepository;
             _productTypeRepository = productTypeRepository;
         }
 

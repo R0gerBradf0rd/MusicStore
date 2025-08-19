@@ -7,16 +7,16 @@ namespace MusicStore.Application.Warehouses.Commands.AddProductToWarehouse
 {
     public class AddProductToWarehouseCommandValidator : IAsyncValidator<AddProductToWarehouseCommand>
     {
-        private readonly IWarehoRepository _warehosueRepository;
+        private readonly IWarehouseRepository _warehouseRepository;
         private readonly IProductRepository _productRepository;
         private readonly IProductWarehouseRepository _productWarehouseRepository;
 
         public AddProductToWarehouseCommandValidator(
-            IWarehoRepository warehosueRepository,
+            IWarehouseRepository warehouseRepository,
             IProductRepository productRepository,
             IProductWarehouseRepository productWarehouseRepository )
         {
-            _warehosueRepository = warehosueRepository;
+            _warehouseRepository = warehouseRepository;
             _productRepository = productRepository;
             _productWarehouseRepository = productWarehouseRepository;
         }
@@ -37,12 +37,14 @@ namespace MusicStore.Application.Warehouses.Commands.AddProductToWarehouse
             }
 
             bool isProductExist = await _productRepository.ContainsAsync( p => p.Id == request.ProductId );
-            bool isWarehouseExist = await _warehosueRepository.ContainsAsync( w => w.Id == request.WarehouseId );
 
             if ( !isProductExist )
             {
                 return Result.Failure( "Продукта с таким Id несуществует!" );
             }
+
+            bool isWarehouseExist = await _warehouseRepository.ContainsAsync( w => w.Id == request.WarehouseId );
+
             if ( !isWarehouseExist )
             {
                 return Result.Failure( "Склада с таким Id несуществует!" );

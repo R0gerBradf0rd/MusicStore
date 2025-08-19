@@ -6,11 +6,11 @@ namespace MusicStore.Application.Warehouses.Commands.CreateWarehouse
 {
     public class CreateWarehouseCommandValidator : IAsyncValidator<CreateWarehouseCommand>
     {
-        private readonly IWarehoRepository _warehosueRepository;
+        private readonly IWarehouseRepository _warehouseRepository;
 
-        public CreateWarehouseCommandValidator( IWarehoRepository warehosueRepository )
+        public CreateWarehouseCommandValidator( IWarehouseRepository warehosueRepository )
         {
-            _warehosueRepository = warehosueRepository;
+            _warehouseRepository = warehosueRepository;
         }
 
         public async Task<Result> ValidateAsync( CreateWarehouseCommand request )
@@ -20,7 +20,7 @@ namespace MusicStore.Application.Warehouses.Commands.CreateWarehouse
                 return Result.Failure( "Адресс не может быть пустым!" );
             }
 
-            bool isWarehouseAlreadyExist = await _warehosueRepository.ContainsAsync( w => w.Address == request.Address );
+            bool isWarehouseAlreadyExist = await _warehouseRepository.ContainsAsync( w => w.Address == request.Address );
 
             if ( isWarehouseAlreadyExist )
             {

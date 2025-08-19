@@ -11,7 +11,7 @@ namespace MusicStore.Application.Carts.Commands.RemoveCartItem
     {
         private readonly ICartRepository _cartRepository;
         private readonly ICartItemRepository _cartItemRepository;
-        private readonly IAsyncValidator<RemoveCartItemCommand> _asyncValidator;
+        private readonly IAsyncValidator<RemoveCartItemCommand> _removeCartItemCommandValidator;
         private readonly IUnitOfWork _unitOfWork;
 
         public RemoveCartItemCommandHandler(
@@ -21,14 +21,14 @@ namespace MusicStore.Application.Carts.Commands.RemoveCartItem
             ICartItemRepository cartItemRepository )
         {
             _cartRepository = cartRepository;
-            _asyncValidator = validator;
+            _removeCartItemCommandValidator = validator;
             _unitOfWork = unitOfWork;
             _cartItemRepository = cartItemRepository;
         }
 
         public async Task<Result<CartItem>> Handle( RemoveCartItemCommand request, CancellationToken cancellationToken )
         {
-            Result validationResult = await _asyncValidator.ValidateAsync( request );
+            Result validationResult = await _removeCartItemCommandValidator.ValidateAsync( request );
             if ( validationResult.IsError )
             {
                 return Result<CartItem>.Failure( validationResult.Error );

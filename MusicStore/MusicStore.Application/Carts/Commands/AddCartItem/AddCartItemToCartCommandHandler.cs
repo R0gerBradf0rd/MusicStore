@@ -15,7 +15,7 @@ namespace MusicStore.Application.Carts.Commands.AddCartItem
         private readonly ICartItemRepository _cartItemRepository;
         private readonly IProductRepository _productRepository;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IAsyncValidator<AddCartItemToCartCommand> _asyncValidator;
+        private readonly IAsyncValidator<AddCartItemToCartCommand> _addCartItemToCartCommandValidator;
 
         public AddCartItemToCartCommandHandler(
             ICartRepository cartRepository,
@@ -28,12 +28,12 @@ namespace MusicStore.Application.Carts.Commands.AddCartItem
             _cartItemRepository = cartItemRepository;
             _productRepository = productRepository;
             _unitOfWork = unitOfWork;
-            _asyncValidator = validator;
+            _addCartItemToCartCommandValidator = validator;
         }
 
         public async Task<Result<CartItem>> Handle( AddCartItemToCartCommand request, CancellationToken cancellationToken )
         {
-            Result validationResult = await _asyncValidator.ValidateAsync( request );
+            Result validationResult = await _addCartItemToCartCommandValidator.ValidateAsync( request );
             if ( validationResult.IsError )
             {
                 return Result<CartItem>.Failure( validationResult.Error );
@@ -45,6 +45,7 @@ namespace MusicStore.Application.Carts.Commands.AddCartItem
                 CartItem cartItem = new CartItem( request.ProductId, request.CartId, product );
 
                 cart.AddItem( cartItem );
+                _cartItemRepository.Add( cartItem );
                 await _unitOfWork.CommitAsync();
 
                 return Result<CartItem>.Success( cartItem );

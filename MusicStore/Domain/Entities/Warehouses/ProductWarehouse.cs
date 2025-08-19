@@ -21,11 +21,6 @@
         public int Quantity { get; private set; }
 
         /// <summary>
-        /// Статус товара на складе
-        /// </summary>
-        public ProductWarehouseReservationStatus ReservationStatus { get; private set; }
-
-        /// <summary>
         /// Создает объект, содержащий колличество определенного товара, на определенном складе, с указанными параметрами
         /// </summary>
         /// <param name="productId">Идентификатор продукта</param>
@@ -50,7 +45,6 @@
             ProductId = productId;
             WarehouseId = warehouseId;
             Quantity = quantity;
-            ReservationStatus = ProductWarehouseReservationStatus.Available;
         }
 
         /// <summary>
@@ -71,24 +65,6 @@
                 throw new InvalidOperationException( "Невозможно взять данное количество товара со склада!" );
             }
             Quantity -= count;
-        }
-
-        /// <summary>
-        /// Бронирует товар для заказа
-        /// </summary>
-        /// <param name="productWarehouse">Товар на складе</param>
-        public void ReserveProductInWarehouse()
-        {
-            ReservationStatus = ProductWarehouseReservationStatus.Reserved;
-        }
-
-        /// <summary>
-        /// Отменяет бронь товара на складе
-        /// </summary>
-        /// <param name="productWarehouse">Товар на складе</param>
-        public void UnreserveProductInWarehouse()
-        {
-            ReservationStatus = ProductWarehouseReservationStatus.Available;
         }
     }
 }

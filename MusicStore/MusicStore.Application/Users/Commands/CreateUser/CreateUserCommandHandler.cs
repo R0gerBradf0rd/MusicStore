@@ -14,7 +14,7 @@ namespace MusicStore.Application.Users.Commands.CreateUser
         private readonly IUserRepository _userRepository;
         private readonly ICartRepository _cartRepository;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IAsyncValidator<CreateUserCommand> _asyncValidator;
+        private readonly IAsyncValidator<CreateUserCommand> _createUserCommandValidator;
 
         public CreateUserCommandHandler(
             IUserRepository userRepository,
@@ -25,12 +25,12 @@ namespace MusicStore.Application.Users.Commands.CreateUser
             _userRepository = userRepository;
             _cartRepository = cartRepository;
             _unitOfWork = unitOfWork;
-            _asyncValidator = asyncValidator;
+            _createUserCommandValidator = asyncValidator;
         }
 
         public async Task<Result<Guid>> Handle( CreateUserCommand request, CancellationToken cancellationToken )
         {
-            Result validationResult = await _asyncValidator.ValidateAsync( request );
+            Result validationResult = await _createUserCommandValidator.ValidateAsync( request );
             if ( validationResult.IsError )
             {
                 return Result<Guid>.Failure( validationResult.Error );

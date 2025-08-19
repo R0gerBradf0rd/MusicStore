@@ -5,11 +5,11 @@ using MusicStore.Domain.Entities.Orders;
 
 namespace MusicStore.Application.Orders.Commands.SetStatusToArrived
 {
-    public class SetStatusToArrivedCommanValidator : IAsyncValidator<SetStatusToArrivedCommand>
+    public class SetStatusToArrivedCommandValidator : IAsyncValidator<SetStatusToArrivedCommand>
     {
         private readonly IOrderRepository _orderRepository;
 
-        public SetStatusToArrivedCommanValidator( IOrderRepository orderRepository )
+        public SetStatusToArrivedCommandValidator( IOrderRepository orderRepository )
         {
             _orderRepository = orderRepository;
         }

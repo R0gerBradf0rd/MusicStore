@@ -40,7 +40,7 @@ namespace MusicStore.Domain.Entities.Orders
         /// <summary>
         /// Дата отправки
         /// </summary>
-        public DateTime ShippmentDate { get; private set; }
+        public DateTime ShipmentDate { get; private set; }
 
         /// <summary>
         /// Дата доставки
@@ -155,7 +155,7 @@ namespace MusicStore.Domain.Entities.Orders
                 throw new InvalidOperationException( "Невозможно перейти в этот статус. Предыдущий статус должен быть ReadyToShip." );
             }
             Status = OrderStatus.Shipped;
-            ShippmentDate = DateTime.UtcNow;
+            ShipmentDate = DateTime.UtcNow;
         }
 
         /// <summary>

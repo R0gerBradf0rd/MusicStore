@@ -3,7 +3,7 @@ using MusicStore.Domain.Entities.Reviews;
 
 namespace MusicStore.Application.Reviews.Mappers
 {
-    public static class ReviewMappingExtencions
+    public static class ReviewMappingExtensions
     {
         public static ReviewDto ToDto( this Review review )
         {

@@ -11,7 +11,7 @@ namespace MusicStore.Application.Orders.Commands.SetStatusToShipping
     {
         private readonly IOrderRepository _orderRepository;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IAsyncValidator<SetStatusToShippingCommand> _asyncValidator;
+        private readonly IAsyncValidator<SetStatusToShippingCommand> _setStatusToShippingCommandValidator;
 
         public SetStatusToShippingCommandHandler(
             IOrderRepository orderRepository,
@@ -20,12 +20,12 @@ namespace MusicStore.Application.Orders.Commands.SetStatusToShipping
         {
             _orderRepository = orderRepository;
             _unitOfWork = unitOfWork;
-            _asyncValidator = asyncValidator;
+            _setStatusToShippingCommandValidator = asyncValidator;
         }
 
         public async Task<Result> Handle( SetStatusToShippingCommand request, CancellationToken cancellationToken )
         {
-            Result validationResult = await _asyncValidator.ValidateAsync( request );
+            Result validationResult = await _setStatusToShippingCommandValidator.ValidateAsync( request );
             if ( validationResult.IsError )
             {
                 return Result.Failure( validationResult.Error );

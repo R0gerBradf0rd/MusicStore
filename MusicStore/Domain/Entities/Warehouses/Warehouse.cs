@@ -43,14 +43,5 @@
         {
             ProductWarehouseItems.Add( productWarehouse );
         }
-
-        /// <summary>
-        /// Убирает товар со склада
-        /// </summary>
-        /// <param name="productWarehouse">Объект, содержащий количество определенного товара, на определенном складе</param>
-        public void DeleteProductFromWarehouse( ProductWarehouse productWarehouse )
-        {
-            ProductWarehouseItems.Remove( productWarehouse );
-        }
     }
 }

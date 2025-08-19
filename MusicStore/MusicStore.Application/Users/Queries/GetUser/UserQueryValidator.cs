@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using MusicStore.Application.Interfaces.Validators;
+﻿using MusicStore.Application.Interfaces.Validators;
 using MusicStore.Application.Results;
 using MusicStore.Application.Users.Repositories;
 

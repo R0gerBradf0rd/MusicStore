@@ -9,32 +9,32 @@ namespace MusicStore.Application.Reviews.Commands.DeleteReview
 {
     public class DeleteReviewCommandHandler : ICommandHandler<DeleteReviewCommand, Result<Guid>>
     {
-        private readonly IReviewRepository _repository;
+        private readonly IReviewRepository _reviewRepository;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IAsyncValidator<DeleteReviewCommand> _asyncValidator;
+        private readonly IAsyncValidator<DeleteReviewCommand> _deleteReviewCommandValidator;
 
         public DeleteReviewCommandHandler(
-            IReviewRepository repository,
+            IReviewRepository reviewRepository,
             IUnitOfWork unitOfWork,
             IAsyncValidator<DeleteReviewCommand> asyncValidator )
         {
-            _repository = repository;
+            _reviewRepository = reviewRepository;
             _unitOfWork = unitOfWork;
-            _asyncValidator = asyncValidator;
+            _deleteReviewCommandValidator = asyncValidator;
         }
 
         public async Task<Result<Guid>> Handle( DeleteReviewCommand request, CancellationToken cancellationToken )
         {
-            Result validationResult = await _asyncValidator.ValidateAsync( request );
+            Result validationResult = await _deleteReviewCommandValidator.ValidateAsync( request );
             if ( validationResult.IsError )
             {
                 return Result<Guid>.Failure( validationResult.Error );
             }
             try
             {
-                Review review = await _repository.GetByIdOrDefaultAsync( request.Id );
+                Review review = await _reviewRepository.GetByIdOrDefaultAsync( request.Id );
 
-                await _repository.DeleteAsync( review );
+                await _reviewRepository.DeleteAsync( review );
                 await _unitOfWork.CommitAsync();
 
                 return Result<Guid>.Success( review.Id );

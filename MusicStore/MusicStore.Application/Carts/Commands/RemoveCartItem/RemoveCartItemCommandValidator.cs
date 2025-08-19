@@ -30,14 +30,6 @@ namespace MusicStore.Application.Carts.Commands.RemoveCartItem
                 return Result.Failure( "Данного элемента корзины несуществует!" );
             }
 
-            CartItem cartItem = await _cartItemRepository.GetByIdOrDefaultAsync( request.Id );
-            Cart cart = await _cartRepository.GetByIdOrDefaultAsync( cartItem.CartId );
-
-            if ( !cart.CartItems.Contains( cartItem ) )
-            {
-                return Result.Failure( "Такого продукта нет в данной корзине!" );
-            }
-
             return Result.Success();
         }
     }

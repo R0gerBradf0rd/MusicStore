@@ -10,21 +10,19 @@ namespace MusicStore.Application.Products.Commands.CreateCategory
     public class CreateCategoryCommandHandler : ICommandHandler<CreateCategoryCommand, Result<Guid>>
     {
         private readonly ICategoryRepository _categoryRepository;
-
         private readonly IUnitOfWork _unitOfWork;
-
-        private readonly IAsyncValidator<CreateCategoryCommand> _asyncValidator;
+        private readonly IAsyncValidator<CreateCategoryCommand> _createCategoryCommandValidator;
 
         public CreateCategoryCommandHandler( ICategoryRepository categoryRepository, IUnitOfWork unitOfWork, IAsyncValidator<CreateCategoryCommand> asyncValidator )
         {
             _categoryRepository = categoryRepository;
             _unitOfWork = unitOfWork;
-            _asyncValidator = asyncValidator;
+            _createCategoryCommandValidator = asyncValidator;
         }
 
         public async Task<Result<Guid>> Handle( CreateCategoryCommand request, CancellationToken cancellationToken )
         {
-            Result validationResult = await _asyncValidator.ValidateAsync( request );
+            Result validationResult = await _createCategoryCommandValidator.ValidateAsync( request );
             if ( validationResult.IsError )
             {
                 return Result<Guid>.Failure( validationResult.Error );

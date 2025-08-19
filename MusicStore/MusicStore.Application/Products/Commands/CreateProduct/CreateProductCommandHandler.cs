@@ -10,10 +10,8 @@ namespace MusicStore.Application.Products.Commands.CreateProduct
     public class CreateProductCommandHandler : ICommandHandler<CreateProductCommand, Result<Guid>>
     {
         private readonly IProductRepository _productRepository;
-
         private readonly IUnitOfWork _unitOfWork;
-
-        private readonly IAsyncValidator<CreateProductCommand> _asyncValidator;
+        private readonly IAsyncValidator<CreateProductCommand> _createProductCommandValidator;
 
         public CreateProductCommandHandler(
             IProductRepository productRepository,
@@ -22,12 +20,12 @@ namespace MusicStore.Application.Products.Commands.CreateProduct
         {
             _productRepository = productRepository;
             _unitOfWork = unitOfWork;
-            _asyncValidator = asyncValidator;
+            _createProductCommandValidator = asyncValidator;
         }
 
         public async Task<Result<Guid>> Handle( CreateProductCommand request, CancellationToken cancellationToken )
         {
-            Result validationResult = await _asyncValidator.ValidateAsync( request );
+            Result validationResult = await _createProductCommandValidator.ValidateAsync( request );
             if ( validationResult.IsError )
             {
                 return Result<Guid>.Failure( validationResult.Error );

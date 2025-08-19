@@ -11,7 +11,7 @@ namespace MusicStore.Application.Orders.Commands.SetStatusToStartAssembly
     {
         private readonly IOrderRepository _orderRepository;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IAsyncValidator<SetStatusToStartAssemblyCommand> _asyncValidator;
+        private readonly IAsyncValidator<SetStatusToStartAssemblyCommand> _setStatusToStartAssemblyCommandValidator;
 
         public SetStatusToStartAssemblyCommandHandler(
             IOrderRepository orderRepository,
@@ -20,12 +20,12 @@ namespace MusicStore.Application.Orders.Commands.SetStatusToStartAssembly
         {
             _orderRepository = orderRepository;
             _unitOfWork = unitOfWork;
-            _asyncValidator = asyncValidator;
+            _setStatusToStartAssemblyCommandValidator = asyncValidator;
         }
 
         public async Task<Result> Handle( SetStatusToStartAssemblyCommand request, CancellationToken cancellationToken )
         {
-            Result validationResult = await _asyncValidator.ValidateAsync( request );
+            Result validationResult = await _setStatusToStartAssemblyCommandValidator.ValidateAsync( request );
             if ( validationResult.IsError )
             {
                 return Result.Failure( validationResult.Error );

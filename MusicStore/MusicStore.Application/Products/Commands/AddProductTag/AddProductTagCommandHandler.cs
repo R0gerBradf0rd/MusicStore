@@ -10,12 +10,9 @@ namespace MusicStore.Application.Products.Commands.AddProductTag
     public class AddProductTagCommandHandler : ICommandHandler<AddProductTagCommand, Result<ProductTag>>
     {
         private readonly IProductTagRepository _productTagRepository;
-
         private readonly IProductRepository _productRepository;
-
         private readonly IUnitOfWork _unitOfWork;
-
-        private readonly IAsyncValidator<AddProductTagCommand> _asyncValidator;
+        private readonly IAsyncValidator<AddProductTagCommand> _addProductTagCommandValidator;
 
         public AddProductTagCommandHandler(
             IProductTagRepository productTagRepository,
@@ -26,12 +23,12 @@ namespace MusicStore.Application.Products.Commands.AddProductTag
             _productTagRepository = productTagRepository;
             _productRepository = productRepository;
             _unitOfWork = unitOfWork;
-            _asyncValidator = asyncValidator;
+            _addProductTagCommandValidator = asyncValidator;
         }
 
         public async Task<Result<ProductTag>> Handle( AddProductTagCommand request, CancellationToken cancellationToken )
         {
-            Result validationResult = await _asyncValidator.ValidateAsync( request );
+            Result validationResult = await _addProductTagCommandValidator.ValidateAsync( request );
             if ( validationResult.IsError )
             {
                 return Result<ProductTag>.Failure( validationResult.Error );
@@ -42,6 +39,7 @@ namespace MusicStore.Application.Products.Commands.AddProductTag
                 ProductTag productTag = new ProductTag( request.TagId, request.ProductId );
 
                 product.AddTag( productTag );
+                _productTagRepository.Add( productTag );
                 await _unitOfWork.CommitAsync();
 
                 return Result<ProductTag>.Success( productTag );

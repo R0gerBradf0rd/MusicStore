@@ -28,7 +28,7 @@
             get
             {
                 return CartItems
-                    .Where( item => item.IsSelected == CartItemSelectionStatus.Selected )
+                    .Where( item => item.SelectionStatus == CartItemSelectionStatus.Selected )
                     .Sum( item => item.TotalPrice );
             }
         }

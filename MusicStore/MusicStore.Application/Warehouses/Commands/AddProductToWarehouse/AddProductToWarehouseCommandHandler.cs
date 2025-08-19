@@ -9,37 +9,37 @@ namespace MusicStore.Application.Warehouses.Commands.AddProductToWarehouse
 {
     public class AddProductToWarehouseCommandHandler : ICommandHandler<AddProductToWarehouseCommand, Result<ProductWarehouse>>
     {
-        private readonly IProductWarehouseRepository _repository;
-        private readonly IWarehoRepository _warehosueRepository;
+        private readonly IProductWarehouseRepository _productWarehouseRepository;
+        private readonly IWarehouseRepository _warehouseRepository;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IAsyncValidator<AddProductToWarehouseCommand> _asyncValidator;
+        private readonly IAsyncValidator<AddProductToWarehouseCommand> _addProductToWarehouseCommandValidator;
 
         public AddProductToWarehouseCommandHandler(
-            IProductWarehouseRepository repository,
-            IWarehoRepository warehosueRepository,
+            IProductWarehouseRepository productWarehouseRepository,
+            IWarehouseRepository warehouseRepository,
             IUnitOfWork unitOfWork,
             IAsyncValidator<AddProductToWarehouseCommand> asyncValidator )
         {
-            _repository = repository;
-            _warehosueRepository = warehosueRepository;
+            _productWarehouseRepository = productWarehouseRepository;
+            _warehouseRepository = warehouseRepository;
             _unitOfWork = unitOfWork;
-            _asyncValidator = asyncValidator;
+            _addProductToWarehouseCommandValidator = asyncValidator;
         }
 
         public async Task<Result<ProductWarehouse>> Handle( AddProductToWarehouseCommand request, CancellationToken cancellationToken )
         {
-            Result validationResult = await _asyncValidator.ValidateAsync( request );
+            Result validationResult = await _addProductToWarehouseCommandValidator.ValidateAsync( request );
             if ( validationResult.IsError )
             {
                 return Result<ProductWarehouse>.Failure( validationResult.Error );
             }
             try
             {
-                Warehouse warehouse = await _warehosueRepository.GetByIdOrDefaultAsync( request.WarehouseId );
+                Warehouse warehouse = await _warehouseRepository.GetByIdOrDefaultAsync( request.WarehouseId );
                 ProductWarehouse productWarehouse = new ProductWarehouse( request.ProductId, request.WarehouseId, request.WarehouseProductQuantity );
 
                 warehouse.AddProductToWarehouse( productWarehouse );
-                _repository.Add( productWarehouse );
+                _productWarehouseRepository.Add( productWarehouse );
                 await _unitOfWork.CommitAsync();
 
                 return Result<ProductWarehouse>.Success( productWarehouse );

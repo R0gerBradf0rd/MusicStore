@@ -9,20 +9,20 @@ namespace MusicStore.Application.Warehouses.Commands.CreateWarehouse
 {
     public class CreateWarehouseCommandHandler : ICommandHandler<CreateWarehouseCommand, Result<Guid>>
     {
-        private readonly IWarehoRepository _warehosueRepository;
+        private readonly IWarehouseRepository _warehouseRepository;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IAsyncValidator<CreateWarehouseCommand> _asyncValidator;
+        private readonly IAsyncValidator<CreateWarehouseCommand> _createWarehouseCommandValidator;
 
-        public CreateWarehouseCommandHandler( IWarehoRepository warehosueRepository, IUnitOfWork unitOfWork, IAsyncValidator<CreateWarehouseCommand> asyncValidator )
+        public CreateWarehouseCommandHandler( IWarehouseRepository warehouseRepository, IUnitOfWork unitOfWork, IAsyncValidator<CreateWarehouseCommand> asyncValidator )
         {
-            _warehosueRepository = warehosueRepository;
+            _warehouseRepository = warehouseRepository;
             _unitOfWork = unitOfWork;
-            _asyncValidator = asyncValidator;
+            _createWarehouseCommandValidator = asyncValidator;
         }
 
         public async Task<Result<Guid>> Handle( CreateWarehouseCommand request, CancellationToken cancellationToken )
         {
-            Result validationResult = await _asyncValidator.ValidateAsync( request );
+            Result validationResult = await _createWarehouseCommandValidator.ValidateAsync( request );
             if ( validationResult.IsError )
             {
                 return Result<Guid>.Failure( validationResult.Error );
@@ -31,7 +31,7 @@ namespace MusicStore.Application.Warehouses.Commands.CreateWarehouse
             {
                 Warehouse warehouse = new Warehouse( request.Address );
 
-                _warehosueRepository.Add( warehouse );
+                _warehouseRepository.Add( warehouse );
                 await _unitOfWork.CommitAsync();
 
                 return Result<Guid>.Success( warehouse.Id );

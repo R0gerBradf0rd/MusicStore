@@ -10,10 +10,8 @@ namespace MusicStore.Application.Products.Commands.CreateTag
     public class CreateTagCommandHandler : ICommandHandler<CreateTagCommand, Result<Guid>>
     {
         private readonly ITagRepository _tagRepository;
-
         private readonly IUnitOfWork _unitOfWork;
-
-        private readonly IAsyncValidator<CreateTagCommand> _asyncValidator;
+        private readonly IAsyncValidator<CreateTagCommand> _createTagCommandValidator;
 
         public CreateTagCommandHandler(
             ITagRepository tagRepository,
@@ -22,12 +20,12 @@ namespace MusicStore.Application.Products.Commands.CreateTag
         {
             _tagRepository = tagRepository;
             _unitOfWork = unitOfWork;
-            _asyncValidator = validator;
+            _createTagCommandValidator = validator;
         }
 
         public async Task<Result<Guid>> Handle( CreateTagCommand request, CancellationToken cancellationToken )
         {
-            Result validationResult = await _asyncValidator.ValidateAsync( request );
+            Result validationResult = await _createTagCommandValidator.ValidateAsync( request );
             if ( validationResult.IsError )
             {
                 return Result<Guid>.Failure( validationResult.Error );

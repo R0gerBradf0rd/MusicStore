@@ -8,6 +8,6 @@ namespace MusicStore.Application.Products.Repositories
     {
         Task<bool> ContainsAsync( Expression<Func<ProductTag, bool>> predicate );
 
-        Task<ProductTag> FindeAsync( Expression<Func<ProductTag, bool>> predicate );
+        Task<ProductTag> FindAsync( Expression<Func<ProductTag, bool>> predicate );
     }
 }

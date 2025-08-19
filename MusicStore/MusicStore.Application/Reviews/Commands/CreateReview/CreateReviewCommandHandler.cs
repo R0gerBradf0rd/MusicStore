@@ -9,23 +9,23 @@ namespace MusicStore.Application.Reviews.Commands.CreateReview
 {
     public class CreateReviewCommandHandler : ICommandHandler<CreateReviewCommand, Result<Guid>>
     {
-        private readonly IReviewRepository _repository;
+        private readonly IReviewRepository _reviewRepository;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IValidator<CreateReviewCommand> _validator;
+        private readonly IValidator<CreateReviewCommand> _createReviewCommandValidator;
 
         public CreateReviewCommandHandler(
-            IReviewRepository repository,
+            IReviewRepository reviewRepository,
             IUnitOfWork unitOfWork,
             IValidator<CreateReviewCommand> validator )
         {
-            _repository = repository;
+            _reviewRepository = reviewRepository;
             _unitOfWork = unitOfWork;
-            _validator = validator;
+            _createReviewCommandValidator = validator;
         }
 
         public async Task<Result<Guid>> Handle( CreateReviewCommand request, CancellationToken cancellationToken )
         {
-            Result validationResult = _validator.Validate( request );
+            Result validationResult = _createReviewCommandValidator.Validate( request );
             if ( validationResult.IsError )
             {
                 return Result<Guid>.Failure( validationResult.Error );
@@ -34,7 +34,7 @@ namespace MusicStore.Application.Reviews.Commands.CreateReview
             {
                 Review review = new Review( request.ProductId, request.UserId, request.Rating, request.Comment );
 
-                _repository.Add( review );
+                _reviewRepository.Add( review );
                 await _unitOfWork.CommitAsync();
 
                 return Result<Guid>.Success( review.Id );

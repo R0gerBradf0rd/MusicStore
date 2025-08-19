@@ -1,12 +1,9 @@
 ﻿using MusicStore.Application.Carts.Repositories;
 using MusicStore.Application.Interfaces.Validators;
-using MusicStore.Application.Orders.Mappers;
-using MusicStore.Application.Orders.Repositories;
 using MusicStore.Application.Results;
 using MusicStore.Application.Users.Repositories;
 using MusicStore.Application.Warehouses.Repositories;
 using MusicStore.Domain.Entities.Carts;
-using MusicStore.Domain.Entities.Orders;
 using MusicStore.Domain.Entities.Warehouses;
 using MusicStore.Domain.Validators;
 
@@ -76,7 +73,7 @@ namespace MusicStore.Application.Orders.Commands.CreateOrder
 
             foreach ( CartItem cartItem in cartItems )
             {
-                ProductWarehouse? productWarehouse = await _productWarehouseRepository.FindeAsync( pw => pw.ProductId == cartItem.ProductId );
+                ProductWarehouse? productWarehouse = await _productWarehouseRepository.FindAsync( pw => pw.ProductId == cartItem.ProductId );
                 if ( productWarehouse == null )
                 {
                     return Result.Failure( $"Товар {cartItem.Product.Name} отсутсвует на складе!" );

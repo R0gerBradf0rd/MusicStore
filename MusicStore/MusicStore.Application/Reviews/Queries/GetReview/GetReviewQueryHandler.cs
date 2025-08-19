@@ -1,5 +1,4 @@
 ﻿using MusicStore.Application.Interfaces.Query;
-using MusicStore.Application.Interfaces.UnitOfWork;
 using MusicStore.Application.Interfaces.Validators;
 using MusicStore.Application.Results;
 using MusicStore.Application.Reviews.Dtos;
@@ -12,19 +11,19 @@ namespace MusicStore.Application.Reviews.Queries.GetReview
     public class GetReviewQueryHandler : IQueryHandler<GetReviewQuery, Result<ReviewDto>>
     {
         private readonly IReviewRepository _reviewRepository;
-        private readonly IAsyncValidator<GetReviewQuery> _asyncValidator;
+        private readonly IAsyncValidator<GetReviewQuery> _getReviewQueryValidator;
 
         public GetReviewQueryHandler(
             IReviewRepository reviewRepository,
             IAsyncValidator<GetReviewQuery> asyncValidator )
         {
             _reviewRepository = reviewRepository;
-            _asyncValidator = asyncValidator;
+            _getReviewQueryValidator = asyncValidator;
         }
 
         public async Task<Result<ReviewDto>> Handle( GetReviewQuery request, CancellationToken cancellationToken )
         {
-            Result validationResult = await _asyncValidator.ValidateAsync( request );
+            Result validationResult = await _getReviewQueryValidator.ValidateAsync( request );
             if ( validationResult.IsError )
             {
                 return Result<ReviewDto>.Failure( validationResult.Error );

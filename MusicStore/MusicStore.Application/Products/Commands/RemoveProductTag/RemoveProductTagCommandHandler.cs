@@ -10,12 +10,9 @@ namespace MusicStore.Application.Products.Commands.RemoveProductTag
     public class RemoveProductTagCommandHandler : ICommandHandler<RemoveProductTagCommand, Result<ProductTag>>
     {
         private readonly IProductTagRepository _productTagRepository;
-
         private readonly IProductRepository _productRepository;
-
         private readonly IUnitOfWork _unitOfWork;
-
-        private readonly IAsyncValidator<RemoveProductTagCommand> _asyncValidator;
+        private readonly IAsyncValidator<RemoveProductTagCommand> _removeProductTagCommandValidator;
 
         public RemoveProductTagCommandHandler(
             IProductTagRepository productTagRepository,
@@ -26,12 +23,12 @@ namespace MusicStore.Application.Products.Commands.RemoveProductTag
             _productTagRepository = productTagRepository;
             _productRepository = productRepository;
             _unitOfWork = unitOfWork;
-            _asyncValidator = asyncValidator;
+            _removeProductTagCommandValidator = asyncValidator;
         }
 
         public async Task<Result<ProductTag>> Handle( RemoveProductTagCommand request, CancellationToken cancellationToken )
         {
-            Result validationResult = await _asyncValidator.ValidateAsync( request );
+            Result validationResult = await _removeProductTagCommandValidator.ValidateAsync( request );
             if ( validationResult.IsError )
             {
                 return Result<ProductTag>.Failure( validationResult.Error );
@@ -39,7 +36,7 @@ namespace MusicStore.Application.Products.Commands.RemoveProductTag
             try
             {
                 Product product = await _productRepository.GetByIdOrDefaultAsync( request.ProductId );
-                ProductTag productTag = await _productTagRepository.FindeAsync( pt => pt.TagId == request.TagId && pt.ProductId == request.ProductId );
+                ProductTag productTag = await _productTagRepository.FindAsync( pt => pt.TagId == request.TagId && pt.ProductId == request.ProductId );
 
                 product.RemoveTag( productTag );
                 await _unitOfWork.CommitAsync();
