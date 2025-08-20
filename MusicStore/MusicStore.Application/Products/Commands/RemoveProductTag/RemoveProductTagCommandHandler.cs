@@ -18,12 +18,12 @@ namespace MusicStore.Application.Products.Commands.RemoveProductTag
             IProductTagRepository productTagRepository,
             IProductRepository productRepository,
             IUnitOfWork unitOfWork,
-            IAsyncValidator<RemoveProductTagCommand> asyncValidator )
+            IAsyncValidator<RemoveProductTagCommand> removeProductTagCommandValidator )
         {
             _productTagRepository = productTagRepository;
             _productRepository = productRepository;
             _unitOfWork = unitOfWork;
-            _removeProductTagCommandValidator = asyncValidator;
+            _removeProductTagCommandValidator = removeProductTagCommandValidator;
         }
 
         public async Task<Result<ProductTag>> Handle( RemoveProductTagCommand request, CancellationToken cancellationToken )

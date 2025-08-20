@@ -13,10 +13,10 @@ namespace MusicStore.Application.Users.Queries.GetUser
         private readonly IUserRepository _userRepository;
         private readonly IAsyncValidator<GetUserQuery> _getUserQueryValidator;
 
-        public GetUserQueryHandler( IUserRepository userRepository, IAsyncValidator<GetUserQuery> validator )
+        public GetUserQueryHandler( IUserRepository userRepository, IAsyncValidator<GetUserQuery> getUserQueryValidator )
         {
             _userRepository = userRepository;
-            _getUserQueryValidator = validator;
+            _getUserQueryValidator = getUserQueryValidator;
         }
 
         public async Task<Result<UserDto>> Handle( GetUserQuery request, CancellationToken cancellationToken )

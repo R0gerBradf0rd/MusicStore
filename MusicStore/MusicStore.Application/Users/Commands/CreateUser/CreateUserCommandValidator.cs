@@ -28,9 +28,9 @@ namespace MusicStore.Application.Users.Commands.CreateUser
                 return Result.Failure( "Роль пользователя не может быть пустой!" );
             }
 
-            bool isUserExist = await _userRepository.ContainsAsync( user => user.Email == request.Email );
+            bool isUserExists = await _userRepository.ContainsAsync( user => user.Email == request.Email );
 
-            if ( isUserExist )
+            if ( isUserExists )
             {
                 return Result.Failure( "Пользователь с таким Email уже существует!" );
             }

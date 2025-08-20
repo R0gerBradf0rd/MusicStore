@@ -4,11 +4,11 @@ using MusicStore.Application.Users.Repositories;
 
 namespace MusicStore.Application.Users.Queries.GetUser
 {
-    public class UserQueryValidator : IAsyncValidator<GetUserQuery>
+    public class GetUserQueryValidator : IAsyncValidator<GetUserQuery>
     {
         private readonly IUserRepository _userRepository;
 
-        public UserQueryValidator( IUserRepository userRepository )
+        public GetUserQueryValidator( IUserRepository userRepository )
         {
             _userRepository = userRepository;
         }
@@ -20,9 +20,9 @@ namespace MusicStore.Application.Users.Queries.GetUser
                 return Result.Failure( "Id не может быть пустым" );
             }
 
-            bool isUserExist = await _userRepository.ContainsAsync( u => u.Id == request.UserId );
+            bool isUserExists = await _userRepository.ContainsAsync( u => u.Id == request.UserId );
 
-            if ( !isUserExist )
+            if ( !isUserExists )
             {
                 return Result.Failure( "Пользователя с таким Id несуществует!" );
             }

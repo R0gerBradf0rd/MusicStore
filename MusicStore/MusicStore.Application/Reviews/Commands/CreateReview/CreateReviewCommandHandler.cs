@@ -16,11 +16,11 @@ namespace MusicStore.Application.Reviews.Commands.CreateReview
         public CreateReviewCommandHandler(
             IReviewRepository reviewRepository,
             IUnitOfWork unitOfWork,
-            IValidator<CreateReviewCommand> validator )
+            IValidator<CreateReviewCommand> createReviewCommandValidator )
         {
             _reviewRepository = reviewRepository;
             _unitOfWork = unitOfWork;
-            _createReviewCommandValidator = validator;
+            _createReviewCommandValidator = createReviewCommandValidator;
         }
 
         public async Task<Result<Guid>> Handle( CreateReviewCommand request, CancellationToken cancellationToken )

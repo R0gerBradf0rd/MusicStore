@@ -26,16 +26,16 @@ namespace MusicStore.Application.Products.Commands.CreateProductType
                 return Result.Failure( "Id не может быть пустым!" );
             }
 
-            bool isCategoryExist = await _categoryRepository.ContainsAsync( c => c.Id == request.CategoryId );
+            bool isCategoryExists = await _categoryRepository.ContainsAsync( c => c.Id == request.CategoryId );
 
-            if ( !isCategoryExist )
+            if ( !isCategoryExists )
             {
                 return Result.Failure( "Такой категории несуществует!" );
             }
 
-            bool isProductTypeAlreadyExist = await _productTypeRepository.ContainsAsync( p => p.Name == request.Name );
+            bool isProductTypeAlreadyExists = await _productTypeRepository.ContainsAsync( p => p.Name == request.Name );
 
-            if ( isProductTypeAlreadyExist )
+            if ( isProductTypeAlreadyExists )
             {
                 return Result.Failure( "Категория с таким названием уже существует!" );
             }

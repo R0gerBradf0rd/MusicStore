@@ -20,9 +20,9 @@ namespace MusicStore.Application.Warehouses.Commands.CreateWarehouse
                 return Result.Failure( "Адресс не может быть пустым!" );
             }
 
-            bool isWarehouseAlreadyExist = await _warehouseRepository.ContainsAsync( w => w.Address == request.Address );
+            bool isWarehouseAlreadyExists = await _warehouseRepository.ContainsAsync( w => w.Address == request.Address );
 
-            if ( isWarehouseAlreadyExist )
+            if ( isWarehouseAlreadyExists )
             {
                 return Result.Failure( "Склад с таким адресом уже существует!" );
             }

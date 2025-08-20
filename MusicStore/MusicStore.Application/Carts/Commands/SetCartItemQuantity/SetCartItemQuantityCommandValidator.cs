@@ -29,9 +29,9 @@ namespace MusicStore.Application.Carts.Commands.SetCartItemQuantity
                 return Result.Failure( $"Количество товара не должно быть больше {CartItem.CartItemQuantityLimit}!" );
             }
 
-            bool isCartItemExist = await _cartItemRepository.ContainsAsync( ci => ci.Id == request.Id );
+            bool isCartItemExists = await _cartItemRepository.ContainsAsync( ci => ci.Id == request.Id );
 
-            if ( !isCartItemExist )
+            if ( !isCartItemExists )
             {
                 return Result.Failure( "Данного элемента корзины несуществует!" );
             }

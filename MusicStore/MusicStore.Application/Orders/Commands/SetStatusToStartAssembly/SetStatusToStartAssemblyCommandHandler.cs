@@ -16,11 +16,11 @@ namespace MusicStore.Application.Orders.Commands.SetStatusToStartAssembly
         public SetStatusToStartAssemblyCommandHandler(
             IOrderRepository orderRepository,
             IUnitOfWork unitOfWork,
-            IAsyncValidator<SetStatusToStartAssemblyCommand> asyncValidator )
+            IAsyncValidator<SetStatusToStartAssemblyCommand> setStatusToStartAssemblyCommandValidator )
         {
             _orderRepository = orderRepository;
             _unitOfWork = unitOfWork;
-            _setStatusToStartAssemblyCommandValidator = asyncValidator;
+            _setStatusToStartAssemblyCommandValidator = setStatusToStartAssemblyCommandValidator;
         }
 
         public async Task<Result> Handle( SetStatusToStartAssemblyCommand request, CancellationToken cancellationToken )

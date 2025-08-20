@@ -15,10 +15,10 @@ namespace MusicStore.Application.Products.Queries.GetProduct
 
         public GetProductQueryHandler(
             IProductRepository productRepository,
-            IAsyncValidator<GetProductQuery> asyncValidator )
+            IAsyncValidator<GetProductQuery> getProductQueryValidator )
         {
             _productRepository = productRepository;
-            _getProductQueryValidator = asyncValidator;
+            _getProductQueryValidator = getProductQueryValidator;
         }
 
         public async Task<Result<ProductDto>> Handle( GetProductQuery request, CancellationToken cancellationToken )

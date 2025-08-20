@@ -27,14 +27,14 @@ namespace MusicStore.Application.Orders.Commands.CreateOrder
             ICartRepository cartRepository,
             IProductWarehouseRepository productWarehouseRepository,
             IUnitOfWork unitOfWork,
-            IAsyncValidator<CreateOrderCommand> asyncValidator )
+            IAsyncValidator<CreateOrderCommand> createOrderCommandValidator )
         {
             _orderRepository = orderRepository;
             _orderItemRepository = orderItemRepository;
             _cartRepository = cartRepository;
             _productWarehouseRepository = productWarehouseRepository;
             _unitOfWork = unitOfWork;
-            _createOrderCommandValidator = asyncValidator;
+            _createOrderCommandValidator = createOrderCommandValidator;
         }
 
         public async Task<Result<Guid>> Handle( CreateOrderCommand request, CancellationToken cancellationToken )

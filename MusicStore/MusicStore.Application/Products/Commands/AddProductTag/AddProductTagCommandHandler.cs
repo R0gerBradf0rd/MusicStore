@@ -18,12 +18,12 @@ namespace MusicStore.Application.Products.Commands.AddProductTag
             IProductTagRepository productTagRepository,
             IProductRepository productRepository,
             IUnitOfWork unitOfWork,
-            IAsyncValidator<AddProductTagCommand> asyncValidator )
+            IAsyncValidator<AddProductTagCommand> addProductTagCommandValidator )
         {
             _productTagRepository = productTagRepository;
             _productRepository = productRepository;
             _unitOfWork = unitOfWork;
-            _addProductTagCommandValidator = asyncValidator;
+            _addProductTagCommandValidator = addProductTagCommandValidator;
         }
 
         public async Task<Result<ProductTag>> Handle( AddProductTagCommand request, CancellationToken cancellationToken )

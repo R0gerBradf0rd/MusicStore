@@ -20,9 +20,9 @@ namespace MusicStore.Application.Products.Queries.GetProduct
                 return Result.Failure( "Id не может быть пустым!" );
             }
 
-            bool isProductExist = await _productRepository.ContainsAsync( p => p.Id == request.Id );
+            bool isProductExists = await _productRepository.ContainsAsync( p => p.Id == request.Id );
 
-            if ( !isProductExist )
+            if ( !isProductExists )
             {
                 return Result.Failure( "Данного продукта несуществует!" );
             }

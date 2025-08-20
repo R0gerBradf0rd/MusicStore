@@ -22,13 +22,13 @@ namespace MusicStore.Application.Carts.Commands.AddCartItem
             ICartItemRepository cartItemRepository,
             IProductRepository productRepository,
             IUnitOfWork unitOfWork,
-            IAsyncValidator<AddCartItemToCartCommand> validator )
+            IAsyncValidator<AddCartItemToCartCommand> addCartItemToCartCommandValidator )
         {
             _cartRepository = cartRepository;
             _cartItemRepository = cartItemRepository;
             _productRepository = productRepository;
             _unitOfWork = unitOfWork;
-            _addCartItemToCartCommandValidator = validator;
+            _addCartItemToCartCommandValidator = addCartItemToCartCommandValidator;
         }
 
         public async Task<Result<CartItem>> Handle( AddCartItemToCartCommand request, CancellationToken cancellationToken )

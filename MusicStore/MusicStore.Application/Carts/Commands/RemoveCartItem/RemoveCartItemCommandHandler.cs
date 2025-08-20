@@ -16,12 +16,12 @@ namespace MusicStore.Application.Carts.Commands.RemoveCartItem
 
         public RemoveCartItemCommandHandler(
             ICartRepository cartRepository,
-            IAsyncValidator<RemoveCartItemCommand> validator,
+            IAsyncValidator<RemoveCartItemCommand> removeCartItemCommandValidator,
             IUnitOfWork unitOfWork,
             ICartItemRepository cartItemRepository )
         {
             _cartRepository = cartRepository;
-            _removeCartItemCommandValidator = validator;
+            _removeCartItemCommandValidator = removeCartItemCommandValidator;
             _unitOfWork = unitOfWork;
             _cartItemRepository = cartItemRepository;
         }

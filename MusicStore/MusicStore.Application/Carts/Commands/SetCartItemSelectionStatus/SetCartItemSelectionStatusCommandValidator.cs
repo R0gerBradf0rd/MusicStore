@@ -25,9 +25,9 @@ namespace MusicStore.Application.Carts.Commands.SetCartItemSelectionStatus
                 return Result.Failure( "Такого статуса несуществует!" );
             }
 
-            bool isCartItemExist = await _cartItemRepository.ContainsAsync( ci => ci.Id == request.CartItemId );
+            bool isCartItemExists = await _cartItemRepository.ContainsAsync( ci => ci.Id == request.CartItemId );
 
-            if ( !isCartItemExist )
+            if ( !isCartItemExists )
             {
                 return Result.Failure( "Такого элемента корзины несуществует!" );
             }

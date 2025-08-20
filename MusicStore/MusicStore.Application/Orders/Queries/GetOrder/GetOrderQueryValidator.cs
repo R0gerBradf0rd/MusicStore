@@ -20,9 +20,9 @@ namespace MusicStore.Application.Orders.Queries.GetOrder
                 return Result.Failure( "Id не может бытьп пустым!" );
             }
 
-            bool isOrderExist = await _orderRepository.ContainsAsync( o => o.Id == request.Id );
+            bool isOrderExists = await _orderRepository.ContainsAsync( o => o.Id == request.Id );
 
-            if ( !isOrderExist )
+            if ( !isOrderExists )
             {
                 return Result.Failure( "Данного заказа несуществует!" );
             }

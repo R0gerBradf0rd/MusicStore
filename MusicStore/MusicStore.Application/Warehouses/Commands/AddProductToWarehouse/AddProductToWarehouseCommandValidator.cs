@@ -36,23 +36,23 @@ namespace MusicStore.Application.Warehouses.Commands.AddProductToWarehouse
                 return Result.Failure( "Количество товара не может быть отрицательным!" );
             }
 
-            bool isProductExist = await _productRepository.ContainsAsync( p => p.Id == request.ProductId );
+            bool isProductExists = await _productRepository.ContainsAsync( p => p.Id == request.ProductId );
 
-            if ( !isProductExist )
+            if ( !isProductExists )
             {
                 return Result.Failure( "Продукта с таким Id несуществует!" );
             }
 
-            bool isWarehouseExist = await _warehouseRepository.ContainsAsync( w => w.Id == request.WarehouseId );
+            bool isWarehouseExists = await _warehouseRepository.ContainsAsync( w => w.Id == request.WarehouseId );
 
-            if ( !isWarehouseExist )
+            if ( !isWarehouseExists )
             {
                 return Result.Failure( "Склада с таким Id несуществует!" );
             }
 
-            bool isWarehouseProductAlreadyExist = await _productWarehouseRepository.ContainsAsync( pw => pw.WarehouseId == request.WarehouseId && pw.ProductId == request.ProductId );
+            bool isWarehouseProductAlreadyExists = await _productWarehouseRepository.ContainsAsync( pw => pw.WarehouseId == request.WarehouseId && pw.ProductId == request.ProductId );
 
-            if ( isWarehouseProductAlreadyExist )
+            if ( isWarehouseProductAlreadyExists )
             {
                 return Result.Failure( "Такой продукт уже есть на этом складе!" );
             }

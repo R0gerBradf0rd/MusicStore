@@ -16,11 +16,11 @@ namespace MusicStore.Application.Reviews.Commands.DeleteReview
         public DeleteReviewCommandHandler(
             IReviewRepository reviewRepository,
             IUnitOfWork unitOfWork,
-            IAsyncValidator<DeleteReviewCommand> asyncValidator )
+            IAsyncValidator<DeleteReviewCommand> deleteReviewCommandValidator )
         {
             _reviewRepository = reviewRepository;
             _unitOfWork = unitOfWork;
-            _deleteReviewCommandValidator = asyncValidator;
+            _deleteReviewCommandValidator = deleteReviewCommandValidator;
         }
 
         public async Task<Result<Guid>> Handle( DeleteReviewCommand request, CancellationToken cancellationToken )

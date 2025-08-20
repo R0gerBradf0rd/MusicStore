@@ -31,16 +31,16 @@ namespace MusicStore.Application.Products.Commands.AddProductTag
                 return Result.Failure( "Id тега не может быть пустым!" );
             }
 
-            bool isProductExist = await _productRepository.ContainsAsync( p => p.Id == request.ProductId );
+            bool isProductExists = await _productRepository.ContainsAsync( p => p.Id == request.ProductId );
 
-            if ( !isProductExist )
+            if ( !isProductExists )
             {
                 return Result.Failure( "Данного продутка несуществует!" );
             }
 
-            bool isTagExist = await _tagRepository.ContainsAsync( t => t.Id == request.TagId );
+            bool isTagExists = await _tagRepository.ContainsAsync( t => t.Id == request.TagId );
 
-            if ( !isTagExist )
+            if ( !isTagExists )
             {
                 return Result.Failure( "Данного тега несуществует!" );
             }

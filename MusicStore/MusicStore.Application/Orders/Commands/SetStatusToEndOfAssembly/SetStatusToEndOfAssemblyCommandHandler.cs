@@ -11,21 +11,21 @@ namespace MusicStore.Application.Orders.Commands.SetStatusToEndOfAssembly
     {
         private readonly IOrderRepository _orderRepository;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IAsyncValidator<SetStatusToEndOfAssemblyCommand> _asyncValidator;
+        private readonly IAsyncValidator<SetStatusToEndOfAssemblyCommand> _setStatusToEndOfAssemblyCommandValidator;
 
         public SetStatusToEndOfAssemblyCommandHandler(
             IOrderRepository orderRepository,
             IUnitOfWork unitOfWork,
-            IAsyncValidator<SetStatusToEndOfAssemblyCommand> asyncValidator )
+            IAsyncValidator<SetStatusToEndOfAssemblyCommand> setStatusToEndOfAssemblyCommandValidator )
         {
             _orderRepository = orderRepository;
             _unitOfWork = unitOfWork;
-            _asyncValidator = asyncValidator;
+            _setStatusToEndOfAssemblyCommandValidator = setStatusToEndOfAssemblyCommandValidator;
         }
 
         public async Task<Result> Handle( SetStatusToEndOfAssemblyCommand request, CancellationToken cancellationToken )
         {
-            Result validationResult = await _asyncValidator.ValidateAsync( request );
+            Result validationResult = await _setStatusToEndOfAssemblyCommandValidator.ValidateAsync( request );
             if ( validationResult.IsError )
             {
                 return Result.Failure( validationResult.Error );

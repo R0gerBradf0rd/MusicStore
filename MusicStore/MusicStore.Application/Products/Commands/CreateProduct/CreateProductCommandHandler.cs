@@ -16,11 +16,11 @@ namespace MusicStore.Application.Products.Commands.CreateProduct
         public CreateProductCommandHandler(
             IProductRepository productRepository,
             IUnitOfWork unitOfWork,
-            IAsyncValidator<CreateProductCommand> asyncValidator )
+            IAsyncValidator<CreateProductCommand> createProductCommandValidator )
         {
             _productRepository = productRepository;
             _unitOfWork = unitOfWork;
-            _createProductCommandValidator = asyncValidator;
+            _createProductCommandValidator = createProductCommandValidator;
         }
 
         public async Task<Result<Guid>> Handle( CreateProductCommand request, CancellationToken cancellationToken )

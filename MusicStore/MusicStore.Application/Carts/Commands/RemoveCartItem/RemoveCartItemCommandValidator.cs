@@ -7,12 +7,10 @@ namespace MusicStore.Application.Carts.Commands.RemoveCartItem
 {
     public class RemoveCartItemCommandValidator : IAsyncValidator<RemoveCartItemCommand>
     {
-        private readonly ICartRepository _cartRepository;
         private readonly ICartItemRepository _cartItemRepository;
 
-        public RemoveCartItemCommandValidator( ICartRepository cartRepository, ICartItemRepository cartItemRepository )
+        public RemoveCartItemCommandValidator( ICartItemRepository cartItemRepository )
         {
-            _cartRepository = cartRepository;
             _cartItemRepository = cartItemRepository;
         }
 
@@ -23,9 +21,9 @@ namespace MusicStore.Application.Carts.Commands.RemoveCartItem
                 return Result.Failure( "Id корзины не может быть пустым!" );
             }
 
-            bool isCartItemExist = await _cartItemRepository.ContainsAsync( ci => ci.Id == request.Id );
+            bool isCartItemExists = await _cartItemRepository.ContainsAsync( ci => ci.Id == request.Id );
 
-            if ( !isCartItemExist )
+            if ( !isCartItemExists )
             {
                 return Result.Failure( "Данного элемента корзины несуществует!" );
             }

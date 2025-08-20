@@ -15,10 +15,10 @@ namespace MusicStore.Application.Reviews.Queries.GetReview
 
         public GetReviewQueryHandler(
             IReviewRepository reviewRepository,
-            IAsyncValidator<GetReviewQuery> asyncValidator )
+            IAsyncValidator<GetReviewQuery> getReviewQueryValidator )
         {
             _reviewRepository = reviewRepository;
-            _getReviewQueryValidator = asyncValidator;
+            _getReviewQueryValidator = getReviewQueryValidator;
         }
 
         public async Task<Result<ReviewDto>> Handle( GetReviewQuery request, CancellationToken cancellationToken )

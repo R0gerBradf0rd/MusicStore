@@ -20,9 +20,9 @@ namespace MusicStore.Application.Carts.Queries.GetCart
                 return Result.Failure( "Id не может быть пустым!" );
             }
 
-            bool isCartExist = await _cartRepository.ContainsAsync( c => c.Id == request.Id );
+            bool isCartExists = await _cartRepository.ContainsAsync( c => c.Id == request.Id );
 
-            if ( !isCartExist )
+            if ( !isCartExists )
             {
                 return Result.Failure( "Корзины с таким Id не существует!" );
             }

@@ -20,12 +20,12 @@ namespace MusicStore.Application.Users.Commands.CreateUser
             IUserRepository userRepository,
             ICartRepository cartRepository,
             IUnitOfWork unitOfWork,
-            IAsyncValidator<CreateUserCommand> asyncValidator )
+            IAsyncValidator<CreateUserCommand> createUserCommandValidator )
         {
             _userRepository = userRepository;
             _cartRepository = cartRepository;
             _unitOfWork = unitOfWork;
-            _createUserCommandValidator = asyncValidator;
+            _createUserCommandValidator = createUserCommandValidator;
         }
 
         public async Task<Result<Guid>> Handle( CreateUserCommand request, CancellationToken cancellationToken )

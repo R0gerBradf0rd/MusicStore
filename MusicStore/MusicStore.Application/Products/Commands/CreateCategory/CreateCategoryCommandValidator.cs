@@ -20,9 +20,9 @@ namespace MusicStore.Application.Products.Commands.CreateCategory
                 return Result.Failure( "Название категории не может быть пустым!" );
             }
 
-            bool isCategoryAlreadyExist = await _repository.ContainsAsync( c => c.Name == request.Name );
+            bool isCategoryAlreadyExists = await _repository.ContainsAsync( c => c.Name == request.Name );
 
-            if ( isCategoryAlreadyExist )
+            if ( isCategoryAlreadyExists )
             {
                 return Result.Failure( "Категория с таким названием уже существует!" );
             }

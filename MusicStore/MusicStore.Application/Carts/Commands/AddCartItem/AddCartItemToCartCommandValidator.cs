@@ -27,16 +27,16 @@ namespace MusicStore.Application.Carts.Commands.AddCartItem
                 return Result.Failure( "Id продукта не может быть пустым!" );
             }
 
-            bool isCartExist = await _cartRepository.ContainsAsync( c => c.Id == request.CartId );
+            bool isCartExists = await _cartRepository.ContainsAsync( c => c.Id == request.CartId );
 
-            if ( !isCartExist )
+            if ( !isCartExists )
             {
                 return Result.Failure( "Корзины с таким Id несуществует!" );
             }
 
-            bool isProductExist = await _productRepository.ContainsAsync( p => p.Id == request.ProductId );
+            bool isProductExists = await _productRepository.ContainsAsync( p => p.Id == request.ProductId );
 
-            if ( !isProductExist )
+            if ( !isProductExists )
             {
                 return Result.Failure( "Продукта с таким Id несуществует!" );
             }

@@ -20,9 +20,9 @@ namespace MusicStore.Application.Reviews.Commands.DeleteReview
                 return Result.Failure( "Id отзыва не может быть пустым!" );
             }
 
-            bool isReviewExist = await _reviewRepository.ContainsAsync( r => r.Id == request.Id );
+            bool isReviewExists = await _reviewRepository.ContainsAsync( r => r.Id == request.Id );
 
-            if ( !isReviewExist )
+            if ( !isReviewExists )
             {
                 return Result.Failure( "Данного отзыва несуществует!" );
             }

@@ -13,11 +13,14 @@ namespace MusicStore.Application.Warehouses.Commands.CreateWarehouse
         private readonly IUnitOfWork _unitOfWork;
         private readonly IAsyncValidator<CreateWarehouseCommand> _createWarehouseCommandValidator;
 
-        public CreateWarehouseCommandHandler( IWarehouseRepository warehouseRepository, IUnitOfWork unitOfWork, IAsyncValidator<CreateWarehouseCommand> asyncValidator )
+        public CreateWarehouseCommandHandler(
+            IWarehouseRepository warehouseRepository,
+            IUnitOfWork unitOfWork,
+            IAsyncValidator<CreateWarehouseCommand> createWarehouseCommandValidator )
         {
             _warehouseRepository = warehouseRepository;
             _unitOfWork = unitOfWork;
-            _createWarehouseCommandValidator = asyncValidator;
+            _createWarehouseCommandValidator = createWarehouseCommandValidator;
         }
 
         public async Task<Result<Guid>> Handle( CreateWarehouseCommand request, CancellationToken cancellationToken )

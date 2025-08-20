@@ -15,10 +15,10 @@ namespace MusicStore.Application.Orders.Queries.GetOrder
 
         public GetOrderQueryHandler(
             IOrderRepository orderRepository,
-            IAsyncValidator<GetOrderQuery> asyncValidator )
+            IAsyncValidator<GetOrderQuery> getOrderQueryValidator )
         {
             _orderRepository = orderRepository;
-            _getOrderQueryValidator = asyncValidator;
+            _getOrderQueryValidator = getOrderQueryValidator;
         }
 
         public async Task<Result<OrderDto>> Handle( GetOrderQuery request, CancellationToken cancellationToken )

@@ -20,9 +20,9 @@ namespace MusicStore.Application.Products.Commands.CreateTag
                 return Result.Failure( "Значение тега не может быть пустым!" );
             }
 
-            bool isTagAlreadyExist = await _tagRepository.ContainsAsync( t => t.Value == request.Value );
+            bool isTagAlreadyExists = await _tagRepository.ContainsAsync( t => t.Value == request.Value );
 
-            if ( isTagAlreadyExist )
+            if ( isTagAlreadyExists )
             {
                 return Result.Failure( "Данный тег уже существует!" );
             }

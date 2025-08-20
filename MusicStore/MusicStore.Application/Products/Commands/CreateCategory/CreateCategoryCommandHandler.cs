@@ -13,11 +13,14 @@ namespace MusicStore.Application.Products.Commands.CreateCategory
         private readonly IUnitOfWork _unitOfWork;
         private readonly IAsyncValidator<CreateCategoryCommand> _createCategoryCommandValidator;
 
-        public CreateCategoryCommandHandler( ICategoryRepository categoryRepository, IUnitOfWork unitOfWork, IAsyncValidator<CreateCategoryCommand> asyncValidator )
+        public CreateCategoryCommandHandler(
+            ICategoryRepository categoryRepository,
+            IUnitOfWork unitOfWork,
+            IAsyncValidator<CreateCategoryCommand> createCategoryCommandValidator )
         {
             _categoryRepository = categoryRepository;
             _unitOfWork = unitOfWork;
-            _createCategoryCommandValidator = asyncValidator;
+            _createCategoryCommandValidator = createCategoryCommandValidator;
         }
 
         public async Task<Result<Guid>> Handle( CreateCategoryCommand request, CancellationToken cancellationToken )

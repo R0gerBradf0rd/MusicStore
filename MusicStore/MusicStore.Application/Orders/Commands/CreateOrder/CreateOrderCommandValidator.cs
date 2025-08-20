@@ -48,16 +48,16 @@ namespace MusicStore.Application.Orders.Commands.CreateOrder
                 return Result.Failure( "Данного кода валюты нет в списке доступных кодов!" );
             }
 
-            bool isUserExist = await _userRepository.ContainsAsync( u => u.Id == request.UserId );
+            bool isUserExists = await _userRepository.ContainsAsync( u => u.Id == request.UserId );
 
-            if ( !isUserExist )
+            if ( !isUserExists )
             {
                 return Result.Failure( "Данного пользователя несуществует!" );
             }
 
-            bool isCartExist = await _cartRepository.ContainsAsync( c => c.Id == request.CartId );
+            bool isCartExists = await _cartRepository.ContainsAsync( c => c.Id == request.CartId );
 
-            if ( !isCartExist )
+            if ( !isCartExists )
             {
                 return Result.Failure( "Данной корзины несуществует!" );
             }

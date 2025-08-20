@@ -16,11 +16,11 @@ namespace MusicStore.Application.Carts.Commands.SetCartItemSelectionStatus
         public SetCartItemSelectionStatusCommandHandler(
             ICartItemRepository cartItemRepository,
             IUnitOfWork unitOfWork,
-            IAsyncValidator<SetCartItemSelectionStatusCommand> asyncValidator )
+            IAsyncValidator<SetCartItemSelectionStatusCommand> setCartItemSelectionStatusCommandValidator )
         {
             _cartItemRepository = cartItemRepository;
             _unitOfWork = unitOfWork;
-            _setCartItemSelectionStatusCommandValidator = asyncValidator;
+            _setCartItemSelectionStatusCommandValidator = setCartItemSelectionStatusCommandValidator;
         }
 
         public async Task<Result<string>> Handle( SetCartItemSelectionStatusCommand request, CancellationToken cancellationToken )

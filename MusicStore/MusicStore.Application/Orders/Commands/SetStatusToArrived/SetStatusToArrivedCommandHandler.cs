@@ -16,11 +16,11 @@ namespace MusicStore.Application.Orders.Commands.SetStatusToArrived
         public SetStatusToArrivedCommandHandler(
             IOrderRepository orderRepository,
             IUnitOfWork unitOfWork,
-            IAsyncValidator<SetStatusToArrivedCommand> asyncValidator )
+            IAsyncValidator<SetStatusToArrivedCommand> setStatusToArrivedCommandValidator )
         {
             _orderRepository = orderRepository;
             _unitOfWork = unitOfWork;
-            _setStatusToArrivedCommandValidator = asyncValidator;
+            _setStatusToArrivedCommandValidator = setStatusToArrivedCommandValidator;
         }
 
         public async Task<Result> Handle( SetStatusToArrivedCommand request, CancellationToken cancellationToken )

@@ -13,10 +13,10 @@ namespace MusicStore.Application.Carts.Queries.GetCart
         private readonly ICartRepository _cartRepository;
         private readonly IAsyncValidator<GetCartQuery> _getCartQueryValidator;
 
-        public GetCartQueryHandler( ICartRepository cartRepository, IAsyncValidator<GetCartQuery> asyncValidator )
+        public GetCartQueryHandler( ICartRepository cartRepository, IAsyncValidator<GetCartQuery> getCartQueryValidator )
         {
             _cartRepository = cartRepository;
-            _getCartQueryValidator = asyncValidator;
+            _getCartQueryValidator = getCartQueryValidator;
         }
 
         public async Task<Result<CartDto>> Handle( GetCartQuery request, CancellationToken cancellationToken )

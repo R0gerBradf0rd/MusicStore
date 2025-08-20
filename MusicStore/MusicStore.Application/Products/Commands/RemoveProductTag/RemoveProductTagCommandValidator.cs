@@ -34,21 +34,23 @@ namespace MusicStore.Application.Products.Commands.RemoveProductTag
                 return Result.Failure( "Id тега не может быть пустым!" );
             }
 
-            bool isProductExist = await _productRepository.ContainsAsync( p => p.Id == request.ProductId );
-            bool isTagExist = await _tagRepository.ContainsAsync( t => t.Id == request.TagId );
+            bool isProductExists = await _productRepository.ContainsAsync( p => p.Id == request.ProductId );
 
-            if ( !isProductExist )
+            if ( !isProductExists )
             {
                 return Result.Failure( "Данного продутка несуществует!" );
             }
-            if ( !isTagExist )
+
+            bool isTagExists = await _tagRepository.ContainsAsync( t => t.Id == request.TagId );
+
+            if ( !isTagExists )
             {
                 return Result.Failure( "Данного тега несуществует!" );
             }
 
-            bool isProductTagAlreadyExist = await _productTagRepository.ContainsAsync( pt => pt.TagId == request.TagId && pt.ProductId == request.ProductId );
+            bool isProductTagAlreadyExists = await _productTagRepository.ContainsAsync( pt => pt.TagId == request.TagId && pt.ProductId == request.ProductId );
 
-            if ( !isProductTagAlreadyExist )
+            if ( !isProductTagAlreadyExists )
             {
                 return Result.Failure( "Данного тега нет у данного продукта!" );
             }

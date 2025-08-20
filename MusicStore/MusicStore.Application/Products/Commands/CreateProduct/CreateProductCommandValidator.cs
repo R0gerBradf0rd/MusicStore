@@ -36,9 +36,9 @@ namespace MusicStore.Application.Products.Commands.CreateProduct
                 return Result.Failure( "Id типа продукта не может быть пустым!" );
             }
 
-            bool isProductTypeExist = await _productTypeRepository.ContainsAsync( pt => pt.Id == request.ProductTypeId );
+            bool isProductTypeExists = await _productTypeRepository.ContainsAsync( pt => pt.Id == request.ProductTypeId );
 
-            if ( !isProductTypeExist )
+            if ( !isProductTypeExists )
             {
                 return Result.Failure( "Данного типа продукта несуществует!" );
             }

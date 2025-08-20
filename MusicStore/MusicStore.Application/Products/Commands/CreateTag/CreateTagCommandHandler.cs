@@ -16,11 +16,11 @@ namespace MusicStore.Application.Products.Commands.CreateTag
         public CreateTagCommandHandler(
             ITagRepository tagRepository,
             IUnitOfWork unitOfWork,
-            IAsyncValidator<CreateTagCommand> validator )
+            IAsyncValidator<CreateTagCommand> createTagCommandValidator )
         {
             _tagRepository = tagRepository;
             _unitOfWork = unitOfWork;
-            _createTagCommandValidator = validator;
+            _createTagCommandValidator = createTagCommandValidator;
         }
 
         public async Task<Result<Guid>> Handle( CreateTagCommand request, CancellationToken cancellationToken )

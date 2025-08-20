@@ -12,23 +12,23 @@ namespace MusicStore.Application.Carts.Commands.SetCartItemQuantity
         private readonly ICartItemRepository _cartItemRepository;
         private readonly ICartRepository _cartRepository;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IAsyncValidator<SetCartItemQuantityCommand> _asyncValidator;
+        private readonly IAsyncValidator<SetCartItemQuantityCommand> _setCartItemQuantityCommandValidator;
 
         public SetCartItemQuantityCommandHandler(
             ICartItemRepository cartItemRepository,
             ICartRepository cartRepository,
             IUnitOfWork unitOfWork,
-            IAsyncValidator<SetCartItemQuantityCommand> asyncValidator )
+            IAsyncValidator<SetCartItemQuantityCommand> setCartItemQuantityCommandValidator )
         {
             _cartItemRepository = cartItemRepository;
             _cartRepository = cartRepository;
             _unitOfWork = unitOfWork;
-            _asyncValidator = asyncValidator;
+            _setCartItemQuantityCommandValidator = setCartItemQuantityCommandValidator;
         }
 
         public async Task<Result<string>> Handle( SetCartItemQuantityCommand request, CancellationToken cancellationToken )
         {
-            Result validationResult = await _asyncValidator.ValidateAsync( request );
+            Result validationResult = await _setCartItemQuantityCommandValidator.ValidateAsync( request );
             if ( validationResult.IsError )
             {
                 return Result<string>.Failure( validationResult.Error );

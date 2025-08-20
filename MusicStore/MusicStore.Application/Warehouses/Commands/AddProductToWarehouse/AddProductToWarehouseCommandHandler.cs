@@ -18,12 +18,12 @@ namespace MusicStore.Application.Warehouses.Commands.AddProductToWarehouse
             IProductWarehouseRepository productWarehouseRepository,
             IWarehouseRepository warehouseRepository,
             IUnitOfWork unitOfWork,
-            IAsyncValidator<AddProductToWarehouseCommand> asyncValidator )
+            IAsyncValidator<AddProductToWarehouseCommand> addProductToWarehouseCommandValidator )
         {
             _productWarehouseRepository = productWarehouseRepository;
             _warehouseRepository = warehouseRepository;
             _unitOfWork = unitOfWork;
-            _addProductToWarehouseCommandValidator = asyncValidator;
+            _addProductToWarehouseCommandValidator = addProductToWarehouseCommandValidator;
         }
 
         public async Task<Result<ProductWarehouse>> Handle( AddProductToWarehouseCommand request, CancellationToken cancellationToken )
