@@ -20,6 +20,7 @@ namespace MusicStore.Application.Orders.Commands.CreateOrder
         private readonly IProductWarehouseRepository _productWarehouseRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IAsyncValidator<CreateOrderCommand> _createOrderCommandValidator;
+        private static readonly object _locker = new object();
 
         public CreateOrderCommandHandler(
             IOrderRepository orderRepository,
@@ -52,12 +53,15 @@ namespace MusicStore.Application.Orders.Commands.CreateOrder
                     .Where( i => i.SelectionStatus == CartItemSelectionStatus.Selected )
                     .ToList();
 
-                foreach ( CartItem cartItem in cartItems )
+                lock ( _locker )
                 {
-                    _orderItemRepository.Add( cartItem.ToOrderItem( order.Id ) );
-                    ProductWarehouse productWarehouse = await _productWarehouseRepository.FindAsync( pw => pw.ProductId == cartItem.ProductId );
-                    productWarehouse.TakeProductFromWarehouse( cartItem.Quantity );
-                    cart.RemoveItem( cartItem );
+                    foreach ( CartItem cartItem in cartItems )
+                    {
+                        _orderItemRepository.Add( cartItem.ToOrderItem( order.Id ) );
+                        ProductWarehouse productWarehouse = _productWarehouseRepository.Find( pw => pw.ProductId == cartItem.ProductId );
+                        productWarehouse.TakeProductFromWarehouse( cartItem.Quantity );
+                        cart.RemoveItem( cartItem );
+                    }
                 }
 
                 _orderRepository.Add( order );
