@@ -21,10 +21,22 @@
         public ICollection<CartItem> CartItems { get; }
 
         /// <summary>
+        /// Полная стоимость товаров в корзине
+        /// </summary>
+        public decimal TotalPrice
+        {
+            get
+            {
+                return CartItems
+                    .Where( item => item.SelectionStatus == CartItemSelectionStatus.Selected )
+                    .Sum( item => item.TotalPrice );
+            }
+        }
+
+        /// <summary>
         /// Создаёт новый экземпляр корзины с указанным идентификатором пользователя
         /// </summary>
         /// <param name="userId">Идентификатор пользователя</param>
-        /// <param name="cartItems">Список элементов корзины</param>
         /// <exception cref="ArgumentException">Если переданные значения параметров пустые</exception>
         public Cart( Guid userId )
         {
@@ -47,7 +59,7 @@
         /// <summary>
         /// Добавляет товар в корзину, увеличивает счетчик товаров на 1
         /// </summary>
-        public void AddCartItem( CartItem cartItem )
+        public void AddItem( CartItem cartItem )
         {
             if ( !CartItems.Contains( cartItem ) )
             {
@@ -58,7 +70,7 @@
         /// <summary>
         /// Удаляет товар из корзины, уменьшает счетчик товаров на 1
         /// </summary>
-        public void RemoveCartItem( CartItem cartItem )
+        public void RemoveItem( CartItem cartItem )
         {
             if ( CartItems.Contains( cartItem ) )
             {

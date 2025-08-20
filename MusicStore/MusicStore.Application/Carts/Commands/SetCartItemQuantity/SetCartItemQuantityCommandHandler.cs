@@ -1,0 +1,52 @@
+﻿using MusicStore.Application.Carts.Repositories;
+using MusicStore.Application.Interfaces.Command;
+using MusicStore.Application.Interfaces.UnitOfWork;
+using MusicStore.Application.Interfaces.Validators;
+using MusicStore.Application.Results;
+using MusicStore.Domain.Entities.Carts;
+
+namespace MusicStore.Application.Carts.Commands.SetCartItemQuantity
+{
+    public class SetCartItemQuantityCommandHandler : ICommandHandler<SetCartItemQuantityCommand, Result<string>>
+    {
+        private readonly ICartItemRepository _cartItemRepository;
+        private readonly ICartRepository _cartRepository;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IAsyncValidator<SetCartItemQuantityCommand> _setCartItemQuantityCommandValidator;
+
+        public SetCartItemQuantityCommandHandler(
+            ICartItemRepository cartItemRepository,
+            ICartRepository cartRepository,
+            IUnitOfWork unitOfWork,
+            IAsyncValidator<SetCartItemQuantityCommand> setCartItemQuantityCommandValidator )
+        {
+            _cartItemRepository = cartItemRepository;
+            _cartRepository = cartRepository;
+            _unitOfWork = unitOfWork;
+            _setCartItemQuantityCommandValidator = setCartItemQuantityCommandValidator;
+        }
+
+        public async Task<Result<string>> Handle( SetCartItemQuantityCommand request, CancellationToken cancellationToken )
+        {
+            Result validationResult = await _setCartItemQuantityCommandValidator.ValidateAsync( request );
+            if ( validationResult.IsError )
+            {
+                return Result<string>.Failure( validationResult.Error );
+            }
+            try
+            {
+                CartItem cartItem = await _cartItemRepository.GetByIdOrDefaultAsync( request.Id );
+                Cart cart = await _cartRepository.GetByIdOrDefaultAsync( cartItem.CartId );
+
+                cartItem.SetQuantity( request.Quantity );
+                await _unitOfWork.CommitAsync();
+
+                return Result<string>.Success( $"Количество товара в корзине установленно {request.Quantity}." );
+            }
+            catch ( Exception ex )
+            {
+                return Result<string>.Failure( ex.Message );
+            }
+        }
+    }
+}

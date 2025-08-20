@@ -18,21 +18,21 @@
         /// <summary>
         /// Колличество товара на складе
         /// </summary>
-        public int WarehouseProductQuantity { get; private set; }
+        public int Quantity { get; private set; }
 
         /// <summary>
         /// Создает объект, содержащий колличество определенного товара, на определенном складе, с указанными параметрами
         /// </summary>
         /// <param name="productId">Идентификатор продукта</param>
         /// <param name="warehouseId">Идентификатор склада</param>
-        /// <param name="warehouseProductQuantity">Количество товара на складе</param>
+        /// <param name="quantity">Количество товара на складе</param>
         /// <exception cref="ArgumentException">Если количество товара на складе warehouseProductQuantity отрицательное</exception>
         /// <exception cref="ArgumentException">Если переданные значения параметров пустые</exception>
-        public ProductWarehouse( Guid productId, Guid warehouseId, int warehouseProductQuantity )
+        public ProductWarehouse( Guid productId, Guid warehouseId, int quantity )
         {
-            if ( warehouseProductQuantity < 0 )
+            if ( quantity < 0 )
             {
-                throw new ArgumentException( "Количество товара не может быть отрицательным!", nameof( warehouseProductQuantity ) );
+                throw new ArgumentException( "Количество товара не может быть отрицательным!", nameof( quantity ) );
             }
             if ( productId == Guid.Empty )
             {
@@ -44,7 +44,7 @@
             }
             ProductId = productId;
             WarehouseId = warehouseId;
-            WarehouseProductQuantity = warehouseProductQuantity;
+            Quantity = quantity;
         }
 
         /// <summary>
@@ -52,7 +52,7 @@
         /// </summary>
         public void AddProductToWarehouse( int count )
         {
-            WarehouseProductQuantity += count;
+            Quantity += count;
         }
 
         /// <summary>
@@ -60,11 +60,11 @@
         /// </summary>
         public void TakeProductFromWarehouse( int count )
         {
-            if ( WarehouseProductQuantity - count < 0 )
+            if ( Quantity - count < 0 )
             {
                 throw new InvalidOperationException( "Невозможно взять данное количество товара со склада!" );
             }
-            WarehouseProductQuantity -= count;
+            Quantity -= count;
         }
     }
 }

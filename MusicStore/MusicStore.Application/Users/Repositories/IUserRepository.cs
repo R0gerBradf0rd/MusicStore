@@ -2,7 +2,7 @@
 using MusicStore.Application.Interfaces.Repository;
 using MusicStore.Domain.Entities.Users;
 
-namespace MusicStore.Application.Users.Repository
+namespace MusicStore.Application.Users.Repositories
 {
     public interface IUserRepository : IAddRepository<User>, IDeleteRepository<User>
     {
