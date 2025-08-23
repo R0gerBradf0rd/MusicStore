@@ -20,6 +20,9 @@ namespace MusicStore.Application.Orders.Commands.CreateOrder
         private readonly IProductWarehouseRepository _productWarehouseRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IAsyncValidator<CreateOrderCommand> _createOrderCommandValidator;
+        private static readonly object _locker = new object(); // ну эмм ээээ, ну это типаааа...
+        // крч, я спросил совета у чата гпт, он сказал, что так клево будет, и все экземпляры обработчика команды будут использовать один объект блокировки
+        // извините что сам до этого не додумался
 
         public CreateOrderCommandHandler(
             IOrderRepository orderRepository,
@@ -56,7 +59,14 @@ namespace MusicStore.Application.Orders.Commands.CreateOrder
                 {
                     _orderItemRepository.Add( cartItem.ToOrderItem( order.Id ) );
                     ProductWarehouse productWarehouse = await _productWarehouseRepository.FindAsync( pw => pw.ProductId == cartItem.ProductId );
-                    productWarehouse.TakeProductFromWarehouse( cartItem.Quantity );
+                    lock ( _locker )
+                    {
+                        if ( productWarehouse.Quantity < cartItem.Quantity )
+                        {
+                            return Result<Guid>.Failure( "Недостаточно товара на складе" );
+                        }
+                        productWarehouse.TakeProductFromWarehouse( cartItem.Quantity );
+                    }
                     cart.RemoveItem( cartItem );
                 }
 
