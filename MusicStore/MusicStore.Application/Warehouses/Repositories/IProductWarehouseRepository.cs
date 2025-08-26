@@ -9,7 +9,5 @@ namespace MusicStore.Application.Warehouses.Repositories
         Task<bool> ContainsAsync( Expression<Func<ProductWarehouse, bool>> predicate );
 
         Task<ProductWarehouse> FindAsync( Expression<Func<ProductWarehouse, bool>> predicate );
-
-        ProductWarehouse Find( Expression<Func<ProductWarehouse, bool>> predicate );
     }
 }

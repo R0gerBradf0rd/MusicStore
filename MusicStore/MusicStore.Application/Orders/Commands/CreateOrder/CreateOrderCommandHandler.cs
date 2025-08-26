@@ -58,10 +58,6 @@ namespace MusicStore.Application.Orders.Commands.CreateOrder
                 {
                     _orderItemRepository.Add( cartItem.ToOrderItem( order.Id ) );
                     ProductWarehouse productWarehouse = await _productWarehouseRepository.FindAsync( pw => pw.ProductId == cartItem.ProductId );
-                    if ( productWarehouse.Quantity < cartItem.Quantity )
-                    {
-                        return Result<Guid>.Failure( "Недостаточно товара на складе" );
-                    }
                     productWarehouse.TakeProductFromWarehouse( cartItem.Quantity );
                     cart.RemoveItem( cartItem );
                 }
