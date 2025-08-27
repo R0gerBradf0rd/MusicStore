@@ -4,7 +4,7 @@ using MusicStore.Domain.Entities.Carts;
 
 namespace MusicStore.Application.Carts.Repositories
 {
-    public interface ICartRepository : IAddRepository<Cart>, IDeleteRepository<Cart>
+    public interface ICartRepository : IRepository<Cart>
     {
         Task<Cart?> GetByIdOrDefaultAsync( Guid id );
 

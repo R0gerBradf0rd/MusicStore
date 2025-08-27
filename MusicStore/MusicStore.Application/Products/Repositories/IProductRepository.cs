@@ -4,7 +4,7 @@ using MusicStore.Domain.Entities.Products;
 
 namespace MusicStore.Application.Products.Repositories
 {
-    public interface IProductRepository : IAddRepository<Product>, IDeleteRepository<Product>
+    public interface IProductRepository : IRepository<Product>
     {
         Task<Product?> GetByIdOrDefaultAsync( Guid id );
 

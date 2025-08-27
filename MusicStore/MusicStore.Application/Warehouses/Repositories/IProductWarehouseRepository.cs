@@ -4,10 +4,10 @@ using MusicStore.Domain.Entities.Warehouses;
 
 namespace MusicStore.Application.Warehouses.Repositories
 {
-    public interface IProductWarehouseRepository : IAddRepository<ProductWarehouse>, IDeleteRepository<ProductWarehouse>
+    public interface IProductWarehouseRepository : IRepository<ProductWarehouse>
     {
         Task<bool> ContainsAsync( Expression<Func<ProductWarehouse, bool>> predicate );
 
-        Task<ProductWarehouse> FindAsync( Expression<Func<ProductWarehouse, bool>> predicate );
+        Task<ProductWarehouse?> FindAsync( Expression<Func<ProductWarehouse, bool>> predicate );
     }
 }

@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 
 namespace MusicStore.Application.Orders.Repositories
 {
-    public interface IOrderItemRepository : IAddRepository<OrderItem>, IDeleteRepository<OrderItem>
+    public interface IOrderItemRepository : IRepository<OrderItem>
     {
         Task<OrderItem?> GetByIdOrDefaultAsync( Guid id );
 

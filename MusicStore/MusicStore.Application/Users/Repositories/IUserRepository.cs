@@ -4,7 +4,7 @@ using MusicStore.Domain.Entities.Users;
 
 namespace MusicStore.Application.Users.Repositories
 {
-    public interface IUserRepository : IAddRepository<User>, IDeleteRepository<User>
+    public interface IUserRepository : IRepository<User>
     {
         Task<User?> GetByIdOrDefaultAsync( Guid id );
 

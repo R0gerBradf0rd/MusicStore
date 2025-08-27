@@ -4,7 +4,7 @@ using MusicStore.Domain.Entities.Orders;
 
 namespace MusicStore.Application.Orders.Repositories
 {
-    public interface IOrderRepository : IAddRepository<Order>, IDeleteRepository<Order>
+    public interface IOrderRepository : IRepository<Order>
     {
         Task<Order?> GetByIdOrDefaultAsync( Guid id );
 
