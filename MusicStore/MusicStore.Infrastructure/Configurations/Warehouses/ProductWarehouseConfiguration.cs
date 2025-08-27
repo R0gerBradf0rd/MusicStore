@@ -8,7 +8,7 @@ namespace MusicStore.Infrastructure.Configurations.Warehouses
     {
         public void Configure( EntityTypeBuilder<ProductWarehouse> builder )
         {
-            builder.ToTable( "productWarehouse" );
+            builder.ToTable( "ProductWarehouse" );
 
             builder.HasKey( pw => new { pw.ProductId, pw.WarehouseId } );
 

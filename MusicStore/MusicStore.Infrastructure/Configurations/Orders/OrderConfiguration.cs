@@ -10,7 +10,7 @@ namespace MusicStore.Infrastructure.Configurations.Orders
     {
         public void Configure( EntityTypeBuilder<Order> builder )
         {
-            builder.ToTable( "orders" );
+            builder.ToTable( "Orders" );
 
             builder.HasKey( o => o.Id );
 
@@ -24,7 +24,7 @@ namespace MusicStore.Infrastructure.Configurations.Orders
                 .IsRequired();
 
             builder.Property( o => o.ShippingAddress )
-                .HasMaxLength( 200 )
+                .HasMaxLength( 3000 )
                 .IsRequired();
 
             builder.Property( o => o.CreationDate )

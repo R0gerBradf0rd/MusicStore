@@ -9,7 +9,7 @@ namespace MusicStore.Infrastructure.Configurations.Carts
     {
         public void Configure( EntityTypeBuilder<Cart> builder )
         {
-            builder.ToTable( "carts" );
+            builder.ToTable( "Carts" );
 
             builder.HasKey( c => c.Id );
 

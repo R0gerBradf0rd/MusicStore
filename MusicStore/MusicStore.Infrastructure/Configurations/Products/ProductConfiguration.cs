@@ -9,16 +9,16 @@ namespace MusicStore.Infrastructure.Configurations.Products
     {
         public void Configure( EntityTypeBuilder<Product> builder )
         {
-            builder.ToTable( "products" );
+            builder.ToTable( "Products" );
 
             builder.HasKey( p => p.Id );
 
             builder.Property( p => p.Name )
-                .HasMaxLength( 50 )
+                .HasMaxLength( 300 )
                 .IsRequired();
 
             builder.Property( p => p.Description )
-                .HasMaxLength( 50 );
+                .HasMaxLength( 5000 );
 
             builder.Property( p => p.PriceCurrencyCode )
                 .HasMaxLength( 5 )
@@ -28,7 +28,7 @@ namespace MusicStore.Infrastructure.Configurations.Products
                 .IsRequired();
 
             builder.Property( p => p.ImageURL )
-                .HasMaxLength( 50 )
+                .HasMaxLength( 1000 )
                 .IsRequired();
 
             builder.HasMany( p => p.ProductTags )

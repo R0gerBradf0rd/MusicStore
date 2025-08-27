@@ -8,12 +8,12 @@ namespace MusicStore.Infrastructure.Configurations.Products
     {
         public void Configure( EntityTypeBuilder<ProductType> builder )
         {
-            builder.ToTable( "productType" );
+            builder.ToTable( "ProductType" );
 
             builder.HasKey( pt => pt.Id );
 
             builder.Property( pt => pt.Name )
-                .HasMaxLength( 20 )
+                .HasMaxLength( 300 )
                 .IsRequired();
 
             builder.HasOne<Category>()

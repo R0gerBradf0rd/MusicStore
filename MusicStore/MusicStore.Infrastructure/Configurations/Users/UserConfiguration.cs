@@ -8,20 +8,20 @@ namespace MusicStore.Infrastructure.Configurations.Users
     {
         public void Configure( EntityTypeBuilder<User> builder )
         {
-            builder.ToTable( "users" );
+            builder.ToTable( "Users" );
 
             builder.HasKey( u => u.Id );
 
             builder.Property( u => u.Name )
-                .HasMaxLength( 50 )
+                .HasMaxLength( 300 )
                 .IsRequired();
 
             builder.Property( u => u.Email )
-                .HasMaxLength( 50 )
+                .HasMaxLength( 300 )
                 .IsRequired();
 
             builder.Property( u => u.UserRole )
-               .HasMaxLength( 50 )
+               .HasMaxLength( 300 )
                .IsRequired();
         }
     }

@@ -8,12 +8,12 @@ namespace MusicStore.Infrastructure.Configurations.Warehouses
     {
         public void Configure( EntityTypeBuilder<Warehouse> builder )
         {
-            builder.ToTable( "warehouses" );
+            builder.ToTable( "Warehouses" );
 
             builder.HasKey( w => w.Id );
 
             builder.Property( w => w.Address )
-                .HasMaxLength( 200 )
+                .HasMaxLength( 3000 )
                 .IsRequired();
 
             builder.HasMany( w => w.ProductWarehouseItems )

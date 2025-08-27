@@ -8,7 +8,7 @@ namespace MusicStore.Infrastructure.Configurations.Carts
     {
         public void Configure( EntityTypeBuilder<CartItem> builder )
         {
-            builder.ToTable( "cartItems" );
+            builder.ToTable( "CartItems" );
 
             builder.HasKey( ci => ci.Id );
 

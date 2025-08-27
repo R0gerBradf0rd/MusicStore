@@ -9,7 +9,7 @@ namespace MusicStore.Infrastructure.Configurations.Orders
     {
         public void Configure( EntityTypeBuilder<OrderItem> builder )
         {
-            builder.ToTable( "orderItems" );
+            builder.ToTable( "OrderItems" );
 
             builder.HasKey( oi => oi.Id );
 

@@ -10,12 +10,12 @@ namespace MusicStore.Infrastructure.Configurations.Reviews
     {
         public void Configure( EntityTypeBuilder<Review> builder )
         {
-            builder.ToTable( "reviews" );
+            builder.ToTable( "Reviews" );
 
             builder.HasKey( r => r.Id );
 
             builder.Property( r => r.Comment )
-                .HasMaxLength( 5000 );
+                .HasMaxLength( 10000 );
 
             builder.HasOne<User>()
                 .WithMany()

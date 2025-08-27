@@ -8,7 +8,7 @@ namespace MusicStore.Infrastructure.Configurations.Products
     {
         public void Configure( EntityTypeBuilder<ProductTag> builder )
         {
-            builder.ToTable( "productTag" );
+            builder.ToTable( "ProductTag" );
 
             builder.HasKey( pt => new { pt.TagId, pt.ProductId } );
 

@@ -8,12 +8,12 @@ namespace MusicStore.Infrastructure.Configurations.Products
     {
         public void Configure( EntityTypeBuilder<Tag> builder )
         {
-            builder.ToTable( "tags" );
+            builder.ToTable( "Tags" );
 
             builder.HasKey( t => t.Id );
 
             builder.Property( t => t.Value )
-                .HasMaxLength( 20 )
+                .HasMaxLength( 200 )
                 .IsRequired();
 
             builder.HasMany<ProductTag>()

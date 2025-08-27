@@ -16,30 +16,27 @@ namespace MusicStore.Infrastructure.Contexts
 {
     public class AppDbContext : DbContext
     {
-        DbSet<User> Users { get; set; }
+        public DbSet<User> Users { get; set; }
 
-        DbSet<Warehouse> Warehouses { get; set; }
-        DbSet<ProductWarehouse> ProductWarehouses { get; set; }
+        public DbSet<Warehouse> Warehouses { get; set; }
+        public DbSet<ProductWarehouse> ProductWarehouses { get; set; }
 
-        DbSet<Review> Reviews { get; set; }
+        public DbSet<Review> Reviews { get; set; }
 
-        DbSet<Tag> Tags { get; set; }
-        DbSet<ProductTag> ProductTags { get; set; }
-        DbSet<ProductType> ProductTypes { get; set; }
-        DbSet<Product> Products { get; set; }
-        DbSet<Category> Categories { get; set; }
+        public DbSet<Tag> Tags { get; set; }
+        public DbSet<ProductTag> ProductTags { get; set; }
+        public DbSet<ProductType> ProductTypes { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Category> Categories { get; set; }
 
-        DbSet<OrderItem> OrderItems { get; set; }
-        DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
+        public DbSet<Order> Orders { get; set; }
 
-        DbSet<CartItem> CartItems { get; set; }
-        DbSet<Cart> Carts { get; set; }
+        public DbSet<CartItem> CartItems { get; set; }
+        public DbSet<Cart> Carts { get; set; }
 
         public AppDbContext( DbContextOptions<AppDbContext> options )
-            : base( options )
-        {
-            Database.EnsureCreated();
-        }
+            : base( options ) { }
 
         protected override void OnModelCreating( ModelBuilder modelBuilder )
         {
