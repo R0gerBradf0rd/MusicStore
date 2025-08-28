@@ -16,14 +16,9 @@ namespace MusicStore.Infrastructure.Repositories.Products
             _dbContext = dbContext;
         }
 
-        public Task<bool> ContainsAsync( Expression<Func<ProductTag, bool>> predicate )
-        {
-            return _dbContext.ProductTags.AnyAsync( predicate );
-        }
-
         public Task<ProductTag?> FindAsync( Expression<Func<ProductTag, bool>> predicate )
         {
-            return _dbContext.ProductTags.FirstOrDefaultAsync( predicate );
+            return Entities.FirstOrDefaultAsync( predicate );
         }
     }
 }

@@ -16,19 +16,14 @@ namespace MusicStore.Infrastructure.Repositories.Carts
             _dbContext = dbContext;
         }
 
-        public Task<bool> ContainsAsync( Expression<Func<CartItem, bool>> predicate )
-        {
-            return _dbContext.CartItems.AnyAsync( predicate );
-        }
-
         public Task<CartItem?> FindAsync( Expression<Func<CartItem, bool>> predicate )
         {
-            return _dbContext.CartItems.FirstOrDefaultAsync( predicate );
+            return Entities.FirstOrDefaultAsync( predicate );
         }
 
         public Task<CartItem?> GetByIdOrDefaultAsync( Guid id )
         {
-            return _dbContext.CartItems.FirstOrDefaultAsync( ci => ci.Id == id );
+            return Entities.FirstOrDefaultAsync( ci => ci.Id == id );
         }
     }
 }

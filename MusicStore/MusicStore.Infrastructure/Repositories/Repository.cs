@@ -1,10 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
 using MusicStore.Application.Interfaces.Repository;
 using MusicStore.Infrastructure.Contexts;
 
 namespace MusicStore.Infrastructure.Repositories
 {
-    public class Repository<TEntity> : IRepository<TEntity>
+    public abstract class Repository<TEntity> : IRepository<TEntity>
         where TEntity : class
     {
         protected DbSet<TEntity> Entities { get; }
@@ -22,6 +23,11 @@ namespace MusicStore.Infrastructure.Repositories
         public void Delete( TEntity entity )
         {
             Entities.Remove( entity );
+        }
+
+        public Task<bool> ContainsAsync( Expression<Func<TEntity, bool>> predicate )
+        {
+            return Entities.AnyAsync( predicate );
         }
     }
 }

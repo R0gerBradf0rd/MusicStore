@@ -1,5 +1,4 @@
-﻿using System.Linq.Expressions;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using MusicStore.Application.Users.Repositories;
 using MusicStore.Domain.Entities.Users;
 using MusicStore.Infrastructure.Contexts;
@@ -16,14 +15,9 @@ namespace MusicStore.Infrastructure.Repositories.UserRepositories
             _dbContext = dbContext;
         }
 
-        public Task<bool> ContainsAsync( Expression<Func<User, bool>> predicate )
-        {
-            return _dbContext.Users.AnyAsync( predicate );
-        }
-
         public Task<User?> GetByIdOrDefaultAsync( Guid id )
         {
-            return _dbContext.Users.FirstOrDefaultAsync( u => u.Id == id );
+            return Entities.FirstOrDefaultAsync( u => u.Id == id );
         }
     }
 }

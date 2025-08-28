@@ -6,8 +6,6 @@ namespace MusicStore.Application.Carts.Repositories
 {
     public interface ICartItemRepository : IRepository<CartItem>
     {
-        Task<bool> ContainsAsync( Expression<Func<CartItem, bool>> predicate );
-
         Task<CartItem?> FindAsync( Expression<Func<CartItem, bool>> predicate );
 
         Task<CartItem?> GetByIdOrDefaultAsync( Guid id );

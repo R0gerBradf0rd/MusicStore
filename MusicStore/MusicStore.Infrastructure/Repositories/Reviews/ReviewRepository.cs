@@ -1,5 +1,4 @@
-﻿using System.Linq.Expressions;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using MusicStore.Application.Reviews.Repositories;
 using MusicStore.Domain.Entities.Reviews;
 using MusicStore.Infrastructure.Contexts;
@@ -16,14 +15,9 @@ namespace MusicStore.Infrastructure.Repositories.Reviews
             _dbContext = dbContext;
         }
 
-        public Task<bool> ContainsAsync( Expression<Func<Review, bool>> predicate )
-        {
-            return _dbContext.Reviews.AnyAsync( predicate );
-        }
-
         public Task<Review?> GetByIdOrDefaultAsync( Guid id )
         {
-            return _dbContext.Reviews.FirstOrDefaultAsync( r => r.Id == id );
+            return Entities.FirstOrDefaultAsync( r => r.Id == id );
         }
     }
 }
