@@ -1,4 +1,6 @@
-﻿namespace MusicStore.Domain.Entities.Users
+﻿using System.Data;
+
+namespace MusicStore.Domain.Entities.Users
 {
     /// <summary>
     /// Представляет пользователя

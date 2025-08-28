@@ -34,7 +34,7 @@ namespace MusicStore.Application.Reviews.Commands.DeleteReview
             {
                 Review review = await _reviewRepository.GetByIdOrDefaultAsync( request.Id );
 
-                await _reviewRepository.DeleteAsync( review );
+                _reviewRepository.Delete( review );
                 await _unitOfWork.CommitAsync();
 
                 return Result<Guid>.Success( review.Id );

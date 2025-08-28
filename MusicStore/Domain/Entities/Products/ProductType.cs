@@ -18,7 +18,7 @@
         /// <summary>
         /// Идентификатор категории
         /// </summary>
-        public Guid CatergoryId { get; }
+        public Guid CategoryId { get; }
 
         /// <summary>
         /// Создает тип продукта, относящийся к определенной категории, с указанными параметрами
@@ -39,7 +39,7 @@
             }
             Id = Guid.NewGuid();
             Name = name;
-            CatergoryId = categoryId;
+            CategoryId = categoryId;
         }
     }
 }

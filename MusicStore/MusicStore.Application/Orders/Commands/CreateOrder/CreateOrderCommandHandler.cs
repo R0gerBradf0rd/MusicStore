@@ -20,7 +20,6 @@ namespace MusicStore.Application.Orders.Commands.CreateOrder
         private readonly IProductWarehouseRepository _productWarehouseRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IAsyncValidator<CreateOrderCommand> _createOrderCommandValidator;
-        private readonly SemaphoreSlim _semaphore = new SemaphoreSlim( 1, 1 );
 
         public CreateOrderCommandHandler(
             IOrderRepository orderRepository,
@@ -45,7 +44,6 @@ namespace MusicStore.Application.Orders.Commands.CreateOrder
             {
                 return Result<Guid>.Failure( validationResult.Error );
             }
-            await _semaphore.WaitAsync();
             try
             {
                 Cart cart = await _cartRepository.GetByIdOrDefaultAsync( request.CartId );
@@ -70,10 +68,6 @@ namespace MusicStore.Application.Orders.Commands.CreateOrder
             catch ( Exception ex )
             {
                 return Result<Guid>.Failure( ex.Message );
-            }
-            finally
-            {
-                _semaphore.Release();
             }
         }
     }
