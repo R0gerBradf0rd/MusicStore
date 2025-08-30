@@ -86,6 +86,12 @@ namespace MusicStore.Domain.Entities.Carts
         }
 
         /// <summary>
+        /// Конструктор для EntityFramework
+        /// </summary>
+        private CartItem()
+        { }
+
+        /// <summary>
         /// Устанавливает количество продукта в элементе корзины
         /// </summary>
         public void SetQuantity( int quantity )
