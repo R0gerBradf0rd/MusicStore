@@ -99,6 +99,12 @@ namespace MusicStore.Domain.Entities.Products
         }
 
         /// <summary>
+        /// Конструктор для EntityFramework
+        /// </summary>
+        private Product()
+        { }
+
+        /// <summary>
         /// Добавляет тег в список тегов продукта
         /// </summary>
         /// <param name="tag">Добавляемый тег продукта</param>

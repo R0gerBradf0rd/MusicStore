@@ -63,5 +63,11 @@
             Rating = rating;
             Comment = comment;
         }
+
+        /// <summary>
+        /// Конструктор для EntityFramework
+        /// </summary>
+        private Review()
+        { }
     }
 }

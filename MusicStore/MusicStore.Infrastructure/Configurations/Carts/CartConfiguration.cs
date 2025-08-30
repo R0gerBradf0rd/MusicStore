@@ -16,9 +16,6 @@ namespace MusicStore.Infrastructure.Configurations.Carts
             builder.Property( c => c.UserId )
                 .IsRequired();
 
-            builder.Property( c => c.TotalPrice )
-                .IsRequired();
-
             builder.HasMany( c => c.CartItems )
                 .WithOne()
                 .HasForeignKey( ci => ci.CartId );
