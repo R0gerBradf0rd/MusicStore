@@ -1,11 +1,12 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using MusicStore.Application.Results;
-using MusicStore.Application.Users.Commands.CreateUser;
 using MusicStore.Application.Users.Dtos;
 using MusicStore.Application.Users.Queries.GetUser;
+using MusicStore.Presentation.Contracts.Users;
+using MusicStore.Presentation.Mappers;
 
-namespace MusicStore.API.Controllers
+namespace MusicStore.Presentation.Controllers
 {
     [ApiController]
     [Route( "api/[controller]" )]
@@ -19,29 +20,29 @@ namespace MusicStore.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateUser( [FromBody] CreateUserCommand command )
+        public async Task<IActionResult> CreateUser( [FromBody] CreateUserRequest request )
         {
-            Result<Guid> result = await _mediator.Send( command );
+            Result<Guid> createUserResult = await _mediator.Send( request.ToCommand() );
 
-            if ( result.IsError )
+            if ( createUserResult.IsError )
             {
-                return BadRequest( result.Error );
+                return BadRequest( createUserResult.Error );
             }
 
-            return Ok( result.Value );
+            return Ok( createUserResult.ToResponse() );
         }
 
-        [HttpGet( "{id}" )]
+        [HttpGet( "{id:guid}" )]
         public async Task<ActionResult> GetUserById( Guid id )
         {
-            Result<UserDto> user = await _mediator.Send( new GetUserQuery( id ) );
+            Result<UserDto> getUserResult = await _mediator.Send( new GetUserQuery( id ) );
 
-            if ( user.IsError )
+            if ( getUserResult.IsError )
             {
-                return BadRequest( user.Error );
+                return BadRequest( getUserResult.Error );
             }
 
-            return Ok( user.Value );
+            return Ok( getUserResult.ToResponse() );
         }
     }
 }

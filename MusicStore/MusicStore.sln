@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicStore.Infrastructure",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicStore.Infrastructure.Migrations", "MusicStore.Infrastructure.Migrations\MusicStore.Infrastructure.Migrations.csproj", "{25671884-1AE8-44D1-AD98-C98098A56BDE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicStore.API", "MusicStore.API\MusicStore.API.csproj", "{4E6B5D3A-F524-452D-8975-8921E3C49687}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicStore.Presentation", "MusicStore.API\MusicStore.Presentation.csproj", "{4E6B5D3A-F524-452D-8975-8921E3C49687}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

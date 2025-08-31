@@ -2,7 +2,7 @@
 using MusicStore.Application;
 using MusicStore.Infrastructure;
 
-namespace MusicStore.API
+namespace MusicStore.Presentation
 {
     public class Program
     {

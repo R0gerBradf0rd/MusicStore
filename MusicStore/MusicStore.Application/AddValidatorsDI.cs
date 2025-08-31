@@ -3,6 +3,7 @@ using MusicStore.Application.Carts.Commands.AddCartItem;
 using MusicStore.Application.Carts.Commands.RemoveCartItem;
 using MusicStore.Application.Carts.Commands.SetCartItemQuantity;
 using MusicStore.Application.Carts.Commands.SetCartItemSelectionStatus;
+using MusicStore.Application.Carts.Queries.GetCart;
 using MusicStore.Application.Interfaces.Validators;
 using MusicStore.Application.Orders.Commands.CreateOrder;
 using MusicStore.Application.Orders.Commands.SetStatusToArrived;
@@ -60,6 +61,7 @@ namespace MusicStore.Application
             services.AddScoped<IAsyncValidator<RemoveCartItemCommand>, RemoveCartItemCommandValidator>();
             services.AddScoped<IAsyncValidator<SetCartItemQuantityCommand>, SetCartItemQuantityCommandValidator>();
             services.AddScoped<IAsyncValidator<SetCartItemSelectionStatusCommand>, SetCartItemSelectionStatusCommandValidator>();
+            services.AddScoped<IAsyncValidator<GetCartQuery>, GetCartQueryValidator>();
 
             return services;
         }
