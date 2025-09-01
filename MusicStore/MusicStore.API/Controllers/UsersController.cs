@@ -4,7 +4,7 @@ using MusicStore.Application.Results;
 using MusicStore.Application.Users.Dtos;
 using MusicStore.Application.Users.Queries.GetUser;
 using MusicStore.Presentation.Contracts.Users;
-using MusicStore.Presentation.Mappers;
+using MusicStore.Presentation.UserMappingExtensions;
 
 namespace MusicStore.Presentation.Controllers
 {
