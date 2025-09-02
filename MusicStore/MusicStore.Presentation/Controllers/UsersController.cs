@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using MusicStore.Application.Results;
 using MusicStore.Application.Users.Dtos;
 using MusicStore.Application.Users.Queries.GetUser;
-using MusicStore.Presentation.Contracts.Users;
-using MusicStore.Presentation.Mappers.UserMappingExtensions;
-using MusicStore.Presentation.UserMappingExtensions;
+using MusicStore.Presentation.Contracts.Users.CreateUser;
+using MusicStore.Presentation.Mappers.UserMappingExtensions.CreateUser;
+using MusicStore.Presentation.Mappers.UserMappingExtensions.GetUser;
 
 namespace MusicStore.Presentation.Controllers
 {
@@ -23,14 +23,14 @@ namespace MusicStore.Presentation.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateUser( [FromBody] CreateUserRequest request )
         {
-            Result<Guid> createUserResult = await _mediator.Send( request.ToCommand() );
+            Result<Guid> createUserResult = await _mediator.Send( request.ToCreateUserCommand() );
 
             if ( createUserResult.IsError )
             {
                 return BadRequest( createUserResult.Error );
             }
 
-            return Ok( createUserResult.ToResponse() );
+            return Ok( createUserResult.ToCreateUserResponse() );
         }
 
         [HttpGet( "{id:guid}" )]
@@ -43,7 +43,7 @@ namespace MusicStore.Presentation.Controllers
                 return BadRequest( getUserResult.Error );
             }
 
-            return Ok( getUserResult.ToResponse() );
+            return Ok( getUserResult.ToGetUserResponse() );
         }
     }
 }

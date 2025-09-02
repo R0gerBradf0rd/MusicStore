@@ -1,4 +1,4 @@
-﻿namespace MusicStore.Presentation.Contracts.Users
+﻿namespace MusicStore.Presentation.Contracts.Users.CreateUser
 {
     public class CreateUserResponse
     {
