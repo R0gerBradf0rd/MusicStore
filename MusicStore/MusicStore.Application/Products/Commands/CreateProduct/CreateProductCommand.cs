@@ -18,16 +18,13 @@ namespace MusicStore.Application.Products.Commands.CreateProduct
 
         public Guid ProductTypeId { get; }
 
-        public ICollection<ProductTag> ProductTags { get; }
-
         public CreateProductCommand(
             string name,
             string description,
             decimal price,
             string priceCurrencyCode,
             string imageURL,
-            Guid productTypeId,
-            ICollection<ProductTag> productTags )
+            Guid productTypeId )
         {
             Name = name;
             Description = description;
@@ -35,7 +32,6 @@ namespace MusicStore.Application.Products.Commands.CreateProduct
             PriceCurrencyCode = priceCurrencyCode;
             ImageURL = imageURL;
             ProductTypeId = productTypeId;
-            ProductTags = productTags;
         }
     }
 }

@@ -45,7 +45,7 @@ namespace MusicStore.Domain.Entities.Products
         /// <summary>
         /// Содержит список тегов продукта
         /// </summary>
-        public ICollection<ProductTag> ProductTags { get; }
+        public ICollection<ProductTag> ProductTags { get; } = new List<ProductTag>();
 
         /// <summary>
         /// Создает новый продукт, используя описанные параметры
@@ -56,7 +56,6 @@ namespace MusicStore.Domain.Entities.Products
         /// <param name="priceCurrencyCode">Код валюты цены</param>
         /// <param name="imageURL">Путь к изображению продукта</param>
         /// <param name="productTypeId">Идентификатор типа продукта</param>
-        /// <param name="productTags">Список тегов продукта</param>
         /// <exception cref="ArgumentNullException">Если переданные значения параметров пустые</exception>
         /// <exception cref="ArgumentException">Если цена является недопустимой</exception>
         public Product(
@@ -65,8 +64,7 @@ namespace MusicStore.Domain.Entities.Products
             decimal price,
             string priceCurrencyCode,
             string imageURL,
-            Guid productTypeId,
-            ICollection<ProductTag> productTags )
+            Guid productTypeId )
         {
             if ( string.IsNullOrWhiteSpace( name ) )
             {
@@ -95,7 +93,6 @@ namespace MusicStore.Domain.Entities.Products
             PriceCurrencyCode = priceCurrencyCode;
             ImageURL = imageURL;
             ProductTypeId = productTypeId;
-            ProductTags = productTags;
         }
 
         /// <summary>
