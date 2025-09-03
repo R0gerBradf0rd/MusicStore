@@ -39,8 +39,7 @@ namespace MusicStore.Application.Products.Commands.CreateProduct
                     request.Price,
                     request.PriceCurrencyCode,
                     request.ImageURL,
-                    request.ProductTypeId,
-                    request.ProductTags
+                    request.ProductTypeId
                 );
 
                 _productRepository.Add( product );

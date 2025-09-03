@@ -17,7 +17,8 @@ namespace MusicStore.Infrastructure.Repositories.Carts
 
         public Task<Cart?> GetByIdOrDefaultAsync( Guid id )
         {
-            return Entities.FirstOrDefaultAsync( c => c.Id == id );
+            return Entities.Include( c => c.CartItems ).
+                FirstOrDefaultAsync( c => c.Id == id );
         }
     }
 }

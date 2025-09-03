@@ -18,7 +18,7 @@
         /// <summary>
         /// Список товаров в корзине
         /// </summary>
-        public ICollection<CartItem> CartItems { get; }
+        public ICollection<CartItem> CartItems { get; } = new List<CartItem>();
 
         /// <summary>
         /// Полная стоимость товаров в корзине

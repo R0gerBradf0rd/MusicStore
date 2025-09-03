@@ -73,12 +73,12 @@ namespace MusicStore.Domain.Entities.Carts
             {
                 throw new ArgumentException( "CartId не может быть пустым!", nameof( cartId ) );
             }
+            Id = Guid.NewGuid();
+            ProductId = productId;
             if ( ProductId != product.Id )
             {
                 throw new ArgumentException( "Не верный Id или объект продукта!" );
             }
-            Id = Guid.NewGuid();
-            ProductId = productId;
             CartId = cartId;
             Product = product;
             Quantity = 1;
